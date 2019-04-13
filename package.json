@@ -1,0 +1,41 @@
+{
+  "name": "count-stockula",
+  "version": "1.0.0",
+  "description": "Inventory Control System",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
+    "client": "cd client && npm run start",
+    "install": "cd client && npm install",
+    "build": "cd client && npm run build",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/krtcotmo2/Count-Stockula.git"
+  },
+  "author": "Aaron Lee, Anna Sylvester, Jarett Yingling, Kurt Cooney",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/krtcotmo2/Count-Stockula/issues"
+  },
+  "homepage": "https://github.com/krtcotmo2/Count-Stockula#readme",
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.7"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "if-env": "^1.0.4",
+    "mongoose": "^5.5.0",
+    "pdfmake": "^0.1.54",
+    "react": "^16.8.6",
+    "react-barcode-reader": "0.0.1",
+    "react-router-dom": "^5.0.0",
+    "twilio": "^3.30.0"
+  }
+}
