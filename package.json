@@ -15,14 +15,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/krtcotmo2/Count-Stockula.git"
+    "url": "git+https://github.com/count-stockula/count-stockula.git"
   },
-  "author": "Aaron Lee, Anna Sylvester, Jarett Yingling, Kurt Cooney",
+  "author": "Aaron Lee, Anna Sylvester, Jarret Yingling, Kurt Cooney",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/krtcotmo2/Count-Stockula/issues"
+    "url": "https://github.com/count-stockula/count-stockula/issues"
   },
-  "homepage": "https://github.com/krtcotmo2/Count-Stockula#readme",
+  "homepage": "https://github.com/count-stockula/count-stockula#readme",
   "devDependencies": {
     "concurrently": "^4.1.0",
     "nodemon": "^1.18.7"
