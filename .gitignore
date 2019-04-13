@@ -1,3 +1,6 @@
+# x_ignore directory for misc local files
+x_ignore/
+
 # Logs
 logs
 *.log
