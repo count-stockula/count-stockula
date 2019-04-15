@@ -67,13 +67,13 @@ export default class Dashboard extends PureComponent{
           return (
               <>
                     <PageHeader  title="Dashboard"/>
-                    <div className="container">
-                         <div className="mx-auto col-12 col-lg-5 col-md-6 col-xl-4 col-sm-8 px-0">
+                    <div className="container px-0 w-100">
+                         <div className="mx-auto col-12 col-lg-8 col-md-8 col-sm-10 col-xl-7 px-0">
                               <Tabs tabClick={this.handleTabChange} value={this.state.value}/>
                          </div>
                     </div>
-                    <div className="container pb-5" >
-                         <div className="mx-auto col-12 col-lg-5 col-md-6 col-xl-4 col-sm-8 px-0">
+                    <div className="container px-0 w-100 pb-5" >
+                         <div className="mx-auto col-12 col-lg-8 col-md-8 col-sm-10 col-xl-7 px-0">
                               <List>
                                    {this.state.inventoryList.map( item => <ListItem curQty = {item.currentQty} criticalQty = {item.criticalQty}  key = {item.currentQty} key={item._id}><span>{item.name} {item.description}</span><span>Current Qty: {item.currentQty}</span></ListItem>)}
                               </List>
