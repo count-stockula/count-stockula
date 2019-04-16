@@ -119,11 +119,6 @@ export default class Sales extends PureComponent{
           };
           pdfMake.createPdf(documentDefinition).open();
      }
-    
-
-
-
-
      render(){
           return(
                <>
