@@ -119,10 +119,15 @@ export default class Sales extends PureComponent{
           };
           pdfMake.createPdf(documentDefinition).open();
      }
+     dateFormat = () => {
+          let val =  new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+          console.group(val)
+          return "Sales: " + val;
+     }
      render(){
           return(
                <>
-                    <PageHeader title={`${new Date()}`} isRed="true"/>
+                    <PageHeader title={this.dateFormat()} isRed="true"/>
                     <div className="container px-0 w-100 pb-5 " >
                          <div className="mx-auto col-12 col-lg-8 col-md-8 col-sm-10 col-xl-7 px-0 salesTable">
                               <button className="btn red darken-2 m-3" onClick={() => this.createPdf()}>Finish Sale</button>
