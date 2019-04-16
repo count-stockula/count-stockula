@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./App.css";
-import Nav from "./components/Nav/Nav";
 import Home from "./pages/Home";
 import Sales from "./pages/Sales/Sales";
 import Page1 from "./pages/Page1";
