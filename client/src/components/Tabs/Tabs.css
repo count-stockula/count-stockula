@@ -14,7 +14,3 @@ button.tab.selected  {
      color:white;
      font-weight: bold;
 }
-
-.tabControl [class*="TabIndicator"] {
-     background:#d32f2f;
-}

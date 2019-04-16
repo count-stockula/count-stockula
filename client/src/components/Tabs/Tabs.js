@@ -30,12 +30,15 @@ function TabControl (props) {
     return (
       <div className={classes.root + " mb-3 tabControl"}>
         <AppBar position="static">
-          <Tabs fullWidth="true" value={props.value} onChange={props.tabClick} >
-            <Tab value="one" className={props.value === "one" ? "tab selected" : "tab"} label="All Products"/>
+          <Tabs fullWidth="true" value={props.value} onChange={props.tabClick} indicatorColor="#d32f2f" >
+            <Tab value="one" className={props.value === "one" ? "tab selected" : "tab"} label="All Products"> 
+            </Tab>
             <Tab value="two" className={props.value === "two" ? "tab selected" : "tab"}  label="Low Inventory" />
-            <Tab value="three" className={props.value === "three" ? "tab selected" : "tab"}  label="Out of Stock" />
+            <Tab value="three" className={props.value === "three" ? "tab selected" : "tab"}  label="Out of Stock" />    
           </Tabs>
-        </AppBar>        
+          
+        </AppBar>  
+        
       </div>
     );
   
