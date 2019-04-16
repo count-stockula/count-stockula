@@ -1,0 +1,16 @@
+.tabControl{
+     margin-top:100px;
+}
+
+button.tab  {
+    background:black;
+    color:white;
+    font-weight: bold;
+    opacity: 1;
+}
+
+button.tab.selected  {
+     background:red;
+     color:white;
+     font-weight: bold;
+}
