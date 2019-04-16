@@ -8,7 +8,8 @@ const userSchema = new Schema({
   phoneNumber: String,
   storeId: {
     type: Schema.Types.ObjectId,
-    ref: "Store"
+    ref: "Store",
+    required: true
   },
   management: { type: Boolean, default: false }
 });
