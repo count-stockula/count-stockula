@@ -5,6 +5,7 @@ const storeItemSchema = new Schema({
   name: { type: String, required: true },
   description: String,
   upc: String,
+  caseSize: Number,
   currentQty: { type: Number, required: true, default: 0 },
   criticalQty: { type: Number, required: true, default: 0 },
   alertStatus: { type: Boolean, default: true},
