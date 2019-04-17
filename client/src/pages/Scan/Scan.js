@@ -3,7 +3,6 @@ import API from "../../components/utils/API";
 import PageHeader from "../../components/Pageheader/Pageheader"
 import BottomBar from "../../components/BottomBar/BottomBar"
 import ContainedButtons from "../../components/ContainedButtons/ContainedButtons";
-import Tabs from "../../components/Tabs/Tabs";
 
 export default class Scan extends PureComponent{     
      state = {
