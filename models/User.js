@@ -5,6 +5,7 @@ const userSchema = new Schema({
   userId: { type: String, required: true, unique: true },
   userPass: { type: String, required: true },
   name: String,
+  email: String,
   phoneNumber: String,
   storeId: {
     type: Schema.Types.ObjectId,

@@ -105,14 +105,39 @@ module.exports = {
     }
   },
   lowStock: function (req, res) {
-    db.StoreItem
-      .find(req.body)
-      .then(foundArray => {
-        let lowStockArray = foundArray.filter(function (item) {
-          return (item.currentQty < item.criticalQty);
-        });
-        res.json(lowStockArray);
-      })
-      .catch(err => res.status(422).json(err));
+    if (req.body.storeId) {
+      db.StoreItem
+        .find({ storeId: req.body.storeId })
+        .then(foundArray => {
+          let lowStockArray = foundArray.filter(function (item) {
+            return (item.currentQty < item.criticalQty);
+          });
+          res.json(lowStockArray);
+        })
+        .catch(err => res.status(422).json(err));
+    } else {
+      db.StoreItem
+        .find({})
+        .then(foundArray => {
+          let lowStockArray = foundArray.filter(function (item) {
+            return (item.currentQty < item.criticalQty);
+          });
+          res.json(lowStockArray);
+        })
+        .catch(err => res.status(422).json(err));
+    }
+  },
+  zeroStock: function (req, res) {
+    if (req.body.storeId) {
+      db.StoreItem
+        .find({ storeId: req.body.storeId, currentQty: 0 })
+        .then(foundArray => res.json(foundArray))
+        .catch(err => res.status(422).json(err));
+    } else {
+      db.StoreItem
+        .find({ currentQty: 0 })
+        .then(foundArray => res.json(foundArray))
+        .catch(err => res.status(422).json(err));
+    }
   }
 };

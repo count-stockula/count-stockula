@@ -28,4 +28,8 @@ router.route("/forOne/:id")
 router.route("/lowStock")
   .get(storeItemsController.lowStock);
 
+// Matches with "/api/storeItems/zeroStock"
+router.route("/zeroStock")
+  .get(storeItemsController.zeroStock);
+
 module.exports = router;
