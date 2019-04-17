@@ -10,7 +10,7 @@ button.tab  {
 }
 
 button.tab.selected  {
-     background:red;
+     background:#d32f2f;
      color:white;
      font-weight: bold;
 }
