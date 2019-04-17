@@ -5,6 +5,7 @@ import "./App.css";
 import Home from "./pages/Home";
 import Page1 from "./pages/Page1";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import Scan from "./pages/Scan/Scan";
 
 class App extends PureComponent {
   render() {
@@ -15,11 +16,12 @@ class App extends PureComponent {
             <Route exact path="/" component={Home} />
             <Route exact path="/Dashboard" component={Dashboard} />
             <Route exact path="/Page1" component={Page1} />
+            <Route exact path="/Scan" component={Scan} />
           </Switch>
         </div>
       </Router>
     );
   }
-}
+} 
 
 export default App;
