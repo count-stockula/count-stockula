@@ -8,10 +8,10 @@ export default function () {
     <div className="formContainer">
       <div className="row">
         <form className="col s12">
-          <div className="row">
+        <div className="row">
             <div className="input-field col s12">
-              <input id="product_name" type="text" className="validate"></input>
-              <label for="product_name">Product Name</label>
+              <input disabled value="CocaCola" id="disabled" type="text" className="validate"></input>
+              <label for="disabled">Product Name</label>
             </div>
           </div>
           <div className="row">
@@ -22,23 +22,19 @@ export default function () {
           </div>
           <div className="row">
             <div className="input-field col s12">
-              <input id="description" type="text" className="validate"></input>
-              <label for="description">Description</label>
+              <input disabled value="12 oz, regular flavor, can" id="disabled" type="text" className="validate"></input>
+              <label for="disabled">Description</label>
             </div>
           </div>
           <div className="row">
-            <div className="input-field col s6">
-              <input id="stock-level" type="text" className="validate"></input>
-              <label for="stock-level">Critical Stock Level</label>
-            </div>
-            <div className="input-field col s6">
-              <input id="case-size" type="text" className="validate"></input>
-              <label for="case-size">Default Case Size</label>
+            <div className="input-field col s12">
+              <input disabled value="10" id="disabled" type="text" className="validate"></input>
+              <label for="disabled">Units Available</label>
             </div>
           </div>
           <div class="row">
             <div class="col s12">
-              Units Available:
+              Units Being Added:
               <div class="input-field inline">
                 <input id="units_inline" type="text" class="validate"></input>
                 <label for="units_inline">+</label>
