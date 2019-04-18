@@ -134,12 +134,8 @@ export default class Sales extends PureComponent{
      }
 
      handleScan = data => { 
-          let body ={
-               upc:"23455",
-               storeId:"5cb3247aef86d68b5e0dc795",
-               reduceQty: 1
-          }
-          API.reduceStockByOne(body)
+          //data will be the upc
+          API.reduceStockByOne("5cb6764ced72c8002a0bd157", "1234567", 1)
           .then(retData => {
                this.setState({
                     purchasedItems: [...this.state.purchasedItems, retData.data]
