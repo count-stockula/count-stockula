@@ -1,7 +1,9 @@
 import React, {PureComponent} from "react";
+import API from "../../components/utils/API"
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import List from "../../components/List/List"
+import BarcodeReader from 'react-barcode-reader'
 import PageHeader from "../../components/Pageheader/Pageheader"
 import BottomBar from "../../components/BottomBar/BottomBar"
 import ListItem from "../../components/ListItem/ListItem"
@@ -18,7 +20,8 @@ export default class Sales extends PureComponent{
                zip:"30010",
                phone:"(770) 876-2201"
           },
-          purchasedItems:[
+          purchasedItems:[],
+          allItems:[
                {"currentQty":4,"criticalQty":10,"alertStatus":true,"_id":"5cb31f21ef86d68b5e0dc67d","name":"Diet Coke","description":"2L bottle","upc":"1111111","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
                {"currentQty":7,"criticalQty":10,"alertStatus":true,"_id":"5cb33340ef86d68b5e0dcbbf","name":"Red Bull","upc":"23455","description":"8 oz can","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
                {"currentQty":10,"criticalQty":10,"alertStatus":true,"_id":"5cb33cf7ef86d68b5e0dce44","name":"Chex Mix","upc":"23455","description":"4 oz bag","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
@@ -69,6 +72,8 @@ export default class Sales extends PureComponent{
           const address = this.state.store.address;
           const city = this.state.store.city + ", "+ this.state.store.state + " " +this.state.store.zip;
 
+          let currPurchase = this.state.purchasedItems;
+
           const documentDefinition = {
                pageSize: {width: 250, height:"auto"},
                pageOrientation: 'portrait',
@@ -96,7 +101,7 @@ export default class Sales extends PureComponent{
                          margin: [0,0,0,30]
                     },
                     [
-                         this.state.purchasedItems.map(item => {
+                         currPurchase.map(item => {
                               return item.name;
                          })
                     ] ,
@@ -118,22 +123,45 @@ export default class Sales extends PureComponent{
                }
           };
           pdfMake.createPdf(documentDefinition).open();
+          this.setState({
+               purchasedItems: []
+          });
      }
      dateFormat = () => {
           let val =  new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
           console.group(val)
           return "Sales: " + val;
      }
+
+     handleScan = data => { 
+          let body ={
+               upc:"23455",
+               storeId:"5cb3247aef86d68b5e0dc795",
+               reduceQty: 1
+          }
+          API.reduceStockByOne(body)
+          .then(retData => {
+               this.setState({
+                    purchasedItems: [...this.state.purchasedItems, retData.data]
+               })
+          })
+          .catch(err => console.log(err));
+     }
+
      render(){
           return(
                <>
+                    <BarcodeReader
+                    onError={this.handleError}
+                    onScan={this.handleScan}
+                    />
                     <PageHeader title={this.dateFormat()} isRed="true"/>
                     <div className="container px-0 w-100 pb-5 " >
                          <div className="mx-auto col-12 col-lg-8 col-md-8 col-sm-10 col-xl-7 px-0 salesTable">
                               <button className="btn red darken-2 m-3" onClick={() => this.createPdf()}>Finish Sale</button>
                               <List>
-                                       {this.state.purchasedItems.map(item => {
-                                            return <ListItem>{item.name}</ListItem>
+                                       {this.state.purchasedItems.map((item, i) => {
+                                            return <ListItem key={i}>{item.name}</ListItem>
                                        })}             
                               </List>
                               <button className="btn red darken-2 mb-5 mt-0" onClick={() => this.createPdf()}>Finish Sale</button>

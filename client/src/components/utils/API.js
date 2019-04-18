@@ -1,5 +1,7 @@
 import axios from "axios";
 
 export default {
-  //include functions for axios
+     reduceStockByOne : function(body) {
+          return axios.put("api/storeItems/upc/reduceStock", body);
+     }
 };
