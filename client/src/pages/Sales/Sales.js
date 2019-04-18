@@ -135,7 +135,7 @@ export default class Sales extends PureComponent{
 
      handleScan = data => { 
           //data will be the upc
-          API.reduceStockByOne("5cb6764ced72c8002a0bd157", "1234567", 1)
+          API.reduceStock("5cb6764ced72c8002a0bd157", "1234567", 1)
           .then(retData => {
                this.setState({
                     purchasedItems: [...this.state.purchasedItems, retData.data]
