@@ -1,7 +1,9 @@
 import React, {PureComponent} from "react";
+import API from "../../components/utils/API"
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 import List from "../../components/List/List"
+import BarcodeReader from 'react-barcode-reader'
 import PageHeader from "../../components/Pageheader/Pageheader"
 import BottomBar from "../../components/BottomBar/BottomBar"
 import ListItem from "../../components/ListItem/ListItem"
@@ -9,6 +11,7 @@ import "./Sales.css";
 
 
 export default class Sales extends PureComponent{
+    
      state={
           store:{
                name:"Shops at East Peidmont",
@@ -18,49 +21,32 @@ export default class Sales extends PureComponent{
                zip:"30010",
                phone:"(770) 876-2201"
           },
-          purchasedItems:[
-               {"currentQty":4,"criticalQty":10,"alertStatus":true,"_id":"5cb31f21ef86d68b5e0dc67d","name":"Diet Coke","description":"2L bottle","upc":"1111111","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":7,"criticalQty":10,"alertStatus":true,"_id":"5cb33340ef86d68b5e0dcbbf","name":"Red Bull","upc":"23455","description":"8 oz can","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":10,"criticalQty":10,"alertStatus":true,"_id":"5cb33cf7ef86d68b5e0dce44","name":"Chex Mix","upc":"23455","description":"4 oz bag","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":14,"criticalQty":10,"alertStatus":true,"_id":"5cb33d14ef86d68b5e0dce4e","name":"Prune Juice","upc":"23455","description":"64 oz bottle","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":0,"criticalQty":10,"alertStatus":true,"_id":"5cb3429def86d68b5e0dcfd3","name":"Bud Light","upc":"23455","description":"6 pack","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":3,"criticalQty":4,"alertStatus":true,"_id":"5cb3c7cdef86d68b5e0df779","name":"Jack Lins Beef Jerky","upc":"2455","description":"2.85 oz bag","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":15,"criticalQty":10,"alertStatus":true,"_id":"5cb3c847ef86d68b5e0df79c","name":"Blueberry Pop Tarts","upc":"2455","description":"8 count box","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":0,"criticalQty":10,"alertStatus":true,"_id":"5cb3c873ef86d68b5e0df7aa","name":"Kraft Easy Mac Original Flavor Macaroni & Cheese","upc":"2455","description":"2.05 Ounce Microwavable Cups","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":15,"criticalQty":10,"alertStatus":true,"_id":"5cb3c8d5ef86d68b5e0df7c9","name":"Bizzy Cold Brew Coffee","upc":"2455","description":"16 ox bag","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":8,"criticalQty":10,"alertStatus":true,"_id":"5cb3c90def86d68b5e0df7da","name":"Dole Bowls, Cherry Mixed in 100% Fruit Juice","upc":"2455","description":"4px 4 oz cups","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":4,"criticalQty":10,"alertStatus":true,"_id":"5cb31f21ef86d68b5e0dc67d","name":"Diet Coke","description":"2L bottle","upc":"1111111","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":7,"criticalQty":10,"alertStatus":true,"_id":"5cb33340ef86d68b5e0dcbbf","name":"Red Bull","upc":"23455","description":"8 oz can","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":10,"criticalQty":10,"alertStatus":true,"_id":"5cb33cf7ef86d68b5e0dce44","name":"Chex Mix","upc":"23455","description":"4 oz bag","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":14,"criticalQty":10,"alertStatus":true,"_id":"5cb33d14ef86d68b5e0dce4e","name":"Prune Juice","upc":"23455","description":"64 oz bottle","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":0,"criticalQty":10,"alertStatus":true,"_id":"5cb3429def86d68b5e0dcfd3","name":"Bud Light","upc":"23455","description":"6 pack","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":3,"criticalQty":4,"alertStatus":true,"_id":"5cb3c7cdef86d68b5e0df779","name":"Jack Lins Beef Jerky","upc":"2455","description":"2.85 oz bag","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":15,"criticalQty":10,"alertStatus":true,"_id":"5cb3c847ef86d68b5e0df79c","name":"Blueberry Pop Tarts","upc":"2455","description":"8 count box","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":0,"criticalQty":10,"alertStatus":true,"_id":"5cb3c873ef86d68b5e0df7aa","name":"Kraft Easy Mac Original Flavor Macaroni & Cheese","upc":"2455","description":"2.05 Ounce Microwavable Cups","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":15,"criticalQty":10,"alertStatus":true,"_id":"5cb3c8d5ef86d68b5e0df7c9","name":"Bizzy Cold Brew Coffee","upc":"2455","description":"16 ox bag","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":8,"criticalQty":10,"alertStatus":true,"_id":"5cb3c90def86d68b5e0df7da","name":"Dole Bowls, Cherry Mixed in 100% Fruit Juice","upc":"2455","description":"4px 4 oz cups","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":4,"criticalQty":10,"alertStatus":true,"_id":"5cb31f21ef86d68b5e0dc67d","name":"Diet Coke","description":"2L bottle","upc":"1111111","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":7,"criticalQty":10,"alertStatus":true,"_id":"5cb33340ef86d68b5e0dcbbf","name":"Red Bull","upc":"23455","description":"8 oz can","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":10,"criticalQty":10,"alertStatus":true,"_id":"5cb33cf7ef86d68b5e0dce44","name":"Chex Mix","upc":"23455","description":"4 oz bag","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":14,"criticalQty":10,"alertStatus":true,"_id":"5cb33d14ef86d68b5e0dce4e","name":"Prune Juice","upc":"23455","description":"64 oz bottle","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":0,"criticalQty":10,"alertStatus":true,"_id":"5cb3429def86d68b5e0dcfd3","name":"Bud Light","upc":"23455","description":"6 pack","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":3,"criticalQty":4,"alertStatus":true,"_id":"5cb3c7cdef86d68b5e0df779","name":"Jack Lins Beef Jerky","upc":"2455","description":"2.85 oz bag","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":15,"criticalQty":10,"alertStatus":true,"_id":"5cb3c847ef86d68b5e0df79c","name":"Blueberry Pop Tarts","upc":"2455","description":"8 count box","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":0,"criticalQty":10,"alertStatus":true,"_id":"5cb3c873ef86d68b5e0df7aa","name":"Kraft Easy Mac Original Flavor Macaroni & Cheese","upc":"2455","description":"2.05 Ounce Microwavable Cups","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":15,"criticalQty":10,"alertStatus":true,"_id":"5cb3c8d5ef86d68b5e0df7c9","name":"Bizzy Cold Brew Coffee","upc":"2455","description":"16 ox bag","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":8,"criticalQty":10,"alertStatus":true,"_id":"5cb3c90def86d68b5e0df7da","name":"Dole Bowls, Cherry Mixed in 100% Fruit Juice","upc":"2455","description":"4px 4 oz cups","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":4,"criticalQty":10,"alertStatus":true,"_id":"5cb31f21ef86d68b5e0dc67d","name":"Diet Coke","description":"2L bottle","upc":"1111111","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":7,"criticalQty":10,"alertStatus":true,"_id":"5cb33340ef86d68b5e0dcbbf","name":"Red Bull","upc":"23455","description":"8 oz can","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":10,"criticalQty":10,"alertStatus":true,"_id":"5cb33cf7ef86d68b5e0dce44","name":"Chex Mix","upc":"23455","description":"4 oz bag","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":14,"criticalQty":10,"alertStatus":true,"_id":"5cb33d14ef86d68b5e0dce4e","name":"Prune Juice","upc":"23455","description":"64 oz bottle","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":0,"criticalQty":10,"alertStatus":true,"_id":"5cb3429def86d68b5e0dcfd3","name":"Bud Light","upc":"23455","description":"6 pack","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":3,"criticalQty":4,"alertStatus":true,"_id":"5cb3c7cdef86d68b5e0df779","name":"Jack Lins Beef Jerky","upc":"2455","description":"2.85 oz bag","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":15,"criticalQty":10,"alertStatus":true,"_id":"5cb3c847ef86d68b5e0df79c","name":"Blueberry Pop Tarts","upc":"2455","description":"8 count box","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":0,"criticalQty":10,"alertStatus":true,"_id":"5cb3c873ef86d68b5e0df7aa","name":"Kraft Easy Mac Original Flavor Macaroni & Cheese","upc":"2455","description":"2.05 Ounce Microwavable Cups","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":15,"criticalQty":10,"alertStatus":true,"_id":"5cb3c8d5ef86d68b5e0df7c9","name":"Bizzy Cold Brew Coffee","upc":"2455","description":"16 ox bag","storeId":"5cb3247aef86d68b5e0dc795","__v":0},
-               {"currentQty":8,"criticalQty":10,"alertStatus":true,"_id":"5cb3c90def86d68b5e0df7da","name":"Dole Bowls, Cherry Mixed in 100% Fruit Juice","upc":"2455","description":"4px 4 oz cups","storeId":"5cb3247aef86d68b5e0dc795","__v":0}
-
-          ] 
+          purchasedItems:[],
+          alertShown:false ,
+          errorMessage:"",   
+     }
+     keyPressListener = (event) => {
+         if(event.keyCode===49){
+          API.reduceStock("5cb6764ced72c8002a0bd157", "1234567", 1)
+          .then(retData => {
+               this.setState({
+                    purchasedItems: [...this.state.purchasedItems, retData.data],
+                    alertShown: false
+               })
+          })
+          .catch(err => {
+               this.setState({
+                    errorMessage: "Failed to find scanned item in the database",
+                    alertShown: true
+               });
+          });
+         }
+      }
+     componentDidMount = () =>{
+          document.addEventListener("keydown", this.keyPressListener, false);
+     }
+     componentWillUnmount = () =>{
+          document.removeEventListener("keydown", this.keyPressListener, false);
      }
      createPdf = () => {
           const {vfs} = pdfFonts.pdfMake;
@@ -68,6 +54,8 @@ export default class Sales extends PureComponent{
           const storeName = this.state.store.name;
           const address = this.state.store.address;
           const city = this.state.store.city + ", "+ this.state.store.state + " " +this.state.store.zip;
+
+          let currPurchase = this.state.purchasedItems;
 
           const documentDefinition = {
                pageSize: {width: 250, height:"auto"},
@@ -96,7 +84,7 @@ export default class Sales extends PureComponent{
                          margin: [0,0,0,30]
                     },
                     [
-                         this.state.purchasedItems.map(item => {
+                         currPurchase.map(item => {
                               return item.name;
                          })
                     ] ,
@@ -118,22 +106,45 @@ export default class Sales extends PureComponent{
                }
           };
           pdfMake.createPdf(documentDefinition).open();
+          this.setState({
+               purchasedItems: [],
+               alertShown: false
+          });
      }
      dateFormat = () => {
           let val =  new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
           console.group(val)
           return "Sales: " + val;
      }
+     handleScan = data => { 
+          //data will be the upc
+          API.reduceStock("5cb6764ced72c8002a0bd157", "1234567", 1)
+          .then(retData => {
+               this.setState({
+                    purchasedItems: [...this.state.purchasedItems, retData.data],
+                    alertShown: false
+               })
+          })
+          .catch(err => {
+               this.setState({
+                    errorMessage: "Failed to find scanned item in the database",
+                    alertShown: true
+               });
+          });
+     }
+     
      render(){
           return(
                <>
+                   <BarcodeReader onError={this.handleError} onScan={this.handleScan}/>
                     <PageHeader title={this.dateFormat()} isRed="true"/>
                     <div className="container px-0 w-100 pb-5 " >
                          <div className="mx-auto col-12 col-lg-8 col-md-8 col-sm-10 col-xl-7 px-0 salesTable">
+                              <div className={this.state.alertShown ? 'alert alert-danger':'alert alert-danger d-none'} role="alert">{this.state.errorMessage}</div>
                               <button className="btn red darken-2 m-3" onClick={() => this.createPdf()}>Finish Sale</button>
                               <List>
-                                       {this.state.purchasedItems.map(item => {
-                                            return <ListItem>{item.name}</ListItem>
+                                       {this.state.purchasedItems.map((item, i) => {
+                                            return <ListItem key={i}>{item.name}</ListItem>
                                        })}             
                               </List>
                               <button className="btn red darken-2 mb-5 mt-0" onClick={() => this.createPdf()}>Finish Sale</button>
