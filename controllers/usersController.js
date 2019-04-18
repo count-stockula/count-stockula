@@ -4,7 +4,7 @@ module.exports = {
   findAll: function (req, res) {
     if (req.body.storeId) {
       db.User
-        .find(req.body)
+        .find({ storeId: req.body.storeId })
         .then(foundArray => res.json(foundArray))
         .catch(err => res.status(422).json(err));
     } else {
