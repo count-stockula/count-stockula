@@ -8,7 +8,7 @@ export default class AddItem extends PureComponent {
   state = {
     showForm: false,
   }
-  
+
   render() {
     return (
       <>
