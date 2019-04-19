@@ -1,12 +1,12 @@
 import React from "react";
 import "./Form.css";
 
-import Input from "../../components/Input/Input";
-
 function Form(props) {
+  let styleName = "";
   return (
-    <form>
-      {props.children.map(() => {<Input/>})}
+    <form className={styleName}>
+      {/*props.children.map((item)=>{return item})*/}
+      {props.children}
     </form>
   );
 }

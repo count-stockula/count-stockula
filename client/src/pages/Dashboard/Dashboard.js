@@ -75,7 +75,7 @@ export default class Dashboard extends PureComponent{
                     <div className="container px-0 w-100 pb-5" >
                          <div className="mx-auto col-12 col-lg-8 col-md-8 col-sm-10 col-xl-7 px-0">
                               <List>
-                                   {this.state.inventoryList.map( item => <ListItem curQty = {item.currentQty} criticalQty = {item.criticalQty}  key = {item.currentQty} key={item._id}><span>{item.name} {item.description}</span><span>Current Qty: {item.currentQty}</span></ListItem>)}
+                                   {this.state.inventoryList.map( item => <ListItem curQty = {item.currentQty} criticalQty = {item.criticalQty}  currentQty = {item.currentQty} key = {item._id}><span>{item.name} {item.description}</span><span>Current Qty: {item.currentQty}</span></ListItem>)}
                               </List>
                          </div>
                     </div>
