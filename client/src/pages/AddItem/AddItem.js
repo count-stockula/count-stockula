@@ -6,13 +6,14 @@ import ScanStartAddNewItem from "../../components/ScanStart/ScanStartAddNewItem"
 
 export default class AddItem extends PureComponent {
   state = {
+    showForm: false,
   }
-
+  
   render() {
     return (
       <>
         <PageHeader title="Add Item" />
-            <ScanStartAddNewItem />
+            <ScanStartAddNewItem isFormShown={this.state.showForm} />
         <BottomBar />
       </>
     );

@@ -6,6 +6,7 @@ import AddItemForm from "../../components/Forms/AddItemForm"
 
 export default class AddItemField extends PureComponent {
   state = {
+    
   }
 
   render() {
