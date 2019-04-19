@@ -23,6 +23,7 @@ export default class Login extends PureComponent {
                   <Input type="text" className="form-control text-center" id="3" name="3" value="3" placeholder="" readonly="readonly" />
                   <Button type="submit">Login</Button>
               </Form>
+              <a href="/Scan"><Button>Sign Up</Button></a>
             </div>
           </div>
         <BottomBar />
