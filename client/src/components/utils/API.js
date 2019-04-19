@@ -39,11 +39,11 @@ export default {
   createItem: function(itemData) {
     return axios.post("/api/storeItems", itemData);
   },
-  // Deletes the item with the given id
+  // Deletes the item with the given item Uid
   deleteItem: function(itemId) {
     return axios.delete("/api/storeItems/forOne/" + itemId);
   },
-  // Updates the item with the given id
+  // Updates the item with the given item Uid
   updateItem: function(itemId, itemData) {
     return axios.put("/api/storeItems/forOne/" + itemId, itemData);
   },
@@ -65,15 +65,15 @@ export default {
   createStore: function(storeData) {
     return axios.post("/api/stores", storeData);
   },
-  // gets an object by store Id
+  // gets an object by store Uid
   findStoreId: function(storeId) {
     return axios.get("/api/stores/" + storeId);
   },
-  // Updates the store with the given id
+  // Updates the store with the given store Uid
   updateStore: function(storeId, storeData) {
     return axios.put("/api/stores/" + storeId, storeData);
   },
-  // Deletes the item with the given id
+  // Deletes the item with the given store Uid
   deleteStore: function(storeId) {
     return axios.delete("/api/stores/" + storeId);
   },
@@ -93,14 +93,18 @@ export default {
   },
   // gets an object by user Uid
   findUserId: function(userId) {
-    return axios.get("/api/users/" + userId);
+    return axios.get("/api/users/forOne/" + userId);
   },
-  // Updates the user with the given id
+  // Updates the user with the given user Uid
   updateUser: function(userId, userData) {
-    return axios.put("/api/users/" + userId, userData);
+    return axios.put("/api/users/forOne/" + userId, userData);
   },
-  // Deletes the user with the given id
+  // Deletes the user with the given user Uid
   deleteUser: function(userId) {
-    return axios.delete("/api/stores/" + userId);
+    return axios.delete("/api/users/forOne/" + userId);
+  },
+  // checks the given user email and password and returns one of three: "badPass", "badEmail", or the user document object
+  checkPass: function(email, userPass) {
+    return axios.get("/api/users/checkPass", { email: email, userPass: userPass });
   }
 };
