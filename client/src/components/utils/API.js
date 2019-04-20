@@ -33,7 +33,8 @@ export default {
   },
   // gets an object by storeId and upc
   findItemUpc: function(storeId, upc) {
-    return axios.get("/api/storeItems/upc", { storeId: storeId, upc: upc });
+     let args = {params:{storeId: storeId, upc: upc.trim()}};
+    return axios.get("/api/storeItems/upc", args);
   },
   // Create an item document in database
   createItem: function(itemData) {
@@ -47,11 +48,11 @@ export default {
   updateItem: function(itemId, itemData) {
     return axios.put("/api/storeItems/forOne/" + itemId, itemData);
   },
-  // Reduces the current qty of an item by set amount
+  // Reduces the current qty of an item by set amount. reduceQty must be positive integer.
   reduceStock: function(storeId, upc, reduceQty) {
     return axios.put("/api/storeItems/upc/reduceStock", { storeId: storeId, upc: upc, reduceQty: reduceQty });
   },
-  // Increases the current qty of an item by set amount
+  // Increases the current qty of an item by set amount. addQty must be positive integer.
   addStock: function(storeId, upc, addQty) {
     return axios.put("/api/storeItems/upc/addStock", { storeId: storeId, upc: upc, reduceQty: addQty });
   },

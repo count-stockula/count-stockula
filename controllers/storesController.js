@@ -4,14 +4,26 @@ module.exports = {
   findAll: function(req, res) {
     db.Store
       .find({})
-      .then(foundArray => res.json(foundArray))
+      .then(foundArray => {
+        if (foundArray) {
+          res.json(foundArray);
+        } else {
+          res.status(400).json("no stores found");
+        };
+      })
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
     db.Store
       .findById(req.params.id)
       .populate("userId")
-      .then(foundObj => res.json(foundObj))
+      .then(foundObj => {
+        if (foundObj) {
+          res.json(foundObj);
+        } else {
+          res.status(400).json("no items found");
+        };
+      })
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
