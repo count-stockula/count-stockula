@@ -4,9 +4,9 @@ const saltRounds = 10;
 
 module.exports = {
   findAll: function (req, res) {
-    if (req.body.storeId) {
+    if (req.query.storeId) {
       db.User
-        .find({ storeId: req.body.storeId })
+        .find({ storeId: req.query.storeId })
         .then(foundArray => res.json(foundArray))
         .catch(err => res.status(422).json(err));
     } else {
@@ -85,10 +85,10 @@ module.exports = {
   },
   checkPass: function (req, res) {
     db.User
-      .findOne({ email: req.body.email })
+      .findOne({ email: req.query.email })
       .then(foundObj => {
         if (foundObj) {
-          bcrypt.compare(req.body.userPass, foundObj.userPass)
+          bcrypt.compare(req.query.userPass, foundObj.userPass)
             .then(compareResult => {
             if (compareResult) {
               res.json(foundObj);
