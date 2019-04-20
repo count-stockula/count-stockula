@@ -1,6 +1,5 @@
 import React from "react";
 import "./Forms.css";
-import Grid from '@material-ui/core/Grid';
 
 export default function (props) {
 
@@ -10,18 +9,18 @@ export default function (props) {
         <form className="col s12">
           <div className="row">
             <div className="input-field col s12">
-              <input disabled value="CocaCola" id="disabled" type="text" className="validate"></input>
-              <label for="disabled">Product Name</label>
+              <input readOnly value={props.prodName}  id="prodName" type="text" className="validate"></input>
+              <label htmlFor="prodName" className="active">Product Name</label>
             </div>
             <div className="input-field col s12">
-              <input disabled value="1234837" id="disabled" type="text" className="validate"></input>
-              <label for="disabled">Product Code</label>
+              <input readOnly value={props.upc} id="upc" type="text" className="validate"></input>
+              <label htmlFor="upc">Product Code</label>
             </div>
           </div>
           <div className="row">
             <div className="input-field col s12">
-              <input disabled value="12 oz, regular flavor, can" id="disabled" type="text" className="validate"></input>
-              <label for="disabled">Description</label>
+              <input readOnly value={props.description}  id="desc" type="text" className="validate"></input>
+              <label htmlFor="desc"  className="active">Description</label>
             </div>
           </div>
           <div className="row">
@@ -50,7 +49,7 @@ export default function (props) {
               <a class="waves-effect waves-light btn black white-text">SAVE</a>
             </div>
             <div className="input-field col s6">
-              <a class="waves-effect waves-light btn black white-text">CANCEL</a>
+              <a class="waves-effect waves-light btn black white-text" onClick={() => props.cancelEntry()}>CANCEL</a>
             </div>
           </div>
         </form>
