@@ -4,15 +4,27 @@ const saltRounds = 10;
 
 module.exports = {
   findAll: function (req, res) {
-    if (req.body.storeId) {
+    if (req.query.storeId) {
       db.User
-        .find({ storeId: req.body.storeId })
-        .then(foundArray => res.json(foundArray))
+        .find({ storeId: req.query.storeId })
+        .then(foundArray => {
+          if (foundArray) {
+            res.json(foundArray);
+          } else {
+            res.status(400).json("no users found");
+          };
+        })
         .catch(err => res.status(422).json(err));
     } else {
       db.User
         .find({})
-        .then(foundArray => res.json(foundArray))
+        .then(foundArray => {
+          if (foundArray) {
+            res.json(foundArray);
+          } else {
+            res.status(400).json("no users found");
+          };
+        })
         .catch(err => res.status(422).json(err));
     }
   },
@@ -20,7 +32,13 @@ module.exports = {
     db.User
       .findById(req.params.id)
       .populate("storeId")
-      .then(foundObj => res.json(foundObj))
+      .then(foundObj => {
+        if (foundObj) {
+          res.json(foundObj);
+        } else {
+          res.status(400).json("no users found");
+        };
+      })
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
@@ -85,10 +103,10 @@ module.exports = {
   },
   checkPass: function (req, res) {
     db.User
-      .findOne({ email: req.body.email })
+      .findOne({ email: req.query.email })
       .then(foundObj => {
         if (foundObj) {
-          bcrypt.compare(req.body.userPass, foundObj.userPass)
+          bcrypt.compare(req.query.userPass, foundObj.userPass)
             .then(compareResult => {
             if (compareResult) {
               res.json(foundObj);
