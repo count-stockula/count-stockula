@@ -4,6 +4,7 @@ module.exports = {
   findAll: function(req, res) {
     db.Store
       .find({})
+      .sort({ name: 1 })
       .then(foundArray => {
         if (foundArray) {
           res.json(foundArray);

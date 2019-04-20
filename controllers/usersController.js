@@ -7,6 +7,7 @@ module.exports = {
     if (req.query.storeId) {
       db.User
         .find({ storeId: req.query.storeId })
+        .sort({ name: 1 })
         .then(foundArray => {
           if (foundArray) {
             res.json(foundArray);
@@ -18,6 +19,7 @@ module.exports = {
     } else {
       db.User
         .find({})
+        .sort({ name: 1 })
         .then(foundArray => {
           if (foundArray) {
             res.json(foundArray);

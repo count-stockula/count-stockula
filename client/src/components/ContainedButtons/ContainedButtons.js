@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import "./ContainedButtons.css";
+import {Link}from "react-router-dom";
 
 const styles = theme => ({
   button: {
@@ -25,15 +26,15 @@ function ContainedButtons(props) {
       justify="center"
       alignItems="center">
       
-      <Button variant="contained" className={classes.button}>
+      <Link to="/sales"><Button variant="contained" className={classes.button}>
         SALES
-      </Button>
-      <Button variant="contained" color="primary" className={classes.button}>
+      </Button></Link>
+      <Link to="/inventory"><Button variant="contained" color="primary" className={classes.button}>
         INVENTORY
-      </Button>
-      <Button variant="contained" color="secondary" className={classes.button}>
+      </Button></Link>
+      <Link to="/additem"><Button variant="contained" color="secondary" className={classes.button}>
         ADD NEW ITEM
-      </Button>
+      </Button></Link>
       
       
       </Grid>
