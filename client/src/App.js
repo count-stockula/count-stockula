@@ -2,10 +2,11 @@ import React, { PureComponent } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./App.css";
-import Home from "./pages/Home";
+import Login from "./pages/Login/Login";
+import SignUp from "./pages/SignUp/SignUp";
+import Scan from "./pages/Scan/Scan";
 import Sales from "./pages/Sales/Sales";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import Scan from "./pages/Scan/Scan";
 import AddItem from "./pages/AddItem/AddItem";
 import Inventory from "./pages/Inventory/Inventory";
 import Settings from "./pages/Settings/Settings";
@@ -14,12 +15,10 @@ class App extends PureComponent {
   render() {
     return (
       <Router>
-
-        <div className="App">         
+        <div className="App">
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/SignUp" />
-            <Route exact path="/Login" />
+            <Route exact path="/" component={Login} />
+            <Route exact path="/SignUp" component={SignUp} />
             <Route exact path="/Scan" component={Scan} />
             <Route exact path="/Sales" component={Sales} />
             <Route exact path="/Inventory" component={Inventory} />
@@ -31,6 +30,6 @@ class App extends PureComponent {
       </Router>
     );
   }
-} 
+}
 
 export default App;
