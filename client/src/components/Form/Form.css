@@ -1,1 +1,70 @@
 /* Form.css */
+
+.formContainer {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  background-color: #b71c1c;
+  margin-top: 100px;
+  height: 100%;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+input:not([type]):focus:not([readonly]),
+input[type="text"]:not(.browser-default):focus:not([readonly]),
+input[type="password"]:not(.browser-default):focus:not([readonly]),
+input[type="email"]:not(.browser-default):focus:not([readonly]),
+input[type="url"]:not(.browser-default):focus:not([readonly]),
+input[type="time"]:not(.browser-default):focus:not([readonly]),
+input[type="date"]:not(.browser-default):focus:not([readonly]),
+input[type="datetime"]:not(.browser-default):focus:not([readonly]),
+input[type="datetime-local"]:not(.browser-default):focus:not([readonly]),
+input[type="tel"]:not(.browser-default):focus:not([readonly]),
+input[type="number"]:not(.browser-default):focus:not([readonly]),
+input[type="search"]:not(.browser-default):focus:not([readonly]),
+textarea.materialize-textarea:focus:not([readonly]) {
+  border-bottom: 1px solid white;
+  /* -webkit-box-shadow: 0 1px 0 0 black;
+    box-shadow: 0 1px 0 0 black; */
+}
+
+/* label color */
+.input-field label {
+  color: white;
+}
+
+/* label active */
+.input-field label:active {
+  color: white !important;
+}
+
+/* label focus color */
+.input-field input[type="text"]:focus + label {
+  color: white;
+}
+
+/* label underline focus color */
+.input-field input[type="text"]:focus {
+  border-bottom: 1px solid white;
+  /* box-shadow: 0 1px 0 0 #000; */
+}
+
+/* valid color */
+.input-field input[type="text"].valid {
+  border-bottom: 1px solid white;
+  /* box-shadow: 0 1px 0 0 #000; */
+}
+
+/* invalid color */
+.input-field input[type="text"].invalid {
+  border-bottom: 1px solid white;
+  /* box-shadow: 0 1px 0 0 #000; */
+}
+
+/* icon prefix focus color */
+.input-field .prefix.active {
+  color: white;
+  border-bottom: 1px solid white;
+}
