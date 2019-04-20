@@ -22,7 +22,6 @@ class App extends PureComponent {
           <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/SignUp" component={SignUp} />
-            <Route exact path="/Login" component={Scan} />
             <Route exact path="/Scan" component={Scan} />
             <Route exact path="/Sales" component={Sales} />
             <Route exact path="/Inventory" component={Inventory} />
