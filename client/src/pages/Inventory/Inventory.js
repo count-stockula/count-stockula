@@ -6,9 +6,40 @@ import BottomBar from "../../components/BottomBar/BottomBar"
 import InventoryForm from "../../components/Forms/InventoryForm";
 
 export default class Inventory extends PureComponent {
-  state = {
-    showForm: true,
-  }
+     state={
+          store:{
+               name:"Shops at East Peidmont",
+               address: " 230 E. Peiedmont Ave",
+               city:"Norcross",
+               state:"GA",
+               zip:"30010",
+               phone:"(770) 876-2201"
+          },
+          upc:"1234567",
+          showForm:false,
+          currentQty:0,
+          prodName:"",
+          description:""
+     }
+     handleScan = data => {           
+          console.log(data);
+          //data will be the upc
+          API.findItemUpc("5cb3247aef86d68b5e0dc795", data)
+          .then(retData => {
+               this.setState({showForm: true, upc:data, currentQty:retData.data.currentQty, prodName:retData.data.name, description:retData.data.description});
+               
+          })
+          .catch(err => {
+               this.setState({
+                    errorMessage: "Failed to find scanned item in the database",
+                    alertShown: true
+               });
+          });
+     }
+     cancelEntry = () =>{
+          this.setState({showForm: false, upc:"", currentQty:"", prodName:""});
+     }
+
 
   render() {
     return (
@@ -22,7 +53,14 @@ export default class Inventory extends PureComponent {
                <br className="scanBreak"></br>
                 TO ADD ITEM TO INVENTORY
               </h1>
-              <InventoryForm isFormShown={this.state.showForm}></InventoryForm>
+              <InventoryForm isFormShown={this.state.showForm} 
+                         upc={this.state.upc} 
+                         currentQty={this.state.currentQty} 
+                         prodName={this.state.prodName}
+                         description={this.state.description}
+                         cancelEntry={this.cancelEntry}>
+                         </InventoryForm>
+
             </div>
           </div>
           </div>

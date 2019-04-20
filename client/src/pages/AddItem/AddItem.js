@@ -7,7 +7,7 @@ import "./AddItem.css";
 
 export default class AddItem extends PureComponent {
   state = {
-    showForm: true,
+    showForm: false,
   }
 
   render() {

@@ -49,7 +49,7 @@ export default function (props) {
               <a class="waves-effect waves-light btn black white-text">SAVE</a>
             </div>
             <div className="input-field col s6">
-              <a class="waves-effect waves-light btn black white-text">CANCEL</a>
+              <a class="waves-effect waves-light btn black white-text" onClick={() => props.cancelEntry()}>CANCEL</a>
             </div>
           </div>
         </form>
