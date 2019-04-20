@@ -1,5 +1,5 @@
 const db = require("../models");
-// const importName = require();
+const textApiCall = require("./textApiCall");
 
 module.exports = {
   findAll: function (req, res) {
