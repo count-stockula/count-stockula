@@ -39,7 +39,6 @@
     "pdfmake": "^0.1.54",
     "react": "^16.8.6",
     "react-barcode-reader": "0.0.1",
-    "react-router-dom": "^5.0.0",
-    "twilio": "^3.30.0"
+    "react-router-dom": "^5.0.0"
   }
 }

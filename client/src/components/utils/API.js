@@ -33,7 +33,8 @@ export default {
   },
   // gets an object by storeId and upc
   findItemUpc: function(storeId, upc) {
-    return axios.get("/api/storeItems/upc", { storeId: storeId, upc: upc });
+     let args = {params:{storeId: storeId, upc: upc.trim()}};
+    return axios.get("/api/storeItems/upc", args);
   },
   // Create an item document in database
   createItem: function(itemData) {

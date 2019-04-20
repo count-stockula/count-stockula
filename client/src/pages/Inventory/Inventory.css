@@ -1,0 +1,25 @@
+.scanContainer {
+     position:static;
+    margin:100px 0px;
+     background-color: #b71c1c;
+     border-radius: 7px;
+     height: 100%;
+ }
+ 
+ .scanText {
+     font-size: 14pt;
+     margin: 0px;
+      padding:0px;
+      float: left;
+      width:100%;
+      position:absolute;
+      top: 50%;
+      transform: translateY(-50%) translateX(-50%);
+      left:50%;
+     color: white;
+ }
+ 
+ .scanBreak {
+     line-height: 30px;
+ }
+ 

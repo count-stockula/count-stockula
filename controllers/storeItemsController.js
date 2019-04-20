@@ -46,9 +46,9 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findByUpc: function (req, res) {
-    if (req.body.storeId && req.body.upc) {
+    if (req.query.storeId && req.query.upc) {
       db.StoreItem
-        .findOne(req.body)
+        .findOne(req.query)
         .then(foundObj => res.json(foundObj))
         .catch(err => res.status(422).json(err));
     } else {
