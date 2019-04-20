@@ -6,12 +6,24 @@ module.exports = {
     if (req.query.storeId) {
       db.StoreItem
         .find({ storeId: req.query.storeId })
-        .then(foundArray => res.json(foundArray))
+        .then(foundArray => {
+          if (foundArray) {
+            res.json(foundArray);
+          } else {
+            res.status(400).json("no items found");
+          };
+        })
         .catch(err => res.status(422).json(err));
     } else {
       db.StoreItem
         .find({})
-        .then(foundArray => res.json(foundArray))
+        .then(foundArray => {
+          if (foundArray) {
+            res.json(foundArray);
+          } else {
+            res.status(400).json("no items found");
+          };
+        })
         .catch(err => res.status(422).json(err));
     }
   },
@@ -19,7 +31,13 @@ module.exports = {
     db.StoreItem
       .findById(req.params.id)
       .populate("storeId")
-      .then(foundObj => res.json(foundObj))
+      .then(foundObj => {
+        if (foundObj) {
+          res.json(foundObj);
+        } else {
+          res.status(400).json("no items found");
+        };
+      })
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
@@ -54,8 +72,8 @@ module.exports = {
           if (foundObj) {
             res.json(foundObj);
           } else {
-            res.status(400).json("item does not exist");
-          }
+            res.status(400).json("no items found");
+          };
         })
         .catch(err => res.status(422).json(err));
     } else {

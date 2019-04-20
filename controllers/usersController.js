@@ -7,12 +7,24 @@ module.exports = {
     if (req.query.storeId) {
       db.User
         .find({ storeId: req.query.storeId })
-        .then(foundArray => res.json(foundArray))
+        .then(foundArray => {
+          if (foundArray) {
+            res.json(foundArray);
+          } else {
+            res.status(400).json("no users found");
+          };
+        })
         .catch(err => res.status(422).json(err));
     } else {
       db.User
         .find({})
-        .then(foundArray => res.json(foundArray))
+        .then(foundArray => {
+          if (foundArray) {
+            res.json(foundArray);
+          } else {
+            res.status(400).json("no users found");
+          };
+        })
         .catch(err => res.status(422).json(err));
     }
   },
@@ -20,7 +32,13 @@ module.exports = {
     db.User
       .findById(req.params.id)
       .populate("storeId")
-      .then(foundObj => res.json(foundObj))
+      .then(foundObj => {
+        if (foundObj) {
+          res.json(foundObj);
+        } else {
+          res.status(400).json("no users found");
+        };
+      })
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
