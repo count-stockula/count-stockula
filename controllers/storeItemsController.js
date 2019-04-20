@@ -1,11 +1,12 @@
 const db = require("../models");
-const textApiCall = require("./textApiCall");
+//const textApiCall = require("./textApiCall");
 
 module.exports = {
   findAll: function (req, res) {
     if (req.query.storeId) {
       db.StoreItem
         .find({ storeId: req.query.storeId })
+        .sort({ name: 1 })
         .then(foundArray => {
           if (foundArray) {
             res.json(foundArray);
@@ -17,6 +18,7 @@ module.exports = {
     } else {
       db.StoreItem
         .find({})
+        .sort({ name: 1 })
         .then(foundArray => {
           if (foundArray) {
             res.json(foundArray);
@@ -88,7 +90,7 @@ module.exports = {
         .then(foundObj => {
           let updatedQty = (foundObj.currentQty - req.body.reduceQty);
           if ((updatedQty < foundObj.criticalQty) && (foundObj.alertStatus === false)) {
-            //textApiCall.sendTxt(foundObj, updatedQty);
+            textApiCall.sendTxt(foundObj, updatedQty);
             foundObj.alertStatus = true;
           }
           db.StoreItem
@@ -134,6 +136,7 @@ module.exports = {
     if (req.query.storeId) {
       db.StoreItem
         .find({ storeId: req.query.storeId })
+        .sort({ name: 1 })
         .then(foundArray => {
           let lowStockArray = foundArray.filter(function (item) {
             return (item.currentQty < item.criticalQty);
@@ -144,6 +147,7 @@ module.exports = {
     } else {
       db.StoreItem
         .find({})
+        .sort({ name: 1 })
         .then(foundArray => {
           let lowStockArray = foundArray.filter(function (item) {
             return (item.currentQty < item.criticalQty);
@@ -156,13 +160,25 @@ module.exports = {
   zeroStock: function (req, res) {
     if (req.query.storeId) {
       db.StoreItem
-        .find({ storeId: req.query.storeId, currentQty: 0 })
-        .then(foundArray => res.json(foundArray))
+        .find({ storeId: req.query.storeId })
+        .sort({ name: 1 })
+        .then(foundArray => {
+          let zeroStockArray = foundArray.filter(function (item) {
+            return (item.currentQty <= 0);
+          });
+          res.json(zeroStockArray);
+        })
         .catch(err => res.status(422).json(err));
     } else {
       db.StoreItem
-        .find({ currentQty: 0 })
-        .then(foundArray => res.json(foundArray))
+        .find({})
+        .sort({ name: 1 })
+        .then(foundArray => {
+          let zeroStockArray = foundArray.filter(function (item) {
+            return (item.currentQty <= 0);
+          });
+          res.json(zeroStockArray);
+        })
         .catch(err => res.status(422).json(err));
     }
   }
