@@ -90,7 +90,7 @@ module.exports = {
         .then(foundObj => {
           let updatedQty = (foundObj.currentQty - req.body.reduceQty);
           if ((updatedQty < foundObj.criticalQty) && (foundObj.alertStatus === false)) {
-            textApiCall.sendTxt(foundObj, updatedQty);
+            //textApiCall.sendTxt(foundObj, updatedQty);
             foundObj.alertStatus = true;
           }
           db.StoreItem
