@@ -1,6 +1,7 @@
 .bottomBar{
      position: fixed;
      bottom: 0px;
+     z-index: 100;
 }
 .bottomBar div{
      padding-top:10px;
