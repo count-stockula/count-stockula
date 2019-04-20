@@ -2,9 +2,9 @@ import React from "react";
 import "./Form.css";
 
 function Form(props) {
-  let styleName = "";
+  const { className, id, method, action } = props;
   return (
-    <form className={props.className} id={props.id} method={props.method} action={props.action}>
+    <form className={className} id={id} method={method} action={action}>
       {props.children.map(item => item)}
     </form>
   );
