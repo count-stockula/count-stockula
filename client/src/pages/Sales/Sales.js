@@ -27,7 +27,7 @@ export default class Sales extends PureComponent{
      }
      keyPressListener = (event) => {
          if(event.keyCode===67){
-          API.reduceStock("5cb6764ced72c8002a0bd157", "1234567", 1)
+          API.reduceStock("5cb3247aef86d68b5e0dc795", "1234567", 1)
           .then(retData => {
                this.setState({
                     purchasedItems: [...this.state.purchasedItems, retData.data],
