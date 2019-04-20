@@ -3,22 +3,41 @@ const textApiCall = require("./textApiCall");
 
 module.exports = {
   findAll: function (req, res) {
-    if (req.body.storeId) {
+    if (req.query.storeId) {
       db.StoreItem
-        .find({ storeId: req.body.storeId })
-        .then(foundArray => res.json(foundArray))
+        .find({ storeId: req.query.storeId })
+        .then(foundArray => {
+          if (foundArray) {
+            res.json(foundArray);
+          } else {
+            res.status(400).json("no items found");
+          };
+        })
         .catch(err => res.status(422).json(err));
     } else {
       db.StoreItem
         .find({})
-        .then(foundArray => res.json(foundArray))
+        .then(foundArray => {
+          if (foundArray) {
+            res.json(foundArray);
+          } else {
+            res.status(400).json("no items found");
+          };
+        })
         .catch(err => res.status(422).json(err));
     }
   },
   findById: function (req, res) {
     db.StoreItem
       .findById(req.params.id)
-      .then(foundObj => res.json(foundObj))
+      .populate("storeId")
+      .then(foundObj => {
+        if (foundObj) {
+          res.json(foundObj);
+        } else {
+          res.status(400).json("no items found");
+        };
+      })
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
@@ -46,10 +65,16 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findByUpc: function (req, res) {
-    if (req.body.storeId && req.body.upc) {
+    if (req.query.storeId && req.query.upc) {
       db.StoreItem
-        .findOne(req.body)
-        .then(foundObj => res.json(foundObj))
+        .findOne(req.query)
+        .then(foundObj => {
+          if (foundObj) {
+            res.json(foundObj);
+          } else {
+            res.status(400).json("no items found");
+          };
+        })
         .catch(err => res.status(422).json(err));
     } else {
       res.status(400).json("bad request");
@@ -59,10 +84,11 @@ module.exports = {
     if (req.body.storeId && req.body.upc) {
       db.StoreItem
         .findOne({ storeId: req.body.storeId, upc: req.body.upc })
+        .populate("storeId")
         .then(foundObj => {
           let updatedQty = (foundObj.currentQty - req.body.reduceQty);
           if ((updatedQty < foundObj.criticalQty) && (foundObj.alertStatus === false)) {
-            //importname.functionname(foundObj, updatedQty);
+            //textApiCall.sendTxt(foundObj, updatedQty);
             foundObj.alertStatus = true;
           }
           db.StoreItem
@@ -105,9 +131,9 @@ module.exports = {
     }
   },
   lowStock: function (req, res) {
-    if (req.body.storeId) {
+    if (req.query.storeId) {
       db.StoreItem
-        .find({ storeId: req.body.storeId })
+        .find({ storeId: req.query.storeId })
         .then(foundArray => {
           let lowStockArray = foundArray.filter(function (item) {
             return (item.currentQty < item.criticalQty);
@@ -128,9 +154,9 @@ module.exports = {
     }
   },
   zeroStock: function (req, res) {
-    if (req.body.storeId) {
+    if (req.query.storeId) {
       db.StoreItem
-        .find({ storeId: req.body.storeId, currentQty: 0 })
+        .find({ storeId: req.query.storeId, currentQty: 0 })
         .then(foundArray => res.json(foundArray))
         .catch(err => res.status(422).json(err));
     } else {
