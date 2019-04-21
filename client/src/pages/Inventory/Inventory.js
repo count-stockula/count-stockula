@@ -19,13 +19,14 @@ export default class Inventory extends PureComponent {
           showForm:false,
           currentQty:0,
           prodName:"",
-          description:""
+          description:"",
+          qty:0
      }
-     handleScan = data => {           
-          console.log(data);
+     handleScan = data => {          
           //data will be the upc
           API.findItemUpc("5cb3247aef86d68b5e0dc795", data)
           .then(retData => {
+               console.log(retData.data);
                this.setState({showForm: true, upc:data, currentQty:retData.data.currentQty, prodName:retData.data.name, description:retData.data.description});
                
           })
@@ -39,8 +40,21 @@ export default class Inventory extends PureComponent {
      cancelEntry = () =>{
           this.setState({showForm: false, upc:"", currentQty:"", prodName:""});
      }
+     
 
+     handleChange = event => {
+          const { name, value } = event.target;          
+          this.setState({
+            [name]: value
+          });         
+     };
+     saveInventory = () =>{
+          console.log(this.state.qty)
+          API.addStock("5cb3247aef86d68b5e0dc795", this.state.upc, this.state.qty)               
+          .then(retVal => this.setState({showForm: false, upc:"", prodName:"", description:"", qty:0 }))
+          .catch(err => console.log(err));
 
+     }
   render() {
     return (
       <>
@@ -58,7 +72,11 @@ export default class Inventory extends PureComponent {
                          currentQty={this.state.currentQty} 
                          prodName={this.state.prodName}
                          description={this.state.description}
-                         cancelEntry={this.cancelEntry}>
+                         cancelEntry={this.cancelEntry}
+                         saveInventory={this.saveInventory}
+                         handleChange={this.handleChange}
+                         saveClick={this.saveInventory}
+                         >
                          </InventoryForm>
 
             </div>

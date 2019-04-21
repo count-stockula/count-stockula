@@ -43,6 +43,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
+       console.log(req.body)
     db.StoreItem
       .create(req.body)
       .then(madeObj => res.json(madeObj))
@@ -109,19 +110,22 @@ module.exports = {
     }
   },
   addStock: function (req, res) {
-    if (req.body.storeId && req.body.upc) {
+       console.log("qty",req.body.addQty)
+    if (req.body.storeId && req.body.upc.trim()) {
       db.StoreItem
-        .findOne({ storeId: req.body.storeId, upc: req.body.upc })
+        .findOne({ storeId: req.body.storeId, upc: req.body.upc.trim() })
         .then(foundObj => {
-          let updatedQty = (foundObj.currentQty + req.body.addQty);
+             
+          let updatedQty = (foundObj.currentQty + parseInt(req.body.addQty));
           if (updatedQty >= foundObj.criticalQty) {
             foundObj.alertStatus = false;
           }
+          console.log("foundObj", foundObj)
           db.StoreItem
-            .findOneAndUpdate({ storeId: req.body.storeId, upc: req.body.upc }, { currentQty: updatedQty, alertStatus: foundObj.alertStatus })
+            .findOneAndUpdate({ storeId: req.body.storeId, upc: req.body.upc.trim()}, {currentQty: updatedQty, alertStatus: foundObj.alertStatus })
             .then(() => {
               db.StoreItem
-                .findOne({ storeId: req.body.storeId, upc: req.body.upc })
+                .findOne({ storeId: req.body.storeId, upc: req.body.upc.trim() })
                 .then(foundObj => res.json(foundObj))
                 .catch(err => res.status(422).json(err));
             })

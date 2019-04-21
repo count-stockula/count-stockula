@@ -26,8 +26,8 @@ export default function (props) {
           <div className="row">
             <div className="col s3"></div>
             <div className="input-field col s6">
-              <input disabled value="10" id="disabled" type="text" className="validate"></input>
-              <label for="disabled">Units Available</label>
+              <input disabled value={props.currentQty} id="disabled" type="text" className="validate"></input>
+              <label htmlFor="disabled">Units Available</label>
             </div>
             <div className="col s3"></div>
           </div>
@@ -38,7 +38,7 @@ export default function (props) {
                 Units Being Added:
             </div>
               <div className="input-field inline">
-                <input id="units_inline" type="text" className="validate"></input>
+                <input id="units_inline" name="qty" onKeyUp={props.handleChange} type="text" className="validate"></input>
                 <label id="plus_sign" htmlFor="units_inline">+</label>
               </div>
             </div>
@@ -46,10 +46,10 @@ export default function (props) {
           </div>
           <div className="row">
             <div className="input-field col s6">
-              <a class="waves-effect waves-light btn black white-text">SAVE</a>
+              <a className="waves-effect waves-light btn black white-text" onClick={() => props.saveInventory()}>SAVE</a>
             </div>
             <div className="input-field col s6">
-              <a class="waves-effect waves-light btn black white-text" onClick={() => props.cancelEntry()}>CANCEL</a>
+              <a className="waves-effect waves-light btn black white-text" onClick={() => props.cancelEntry()}>CANCEL</a>
             </div>
           </div>
         </form>

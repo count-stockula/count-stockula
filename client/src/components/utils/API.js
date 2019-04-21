@@ -54,7 +54,7 @@ export default {
   },
   // Increases the current qty of an item by set amount. addQty must be positive integer.
   addStock: function(storeId, upc, addQty) {
-    return axios.put("/api/storeItems/upc/addStock", { storeId: storeId, upc: upc, reduceQty: addQty });
+    return axios.put("/api/storeItems/upc/addStock", { storeId: storeId, upc: upc, addQty: addQty });
   },
 
   // Functions involving Stores collection
