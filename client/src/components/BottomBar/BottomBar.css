@@ -1,11 +1,21 @@
 .bottomBar{
      position: fixed;
+     width:100%;
      bottom: 0px;
-     z-index: 100;
+     z-index: 1200;
+     justify-content:center;
 }
-.bottomBar div{
+.bottomBar .center{
      padding-top:10px;
      padding-bottom:10px;
+     display: flex;
+     width:500px;
+     margin: 0 auto;
+     justify-content: space-between
+}
+.bottomBar i{
+     cursor:pointer;
+     color:white;
 }
 .bottomBar button{
      background: black;
@@ -20,9 +30,13 @@
      padding: 0px;
      font-weight: bold;
 }
-.bottomBar i{
-     cursor:pointer;
+.bottomBar button:hover, .bottomBar button:focus{
+     background: #d50000  ;
 }
-.bottomBar button:hover{
-     background: #6a6a6a;
+
+
+@media only screen and (max-width: 601px){
+     .bottomBar .center{ 
+         width: calc(100% - 72px) !important;
+     }
 }

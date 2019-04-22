@@ -1,9 +1,7 @@
 import React from "react";
-import "./Forms.css";
-
-export default function (props) {
-
+export default function AddItemForm (props) {
   return (
+     
     <div className={props.isFormShown ? "formContainer" : "formContainer hide"} >
       <div className="row">
         <form className="col s12">

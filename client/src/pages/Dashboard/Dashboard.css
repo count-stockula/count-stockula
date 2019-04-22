@@ -1,0 +1,16 @@
+.inventoryList{
+     padding-top:108px;
+}
+.dashboard.mainWrapper{
+     padding-top:0px
+}
+.dashboard.centralContent{
+     position: relative;
+     margin: 0 auto !important;
+     border-radius: 7px;
+     padding:0 !important;
+     width:500px !important;
+}
+@media only screen and (max-width: 601px){    
+     .dashboard.centralContent{width:calc(100% - 72px) !important;}
+}

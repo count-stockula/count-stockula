@@ -5,6 +5,7 @@ import List from "../../components/List/List";
 import PageHeader from "../../components/Pageheader/Pageheader";
 import BottomBar from "../../components/BottomBar/BottomBar";
 import ListItem from "../../components/ListItem/ListItem";
+import "./Dashboard.css";
 
 export default class Dashboard extends PureComponent {
   state = {
@@ -45,29 +46,25 @@ export default class Dashboard extends PureComponent {
     return (
       <>
         <PageHeader title="Dashboard" />
-        <div className="container px-0 w-100">
-          <div className="mx-auto col-12 col-lg-8 col-md-8 col-sm-10 col-xl-7 px-0">
-            <Tabs tabClick={this.handleTabChange} value={this.state.value} />
+          <div className="row dashboard mainWrapper topped">
+               <div className="dashboard centralContent">
+                    <Tabs tabClick={this.handleTabChange} value={this.state.value} />
+                    <List>
+                    {this.state.inventoryList.map(item => (
+                         <ListItem
+                         curQty={item.currentQty}
+                         criticalQty={item.criticalQty}
+                         key={item._id}
+                         >
+                         <span>
+                              {item.name} {item.description}
+                         </span>
+                         <span>Current Qty: {item.currentQty}</span>
+                    </ListItem>
+                    ))}
+                    </List>
+               </div>
           </div>
-        </div>
-        <div className="container px-0 w-100 pb-5">
-          <div className="mx-auto col-12 col-lg-8 col-md-8 col-sm-10 col-xl-7 px-0">
-            <List>
-              {this.state.inventoryList.map(item => (
-                <ListItem
-                  curQty={item.currentQty}
-                  criticalQty={item.criticalQty}
-                  key={item._id}
-                >
-                  <span>
-                    {item.name} {item.description}
-                  </span>
-                  <span>Current Qty: {item.currentQty}</span>
-                </ListItem>
-              ))}
-            </List>
-          </div>
-        </div>
         <BottomBar />
       </>
     );

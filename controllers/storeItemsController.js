@@ -75,12 +75,12 @@ module.exports = {
           if (foundObj) {
             res.json(foundObj);
           } else {
-            res.status(400).json("no items found");
+            return res.status(404).json({message:"no items found"});
           };
         })
-        .catch(err => res.status(422).json(err));
+        .catch(err => res.status(422).json({message:err}));
     } else {
-      res.status(400).json("bad request");
+     return res.status(400).json("bad request");
     }
   },
   reduceStock: function (req, res) {

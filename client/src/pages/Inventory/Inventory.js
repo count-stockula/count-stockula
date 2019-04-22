@@ -4,9 +4,12 @@ import BarcodeReader from 'react-barcode-reader'
 import PageHeader from "../../components/Pageheader/Pageheader"
 import BottomBar from "../../components/BottomBar/BottomBar"
 import InventoryForm from "../../components/Forms/InventoryForm";
+import InvForm2 from "../../components/Forms/InvForm2";
+import "../../components/Form/Form.css";
+import "./Inventory.css";
 
 export default class Inventory extends PureComponent {
-     state={
+        state={
           store:{
                name:"Shops at East Peidmont",
                address: " 230 E. Peiedmont Ave",
@@ -15,19 +18,19 @@ export default class Inventory extends PureComponent {
                zip:"30010",
                phone:"(770) 876-2201"
           },
-          upc:"1234567",
-          showForm:false,
-          currentQty:0,
+          upc:"",
+          showForm:true,
+          currentQty:"",
           prodName:"",
           description:"",
-          qty:0
+          qty:""
      }
      handleScan = data => {          
           //data will be the upc
           API.findItemUpc("5cb3247aef86d68b5e0dc795", data)
           .then(retData => {
-               console.log(retData.data);
-               this.setState({showForm: true, upc:data, currentQty:retData.data.currentQty, prodName:retData.data.name, description:retData.data.description});
+               console.log(parseInt(retData.data.currentQty));
+               this.setState({showForm: true, upc:data, currentQty:parseInt(retData.data.currentQty), prodName:retData.data.name, description:retData.data.description});
                
           })
           .catch(err => {
@@ -37,19 +40,20 @@ export default class Inventory extends PureComponent {
                });
           });
      }
-     cancelEntry = () =>{
-          this.setState({showForm: false, upc:"", currentQty:"", prodName:""});
+     cancelEntry = (event) =>{
+          event.preventDefault();
+          this.setState({showForm: false, upc:0, prodName:"", description:"", currentQty:0, qty:0},console.log(this.state.upc));
      }
-     
-
      handleChange = event => {
-          const { name, value } = event.target;          
+          console.log( event.target.value)      
+          const { name, value } = event.target;    
           this.setState({
             [name]: value
-          });         
+          }, console.log(name, value));         
      };
-     saveInventory = () =>{
-          console.log(this.state.qty)
+     saveInventory = (event) =>{
+          event.preventDefault();
+           console.log("QTY", this.state.qty)
           API.addStock("5cb3247aef86d68b5e0dc795", this.state.upc, this.state.qty)               
           .then(retVal => this.setState({showForm: false, upc:"", prodName:"", description:"", qty:0 }))
           .catch(err => console.log(err));
@@ -59,30 +63,43 @@ export default class Inventory extends PureComponent {
     return (
       <>
       <BarcodeReader  onError={this.handleError} onScan={this.handleScan}/>
-        <PageHeader title="Inventory" />
-        <div className="container px-0 w-100 d-flex">
-          <div className="mx-auto col-10 col-lg-6 col-md-6 col-sm-10 col-xl-6 px-0">
-            <div className="scanContainer">
-              <h1 className={this.state.showForm ? "scanText  hide" : "scanText"}>START SCANNING
-               <br className="scanBreak"></br>
-                TO ADD ITEM TO INVENTORY
-              </h1>
-              <InventoryForm isFormShown={this.state.showForm} 
-                         upc={this.state.upc} 
-                         currentQty={this.state.currentQty} 
+          <PageHeader title="Inventory" />
+          <div className="row mainWrapper stretched">               
+               <div className="col red darken-4 inv centralContent">               
+                    <h1 className={this.state.showForm ? "scanText  hide" : "scanText"}>START SCANNING
+                         <br className="scanBreak"></br>
+                         TO ADD ITEM TO INVENTORY
+                    </h1>
+                    <div className={this.state.showForm ? "" : "hide"}>
+                         <InvForm2  typingEvent = {this.handleChange}
+                         upc={this.state.upc}
+                         cancelEntry={this.cancelEntry}
                          prodName={this.state.prodName}
                          description={this.state.description}
-                         cancelEntry={this.cancelEntry}
-                         saveInventory={this.saveInventory}
-                         handleChange={this.handleChange}
+                         currentQty={this.state.currentQty}
+                         qty={this.state.qty}
                          saveClick={this.saveInventory}
-                         >
-                         </InventoryForm>
+                         />
+                    
+                   
+                    {/*  <InventoryForm isFormShown={this.state.showForm} 
+                                   upc={this.state.upc} 
+                                   currentQty={this.state.currentQty} 
+                                   prodName={this.state.prodName}
+                                   description={this.state.description}
+                                   cancelEntry={this.cancelEntry}
+                                   saveInventory={this.saveInventory}
+                                   handleChange={this.handleChange}
+                                   saveClick={this.saveInventory}
+                                   >
+                    </InventoryForm> 
+                     */}
+                    </div>
+               </div>
+          </div>
 
-            </div>
-          </div>
-          </div>
-        
+                          
+                    
         <BottomBar />
       </>
     );
