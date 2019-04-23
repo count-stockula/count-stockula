@@ -77,7 +77,8 @@ export default class Sales extends PureComponent{
                     header: {bold: true, fontSize: 18, marginBottom: 24}
                }
           };
-          pdfMake.createPdf(documentDefinition).open();
+          let myDoc = pdfMake.createPdf(documentDefinition);
+          myDoc.open();
           this.setState({
                purchasedItems: [],
                alertShown: false

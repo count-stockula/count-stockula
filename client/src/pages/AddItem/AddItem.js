@@ -38,7 +38,7 @@ export default class AddItem extends PureComponent {
                this.setState({alertShown:true, errorMessage:`Error connecting to db`})
                return;
           }
-          this.setState({alertShown:true,showForm: true, upc: data.trim()});
+          this.setState({alertShown:false, showForm: true, upc: data.trim()});
      });
 }
 inputTyping = event => {
