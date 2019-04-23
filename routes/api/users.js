@@ -7,15 +7,13 @@ router.route("/")
   .post(usersController.create);
 
 // Matches with "/api/users/forOne/:id"
-router
-  .route("/forOne/:id")
+router.route("/forOne/:id")
   .get(usersController.findById)
   .put(usersController.update)
   .delete(usersController.remove);
 
 // Matches with "/api/users/checkPass"
-router
-  .route("/checkPass")
+router.route("/checkPass")
   .get(usersController.checkPass);
 
 module.exports = router;
