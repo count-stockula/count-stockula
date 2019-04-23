@@ -4,6 +4,7 @@ import Form from "../../components/Form/Form";
 import Input from "../../components/Input/Input";
 import Label from "../../components/Label/Label";
 import Button from "../../components/Button/Button";
+import Blackbutton from "../../components/Button/Blackbutton";
 
 export default class SignUp extends PureComponent {
   state = {
@@ -68,11 +69,14 @@ export default class SignUp extends PureComponent {
   render() {
     return (
       <>
+      <div className="logoContainer">
         <img
-          src="/images/cntStockLogo.png"
+          src="/images/logo.png"
           alt="Count Stockula Logo"
-          width="300px"
+          width="150px"
         />
+        </div>
+        <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
         <Form className="col" id="login">
           <Label htmlFor="email" className="">
             Email
@@ -135,11 +139,14 @@ export default class SignUp extends PureComponent {
             onchange={this.handleChange}
             disabled={this.isDisabled ? true : false}
           />
-          <Button onClick={this.handleSubmit}>SignUp</Button>
-          <a href="/">
-            <Button>Login</Button>
-          </a>
+          <Blackbutton onClick={this.handleSubmit} text="sign up"></Blackbutton>
         </Form>
+        </div>
+        <div className="orSignUp">
+            <a href="/">
+              <Button>Returning User? SIGN IN</Button>
+            </a>
+        </div>
       </>
     );
   }
