@@ -7,8 +7,9 @@ function Input(props) {
     className,
     id,
     name,
-    defaultValue,
+    value,
     placeholder,
+    onChange,
     disabled
   } = props;
   return (
@@ -19,8 +20,9 @@ function Input(props) {
           className={className}
           id={id}
           name={name}
-          defaultValue={defaultValue}
+          value={value}
           placeholder={placeholder}
+          onChange={onChange}
           disabled={disabled}
         />
       </div>

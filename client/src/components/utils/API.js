@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export default {
-
   // Functions involving StoreItem collection
   // gets an array of all items in db or for a certain store
   getAllItems: function(storeId) {
@@ -9,7 +8,7 @@ export default {
       return axios.get("/api/storeItems", { storeId: storeId });
     } else {
       return axios.get("/api/storeItems");
-    };
+    }
   },
   // gets an array of all the low qty items in the db or for a certain store
   getLowStock: function(storeId) {
@@ -17,7 +16,7 @@ export default {
       return axios.get("/api/storeItems/lowStock", { storeId: storeId });
     } else {
       return axios.get("/api/storeItems/lowStock");
-    };
+    }
   },
   // gets an array of all the zero qty items in the db or for a certain store
   getZeroStock: function(storeId) {
@@ -25,7 +24,7 @@ export default {
       return axios.get("/api/storeItems/zeroStock", { storeId: storeId });
     } else {
       return axios.get("/api/storeItems/zeroStock");
-    };
+    }
   },
   // gets an object by item Id
   findItemId: function(itemId) {
@@ -33,7 +32,7 @@ export default {
   },
   // gets an object by storeId and upc
   findItemUpc: function(storeId, upc) {
-     let args = {params:{storeId: storeId, upc: upc.trim()}};
+    let args = { params: { storeId: storeId, upc: upc.trim() } };
     return axios.get("/api/storeItems/upc", args);
   },
   // Create an item document in database
@@ -50,11 +49,19 @@ export default {
   },
   // Reduces the current qty of an item by set amount. reduceQty must be positive integer.
   reduceStock: function(storeId, upc, reduceQty) {
-    return axios.put("/api/storeItems/upc/reduceStock", { storeId: storeId, upc: upc, reduceQty: reduceQty });
+    return axios.put("/api/storeItems/upc/reduceStock", {
+      storeId: storeId,
+      upc: upc,
+      reduceQty: reduceQty
+    });
   },
   // Increases the current qty of an item by set amount. addQty must be positive integer.
   addStock: function(storeId, upc, addQty) {
-    return axios.put("/api/storeItems/upc/addStock", { storeId: storeId, upc: upc, reduceQty: addQty });
+    return axios.put("/api/storeItems/upc/addStock", {
+      storeId: storeId,
+      upc: upc,
+      reduceQty: addQty
+    });
   },
 
   // Functions involving Stores collection
@@ -86,10 +93,11 @@ export default {
       return axios.get("/api/users", { storeId: storeId });
     } else {
       return axios.get("/api/users");
-    };
+    }
   },
   // Create an user document in database *userData Must contain storeId to create user
   createUser: function(userData) {
+    console.log("userData:\n", userData);
     return axios.post("/api/users", userData);
   },
   // gets an object by user Uid
@@ -105,7 +113,10 @@ export default {
     return axios.delete("/api/users/forOne/" + userId);
   },
   // checks the given user email and password and returns one of three: "badPass", "badEmail", or the user document object
-  checkPass: function(email, userPass) {
-    return axios.get("/api/users/checkPass", { email: email, userPass: userPass });
+  checkPass: function(email, password) {
+    return axios.get("/api/users/checkPass", {
+      email: email,
+      password: password
+    });
   }
 };

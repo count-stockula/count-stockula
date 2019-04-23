@@ -6,39 +6,46 @@ import Label from "../../components/Label/Label";
 import Button from "../../components/Button/Button";
 
 export default class Login extends PureComponent {
-  state = {
-    email: "",
-    userPass: ""
-  };
+  constructor() {
+    super();
+    this.state = {
+      email: "email@domain.com",
+      password: "Password123"
+    };
+  }
 
   handleChange = event => {
-    const { name, defaultValue } = event.target;
+    const { name, value } = event.target;
     this.setState({
-      [name]: defaultValue
+      [name]: value
     });
   };
 
   handleSubmit = event => {
-    const { email, userPass } = this.state;
+    const { email, password } = this.state;
     event.preventDefault();
-    API.checkPass(email, userPass)
+    API.checkPass(email, password)
       .then(serverResponse => {
         this.setState({
           email: "",
-          userPass: ""
+          password: ""
         });
         // handle response from server
         if (serverResponse === "badEmail") {
           // handle bad email
+          console.log("serverResponse:\n", serverResponse);
           return;
         } else if (serverResponse === "badPass") {
           // handle bad password
+          // password: '$2b$10$T/fAJdCJIxwLvhd07RvtS.pwlyMh9klhdXLqaBKFgu2AO6pW.rMMy'
+          console.log("serverResponse:\n", serverResponse);
           return;
         }
-        window.location.href = "/Scan";
+        //window.location.href = "/Scan";
+        console.log("serverResponse:\n", serverResponse);
       })
       .catch(error => {
-        window.location.href = "/Scan";
+        //window.location.href = "/Scan";
       });
     // end API.checkPass
   };
@@ -60,21 +67,21 @@ export default class Login extends PureComponent {
             className="text-center"
             id="email"
             name="email"
-            defaultValue={this.state.email}
+            value={this.state.email}
             placeholder="email@domain.com"
-            onchange={this.handleChange}
+            onChange={this.handleChange}
           />
-          <Label htmlFor="userPass" className="">
+          <Label htmlFor="password" className="">
             Password
           </Label>
           <Input
             type="password"
             className="text-center"
-            id="userPass"
-            name="userPass"
-            defaultValue={this.state.userPass}
+            id="password"
+            name="password"
+            value={this.state.password}
             placeholder="password"
-            onchange={this.handleChange}
+            onChange={this.handleChange}
           />
           <Button onClick={this.handleSubmit}>Login</Button>
           <a href="/SignUp">
