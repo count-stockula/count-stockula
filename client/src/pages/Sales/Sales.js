@@ -11,7 +11,10 @@ import "./Sales.css";
 
 
 export default class Sales extends PureComponent{
-
+     constructor(props) {
+          super(props);
+       this.createPdf = this.createPdf.bind(this);
+     }
      state={
           store:{
                name:"Shops at East Peidmont",
@@ -49,6 +52,7 @@ export default class Sales extends PureComponent{
           document.removeEventListener("keydown", this.keyPressListener, false);
      }
      createPdf = () => {
+          this.thisObj.blur();
           const {vfs} = pdfFonts.pdfMake;
           pdfMake.vfs = vfs;
           const storeName = this.state.store.name;
@@ -56,7 +60,6 @@ export default class Sales extends PureComponent{
           const city = this.state.store.city + ", "+ this.state.store.state + " " +this.state.store.zip;
 
           let currPurchase = this.state.purchasedItems;
-
           const documentDefinition = {
                pageSize: {width: 250, height:"auto"},
                pageOrientation: 'portrait',
@@ -96,12 +99,22 @@ export default class Sales extends PureComponent{
           })
           .catch(err => {
                this.setState({
-                    errorMessage: "Failed to find scanned item in the database",
+                    errorMessage: "Failed to find scanned item with UPC number "+data+" in the database",
                     alertShown: true
                });
           });
      }
-     
+     modalViews = () => {     
+          return this.state.alertShown ? "modal modalOpen" : "modal";
+     }
+     hideModal = () =>{
+          this.setState({alertShown: false, errorMessage:""})
+     }
+     ocusInput(component) {
+          if (component) {
+              React.findDOMNode(component).focus(); 
+          }
+      }
      render(){
           return(
                <>
@@ -109,18 +122,26 @@ export default class Sales extends PureComponent{
                     <PageHeader title={this.dateFormat()} isRed="true"/>
                     <div className="row mainWrapper stretched">
                          <div className="sales centralContent">
-                              <div className={this.state.alertShown ? "card red lighten-4":"card red lighten-4 hide"}>
+                              {/* <div className={this.state.alertShown ? "card red lighten-4":"card red lighten-4 hide"}>
                                    <div className="card-content">
                                    {this.state.errorMessage}
                                    </div>
-                              </div>
+                              </div> */}
                               <List>
                                        {this.state.purchasedItems.map((item, i) => {
                                             return <ListItem key={i}>{item.name}</ListItem>
                                        })}             
                               </List>
                               <div className="btnHolder">     
-                                   <button className="btn red darken-3" onClick={() => this.createPdf()}>Finish Sale</button>
+                                   <button className="btn red darken-3" onClick={() => this.createPdf()} ref={(thisObj) => { this.thisObj = thisObj; }}>Finish Sale</button>
+                              </div>
+                         </div>
+                         <div id="modal1" className={this.modalViews()}>
+                              <div className="modal-content">                         
+                                   <p>{this.state.errorMessage}</p>
+                              </div>
+                              <div className="modal-footer">
+                                   <button className="modal-close waves-effect waves-grey btn-flat" onClick={this.hideModal}>OK</button>
                               </div>
                          </div>
                     </div>

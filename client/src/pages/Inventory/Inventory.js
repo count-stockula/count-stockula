@@ -19,7 +19,7 @@ export default class Inventory extends PureComponent {
                phone:"(770) 876-2201"
           },
           upc:"",
-          showForm:true,
+          showForm:false,
           currentQty:"",
           prodName:"",
           description:"",
@@ -35,7 +35,7 @@ export default class Inventory extends PureComponent {
           })
           .catch(err => {
                this.setState({
-                    errorMessage: "Failed to find scanned item in the database",
+                    errorMessage: "Failed to find scanned item with UPC number "+data+" in the database",
                     alertShown: true
                });
           });
@@ -58,6 +58,12 @@ export default class Inventory extends PureComponent {
           .then(retVal => this.setState({showForm: false, upc:"", prodName:"", description:"", qty:0 }))
           .catch(err => console.log(err));
 
+     }
+     modalViews = () => {     
+          return this.state.alertShown ? "modal modalOpen" : "modal";
+     }
+     hideModal = () =>{
+          this.setState({alertShown: false, errorMessage:""})
      }
   render() {
     return (
@@ -94,6 +100,15 @@ export default class Inventory extends PureComponent {
                                    >
                     </InventoryForm> 
                      */}
+                    </div>
+               
+                    <div id="modal1" className={this.modalViews()}>
+                         <div className="modal-content">                         
+                              <p>{this.state.errorMessage}</p>
+                         </div>
+                         <div className="modal-footer">
+                              <button className="modal-close waves-effect waves-grey btn-flat" onClick={this.hideModal}>OK</button>
+                         </div>
                     </div>
                </div>
           </div>

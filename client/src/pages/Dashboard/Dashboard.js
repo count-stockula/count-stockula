@@ -56,10 +56,12 @@ export default class Dashboard extends PureComponent {
                          criticalQty={item.criticalQty}
                          key={item._id}
                          >
-                         <span>
+                         <div className="row">
+                         <span className="col s9">
                               {item.name} {item.description}
                          </span>
-                         <span>Current Qty: {item.currentQty}</span>
+                         <span className="col s3"> Current Qty: {item.currentQty}</span>
+                         </div>
                     </ListItem>
                     ))}
                     </List>

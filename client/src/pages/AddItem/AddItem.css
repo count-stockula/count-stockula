@@ -22,3 +22,22 @@
 @media only screen and (max-width: 601px){    
      .addItem.centralContent{width:calc(100% - 72px) !important;}
 }
+.modal{
+     width:400px;
+     margin-top:30px;
+     border:1px solid #C62828;
+}
+.modal .modal-footer{
+     text-align: center;
+     border-top:1px solid #6a6a6a;
+}
+.modal .modal-footer button{
+     background:black;
+     color:white;
+}
+.modal .modal-footer button:hover{
+     background:#C62828;
+}
+.modalOpen{
+     display: block;
+}

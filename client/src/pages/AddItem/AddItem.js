@@ -5,7 +5,10 @@ import BarcodeReader from 'react-barcode-reader'
 import PageHeader from "../../components/Pageheader/Pageheader"
 import BottomBar from "../../components/BottomBar/BottomBar"
 import AddItemForm from "../../components/Forms/AddItemForm";
+
 import "./AddItem.css";
+
+
 
 export default class AddItem extends PureComponent {
   state = {
@@ -25,9 +28,9 @@ export default class AddItem extends PureComponent {
   handleScan = data => {
     // this.setState({showForm: true, upc: data.trim()});
      API.findItemUpc("5cb3247aef86d68b5e0dc795", data.trim())
-     .then(retData => {
-                  
-          this.setState({alertShown:true, errorMessage:`${retData.data.upc} exists in the db as ${retData.data.name}. UPCs can not be duplicated. `}, console.log(this.state))
+     .then(retData => {                  
+          this.setState({alertShown:true, errorMessage:`The UPC number ${retData.data.upc} exists in the db as ${retData.data.name}. UPCs can not be duplicated. `}, console.log(this.state));
+         
      })
      .catch(err => { 
           console.log(err)           
@@ -61,6 +64,12 @@ addItem = event =>{
      .then(retVal => this.setState({showForm: false, upc:"", prodName:"", description:"", qty:0 }))
      .catch(err => console.log(err));
 }
+modalViews = () => {     
+     return this.state.alertShown ? "modal modalOpen" : "modal";
+}
+hideModal = () =>{
+     this.setState({alertShown: false, errorMessage:""})
+}
   render() {
     return (
       <>
@@ -85,6 +94,14 @@ addItem = event =>{
                          typingEvent = {this.inputTyping}
                          saveClick ={this.addItem}
                          cancelEntry = {this.cancelEntry}/>
+                    </div>
+               </div>
+               <div id="modal1" className={this.modalViews()}>
+                    <div className="modal-content">                         
+                         <p>{this.state.errorMessage}</p>
+                    </div>
+                    <div className="modal-footer">
+                         <button className="modal-close waves-effect waves-grey btn-flat" onClick={this.hideModal}>OK</button>
                     </div>
                </div>
         </div>
