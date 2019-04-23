@@ -4,8 +4,10 @@ const user = process.env.EMAIL_ADDRESS;
 const pass = process.env.EMAIL_PASSWORD;
 
 const emailSender = {
-    sendEmail: function (receiveAddress, pdfFile) {
-        var transporter = nodemailer.createTransport({
+    sendEmail: function (req, res) {
+        const receiveAddress = req.body.receiveAddress;
+        const pdfFile = req.body.pdfFile;
+        const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: user,
@@ -13,7 +15,7 @@ const emailSender = {
             }
         });
 
-        var mailOptions = {
+        const mailOptions = {
             from: user,
             to: receiveAddress,
             subject: 'Your Count-Stockula Receipt',
@@ -28,9 +30,9 @@ const emailSender = {
 
         transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
-                console.log(error);
+                res.status(400).json(error);
             } else {
-                console.log('Email sent: ' + info.response);
+                res.json('Email sent');
             }
         });
     }
