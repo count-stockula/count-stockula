@@ -1,0 +1,55 @@
+import React from 'react';
+import Form from "../Form/Form";
+import Input from "../Input/Input";
+import Label from "../Label/Label";
+
+export default function SettingsForm(props) {
+     return (
+          <Form id="aForm">
+               <div className="col s12 m6">
+                    <Label labValue="Username" htmlFor="userName" className="active"/>
+                    <Input type="text"
+                    id="userName"
+                    name="userName"
+                    defaultValue={props.userName}
+                    ></Input>
+               </div>
+               <div className="col s12 m6">
+                    <Label labValue="Store No." htmlFor="storeNo" className="active"/>
+                    <Input type="text"
+                    readOnly={true}
+                    defaultValue={props.storeNo}
+                    id="storeNo"
+                    validate="true"
+                    ></Input>
+               </div>
+               <div className="col s12">
+                    <Label labValue="Email" htmlFor="email"/>
+                    {/* <textarea type="text" id="description" name="description" className="materialize-textarea" defaultValue={props.description}></textarea> */}
+                    <Input type="text"
+                    id="email"
+                    name="email"
+                    defaultValue={props.email} />
+               </div>
+               <div className="col s12 m6">
+                    <Label labValue="Phone No." htmlFor="phoneNo" className="active"/>
+                    <Input type="text"
+                    name="phoneNo"
+                    defaultValue={props.phoneNo}
+                    id="phoneNo"
+                    ></Input>
+               </div>
+               <div className="col s12 m6">
+                    <Label labValue="Units Added" htmlFor="addedQty" className="active"/>
+                    <Input type="number"
+                    textChangeFunc = {props.typingEvent}
+                    defaultValue={props.qty}
+                    id="qty"
+                    name="qty"
+                    ></Input>
+               </div>
+               <div className="input-field col s12 m6 center-align"><button className="btn black"onClick={props.saveClick}>Save</button></div>
+               <div className="input-field col s12 m6 center-align"><button className="btn black" onClick={props.cancelEntry}>Cancel</button></div>
+          </Form>
+     )
+}
