@@ -23,23 +23,24 @@ const styles = theme => ({
   root: {
     backgroundColor: theme.palette.background.paper,
   },
+  tabAppBar:{
+       width:"inherit",
+       top:"inherit",
+       left:"inherit",
+       right:"inherit"
+  }
 });
 
 function TabControl (props) {
     const { classes } = props;
-    return (
-      <div className={classes.root + " mb-3 tabControl"}>
-        <AppBar position="static">
-          <Tabs fullWidth="true" value={props.value} onChange={props.tabClick} indicatorColor="#d32f2f" >
-            <Tab value="one" className={props.value === "one" ? "tab selected" : "tab"} label="All Products"> 
-            </Tab>
+    return (         
+        <AppBar position="fixed" className={classes.tabAppBar}>
+          <Tabs variant="fullWidth" value={props.value} onChange={props.tabClick} indicatorColor="#d32f2f">
+            <Tab value="one" className={props.value === "one" ? "tab selected" : "tab"} label="All Products"></Tab>
             <Tab value="two" className={props.value === "two" ? "tab selected" : "tab"}  label="Low Inventory" />
             <Tab value="three" className={props.value === "three" ? "tab selected" : "tab"}  label="Out of Stock" />    
-          </Tabs>
-          
+          </Tabs>          
         </AppBar>  
-        
-      </div>
     );
   
 }

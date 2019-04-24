@@ -1,5 +1,10 @@
 .invList{
      padding-bottom:45px;
+     padding-top:48px;
+     width: 100%
+}
+.invList li {
+     width: 100%
 }
 .invList li span{
      text-align:left;
