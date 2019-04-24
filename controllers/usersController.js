@@ -1,6 +1,6 @@
 const db = require("../models");
-//const bcrypt = require("bcrypt");
-//const saltRounds = 10;
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 module.exports = {
   findAll: function(req, res) {
@@ -41,7 +41,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    //console.log("req.body:\n", req.body);
+    console.log("req.body:\n", req.body);
     if (req.body.storeId) {
       /*
       bcrypt
@@ -114,12 +114,17 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   checkPass: function(req, res) {
-    console.log("req.query:\n", req);
-    db.User.findOne({ email: req.query.email })
+    //console.log("req.query:\n", req.query);
+    //console.log("req.body:\n", req.body);
+    //console.log("req:\n", req);
+    db.User.findOne({ email: req.body.email })
       .then(foundObj => {
+        console.log("foundObj:\n", foundObj);
+        console.log("req.body:\n", req.body);
         if (foundObj) {
+          console.log("found it");
           bcrypt
-            .compare(req.query.password, foundObj.password)
+            .compare(req.body.password, foundObj.password)
             .then(compareResult => {
               if (compareResult) {
                 res.json(foundObj);

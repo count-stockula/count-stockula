@@ -17,7 +17,8 @@ const userSchema = new Schema({
   management: { type: Boolean, default: false }
 });
 
-UserSchema.pre("save", function(next) {
+
+userSchema.pre("save", function(next) {
   // if document is new or new password set
   if (this.isNew || this.isModified("password")) {
     // saving reference for changing scopes
@@ -35,7 +36,8 @@ UserSchema.pre("save", function(next) {
   }
 });
 
-UserSchema.methods.isCorrectPassword = function(password, callback) {
+
+userSchema.methods.isCorrectPassword = function(password, callback) {
   bcrypt.compare(password, this.password, function(err, match) {
     if (err) {
       callback(err);

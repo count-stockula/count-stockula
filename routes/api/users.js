@@ -15,6 +15,8 @@ router
   .delete(usersController.remove);
 
 // Matches with "/api/users/checkPass"
-router.route("/checkPass").get(usersController.checkPass);
+router
+  .route("/checkPass")
+  .post(usersController.checkPass);
 
 module.exports = router;
