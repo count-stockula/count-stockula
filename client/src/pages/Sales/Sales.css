@@ -1,3 +1,51 @@
 .salesTable{
      margin-top:112px;
 }
+
+.sales.centralContent{    
+     margin: 0 auto;
+     position: relative;;
+     border-radius: 7px;
+     padding:24px 0 106px 0 !important;
+     width:500px !important;
+}
+
+.sales .btnHolder{
+     position: fixed;
+     width: inherit;
+     bottom:55px;
+     height: 75px;
+     background: #fff;
+}
+
+.sales .card-content{padding:8px}
+
+@media only screen and (max-width: 601px){
+     .sales .mainWrapper{ margin-top:94px; min-height: calc(100vh - 147px);}
+     .sales.centralContent{width:calc(100% - 72px) !important;}
+}
+button:focus{
+     color:black;
+}
+
+.modal{
+     width:400px;
+     margin-top:30px;
+     border:1px solid #C62828;
+     box-shadow: 0 5px 15px 3px rgba(0,0,0,0.05), 0 9px 15px 8px rgba(0,0,0,0.02), 0 11px 15px -7px rgba(0,0,0,0.05);
+     max-width: 75%;
+}
+.modal .modal-footer{
+     text-align: center;
+     border-top:1px solid #6a6a6a;
+}
+.modal .modal-footer button{
+     background:black;
+     color:white;
+}
+.modal .modal-footer button:hover{
+     background:#C62828;
+}
+.modalOpen{
+     display: block;
+}

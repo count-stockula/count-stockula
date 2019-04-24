@@ -1,1 +1,10 @@
 /* ListItem.css */
+.listItem{
+     padding:8px;
+     border-bottom:1px solid #ccc;
+     border-top:1px solid #ccc;
+     margin-top:-1px;
+}
+.listItem{
+     
+}
