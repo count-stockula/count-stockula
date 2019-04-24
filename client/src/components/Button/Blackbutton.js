@@ -4,7 +4,7 @@ import "./Button.css";
 export const Blackbutton = ({ text }) => {
 
     return (
-            <a className="waves-effect waves-light btn black white-text">{text}</a>
+            <a className="waves-effect waves-light btn white-text">{text}</a>
     )
 }
 

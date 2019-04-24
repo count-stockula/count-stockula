@@ -49,12 +49,12 @@ export default class Login extends PureComponent {
   render() {
     return (
       <>
-      <div className="logoContainer">
-        <img
-          src="images/logo.png"
-          alt="Count Stockula Logo"
-          width="150px"
-        />
+        <div className="logoContainer">
+          <img
+            src="images/logo.png"
+            alt="Count Stockula Logo"
+            width="150px"
+          />
         </div>
         <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
           <div className="loginContainer">
@@ -79,8 +79,10 @@ export default class Login extends PureComponent {
                 placeholder="password"
                 onchange={this.handleChange}
               />
-              <Blackbutton onClick={this.handleSubmit} text="login"></Blackbutton>
             </Form>
+          </div>
+          <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
+            <Blackbutton onClick={this.handleSubmit} text="log in"></Blackbutton>
           </div>
           <div className="orSignUp">
             <a href="/SignUp">
