@@ -14,6 +14,6 @@ router.route("/forOne/:id")
 
 // Matches with "/api/users/checkPass"
 router.route("/checkPass")
-  .get(usersController.checkPass);
+  .post(usersController.checkPass);
 
 module.exports = router;

@@ -105,10 +105,10 @@ module.exports = {
   },
   checkPass: function (req, res) {
     db.User
-      .findOne({ email: req.query.email })
+      .findOne({ email: req.body.email })
       .then(foundObj => {
         if (foundObj) {
-          bcrypt.compare(req.query.userPass, foundObj.userPass)
+          bcrypt.compare(req.body.userPass, foundObj.userPass)
             .then(compareResult => {
             if (compareResult) {
               res.json(foundObj);
