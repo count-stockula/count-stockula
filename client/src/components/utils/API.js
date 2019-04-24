@@ -106,6 +106,11 @@ export default {
   },
   // checks the given user email and password and returns one of three: "badPass", "badEmail", or the user document object
   checkPass: function(email, userPass) {
-    return axios.get("/api/users/checkPass", { email: email, userPass: userPass });
+    return axios.post("/api/users/checkPass", { email: email, userPass: userPass });
+  },
+
+  // sends email with attached file to the specified address
+  sendEmail: function(receiveAddress, pdfFile) {
+    return axios.post("/api/emails", { receiveAddress: receiveAddress, pdfFile: pdfFile });
   }
 };
