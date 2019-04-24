@@ -16,7 +16,7 @@ export default class Inventory extends PureComponent {
                phone:"(770) 876-2201"
           },
           upc:"1234567",
-          showForm:false,
+          showForm:true,
           currentQty:0,
           prodName:"",
           description:""

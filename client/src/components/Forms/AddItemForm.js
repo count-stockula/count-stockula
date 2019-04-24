@@ -5,7 +5,7 @@ import Grid from '@material-ui/core/Grid';
 export default function (props) {
 
   return (
-    <div className={props.isFormShown ? "formContainer" : "formContainer hide"} >
+    <div className={props.isFormShown ? "formsContainer" : "formsContainer hide"} >
       <div className="row">
         <form className="col s12">
           <div className="row">
