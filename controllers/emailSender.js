@@ -23,7 +23,8 @@ const emailSender = {
               attachments: [
                   {
                       filename: "countStockulaReceipt.pdf",
-                      content: pdfFile
+                      content: pdfFile,
+                      encoding: "base64"
                   }
               ]
         };
