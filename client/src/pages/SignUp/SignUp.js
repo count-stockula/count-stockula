@@ -11,21 +11,13 @@ export default class SignUp extends PureComponent {
       email: "email@domain.com",
       password: "Password123",
       confirmation: "Password123",
-      storeId: "5cbebab8dc5d0f0dfc134be2",
       name: "",
-      disabledInputArray: []
+      phone: "",
+      storeId: "5cc151f3f10c374be93d1f5d",
+      management: false,
+      disabledInputArray: ["management"]
     };
   }
-
-  toggleDisable = event => {
-    const { name, disabledInputArray } = event.target;
-    const index = disabledInputArray.indexOf(name);
-    if (index >= 0) {
-      disabledInputArray.splice(index);
-    } else {
-      disabledInputArray.push(index);
-    }
-  };
 
   handleChange = event => {
     const { name, value } = event.target;
@@ -36,7 +28,7 @@ export default class SignUp extends PureComponent {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { email, password, confirmation, storeId, name } = this.state;
+    const { email, password, confirmation, name, phone, storeId, management } = this.state;
     if (password !== confirmation) {
       alert("password must match confirmation");
       return;
@@ -44,31 +36,49 @@ export default class SignUp extends PureComponent {
     API.createUser({
       email: email,
       password: password,
+      name: name,
+      phone: phone,
       storeId: storeId,
-      name: name
+      management: management
     })
       .then(serverResponse => {
+        // handle response from server
+        if (serverResponse === "email username already exists") {
+          // handle bad email
+          return;
+        }
         this.setState({
           email: "",
           password: "",
           confirmation: "",
+          name: "",
+          phone: "",
           storeId: "",
-          name: ""
         });
-        // handle response from server
-        if (serverResponse === "badEmail") {
-          // handle bad email
-          return;
-        } else if (serverResponse === "badPass") {
-          // handle bad password
-          return;
-        }
-        //window.location.href = "/Scan";
+        alert("Successful SignUp\n\nPlease login with your new username and password");
+        window.location.href = "/";
       })
       .catch(error => {
         //window.location.href = "/Scan";
       });
     // end API.checkPass
+  };
+
+  toggleBoolean = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: !value
+    })
+  };
+
+  toggleDisable = event => {
+    const { name, disabledInputArray } = event.target;
+    const index = disabledInputArray.indexOf(name);
+    if (index >= 0) {
+      disabledInputArray.splice(index);
+    } else {
+      disabledInputArray.push(index);
+    }
   };
 
   render() {
@@ -110,6 +120,24 @@ export default class SignUp extends PureComponent {
           <Input
             type="text"
             className="validate"
+            id="name"
+            name="name"
+            value={this.state.name}
+            //placeholder="name"
+            onChange={this.handleChange}
+          />
+          <Input
+            type="tel"
+            className="validate"
+            id="phone"
+            name="phone"
+            value={this.state.phone}
+            //placeholder="name"
+            onChange={this.handleChange}
+          />
+          <Input
+            type="text"
+            className="validate"
             id="storeId"
             name="storeId"
             value={this.state.storeId}
@@ -119,14 +147,13 @@ export default class SignUp extends PureComponent {
           <Input
             type="text"
             className="validate"
-            id="name"
-            name="name"
-            value={this.state.name}
+            id="management"
+            name="management"
+            value={this.state.management}
             //placeholder="name"
-            onChange={this.handleChange}
-            disabled={this.state.disabledInputArray.includes("name")}
+            onClick={this.toggleBoolean}
+            disabled={this.state.disabledInputArray.includes("management")}
           />
-          <div>{this.state.message}</div>
           <Button onClick={this.handleSubmit}>SignUp</Button>
           <a href="/">
             <Button>Login</Button>

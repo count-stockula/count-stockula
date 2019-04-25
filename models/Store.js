@@ -6,7 +6,7 @@ const storeSchema = new Schema({
   street: String,
   city: String,
   state: String,
-  phoneNumber: String,
+  phone: String,
   userId: [{
     type: Schema.Types.ObjectId,
     ref: "User"

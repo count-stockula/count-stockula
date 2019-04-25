@@ -1,6 +1,9 @@
-const db = require("../models");
+
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const db = require("../models");
 
 module.exports = {
   findAll: function(req, res) {
@@ -11,10 +14,10 @@ module.exports = {
           if (foundArray) {
             res.json(foundArray);
           } else {
-            res.status(400).json("no users found");
+            res.status(500).json("no users found");
           }
         })
-        .catch(err => res.status(422).json(err));
+        .catch(err => res.status(500).json(err));
     } else {
       db.User.find({})
         .sort({ name: 1 })
@@ -22,50 +25,50 @@ module.exports = {
           if (foundArray) {
             res.json(foundArray);
           } else {
-            res.status(400).json("no users found");
+            res.status(500).json("no users found");
           }
         })
-        .catch(err => res.status(422).json(err));
+        .catch(err => res.status(500).json(err));
     }
   },
   findById: function(req, res) {
     db.User.findById(req.params.id)
       .populate("storeId")
-      .then(foundObj => {
-        if (foundObj) {
-          res.json(foundObj);
+      .then(foundUser => {
+        if (foundUser) {
+          res.json(foundUser);
         } else {
-          res.status(400).json("no users found");
+          res.status(500).json("no users found");
         }
       })
-      .catch(err => res.status(422).json(err));
+      .catch(err => res.status(500).json(err));
   },
   create: function(req, res) {
     if (req.body.storeId) {
-      db.User.create(req.body)
-        .then(madeObj => {
-          db.Store.findOne({
-            _id: req.body.storeId
-          })
-            .then(foundObj => {
-              let userArray = foundObj.userId;
-              userArray.push(madeObj._id);
+      //check for existing user
+      db.User.findOne({ email: req.body.email }).then(foundUser => {
+        if (foundUser) {
+          res.status(200).json("user already exists");
+        } else {
+          console.log("req.body:\n", req.body);
+          db.User.create(req.body)
+            .then(newUser => {
               db.Store.findOneAndUpdate(
                 {
-                  _id: req.body.storeId
+                  _id: newUser.storeId
                 },
                 {
-                  userId: userArray
+                  $push: {
+                    userId: newUser._id
+                  }
                 }
               )
-                .then(() => res.json(madeObj))
-                .catch(err => res.status(422).json(err));
+                .then(() => res.status(200).json(newUser.email))
+                .catch(err => res.status(500).json(err));
             })
-            .catch(err => res.status(422).json(err));
-        })
-        .catch(err => res.status(422).json(err));
-    } else {
-      res.status(400).json("bad request");
+            .catch(err => res.status(500).json(err));
+        }
+      });
     }
   },
   update: function(req, res) {
@@ -75,44 +78,75 @@ module.exports = {
         db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
           .then(() => {
             db.User.findOne({ _id: req.params.id })
-              .then(foundObj => res.json(foundObj))
-              .catch(err => res.status(422).json(err));
+              .then(foundUser => res.json(foundUser.email))
+              .catch(err => res.status(500).json(err));
           })
-          .catch(err => res.status(422).json(err));
+          .catch(err => res.status(500).json(err));
       });
     } else {
       db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
         .then(() => {
           db.User.findOne({ _id: req.params.id })
-            .then(foundObj => res.json(foundObj))
-            .catch(err => res.status(422).json(err));
+            .then(foundUser => res.json(foundUser.email))
+            .catch(err => res.status(500).json(err));
         })
-        .catch(err => res.status(422).json(err));
+        .catch(err => res.status(500).json(err));
     }
   },
   remove: function(req, res) {
     db.User.findById({ _id: req.params.id })
-      .then(foundObj => foundObj.remove())
-      .then(removedObj => res.json(removedObj))
-      .catch(err => res.status(422).json(err));
+      .then(foundUser => foundUser.remove())
+      .then(removedUser => res.json(removedUser.email))
+      .catch(err => res.status(500).json(err));
   },
   login: function(req, res) {
-    db.User.findOne({ email: req.body.email })
-      .then(foundObj => {
-        if (foundObj) {
-          bcrypt
-            .compare(req.body.password, foundObj.password)
-            .then(compareResult => {
-              if (compareResult) {
-                res.json(foundObj);
-              } else {
-                res.json("incorrect password");
-              }
-            });
+    console.log("req.body:\n", req.body);
+    const {email, password} = req.body;
+    db.User.findOne({ email: email })
+      .then(foundUser => {
+        console.log("foundUser:\n", foundUser);
+            
+
+
+if (!foundUser) {
+      res.status(401)
+        .json({
+        error: "email username not found"
+      });
+    } else {
+      db.User.isCorrectPassword(password, function(err, match) {
+        if (err) {
+          res.status(500)
+            .json({
+            error: "internal server error"
+          });
+        } else if (!match) {
+          res.status(401)
+            .json({
+            error: "incorrect password"
+          });
         } else {
-          res.json("email username not found");
+          // Issue token
+          const payload = { email };
+          const token = jwt.sign(payload, secret, {
+            expiresIn: '1h'
+          });
+          res.cookie('token', token, { httpOnly: true }).sendStatus(200);
         }
+
+
+
+
+
+
+          })
+          
       })
-      .catch(err => res.status(422).json(err));
+      .catch(err => res.status(500)
+        .json({
+        error: "internal server error"
+      });
+
+
   }
 };

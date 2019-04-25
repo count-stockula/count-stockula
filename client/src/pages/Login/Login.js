@@ -23,7 +23,7 @@ export default class Login extends PureComponent {
   handleSubmit = event => {
     const { email, password } = this.state;
     event.preventDefault();
-    API.login(email, password)
+    API.loginUser(email, password)
       .then(serverResponse => {
         this.setState({
           password: ""
@@ -31,16 +31,17 @@ export default class Login extends PureComponent {
         console.log("serverResponse:\n", serverResponse);
         // handle response from server
         if (
-          serverResponse.data === "email username not found" ||
-          serverResponse.data === "incorrect password"
+          serverResponse === "email username not found" ||
+          serverResponse === "incorrect password"
         ) {
           // handle email username not found or incorrect password
           // password: '$2b$10$T/fAJdCJIxwLvhd07RvtS.pwlyMh9klhdXLqaBKFgu2AO6pW.rMMy'
-          alert(serverResponse.data);
+          alert(serverResponse);
           return;
         }
         //successful login
-        window.location.href = "/Scan";
+        alert("successful login");
+        //window.location.href = "/Scan";
       })
       .catch(error => {
         //window.location.href = "/404";

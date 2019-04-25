@@ -7,8 +7,8 @@ const saltRounds = 10;
 const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  name: { type: String, required: false },
-  phoneNumber: String,
+  name: String,
+  phone: String,
   storeId: {
     type: Schema.Types.ObjectId,
     ref: "Store",
@@ -16,7 +16,6 @@ const userSchema = new Schema({
   },
   management: { type: Boolean, default: false }
 });
-
 
 userSchema.pre("save", function(next) {
   // if document is new or new password set
@@ -35,7 +34,6 @@ userSchema.pre("save", function(next) {
     next();
   }
 });
-
 
 userSchema.methods.isCorrectPassword = function(password, callback) {
   bcrypt.compare(password, this.password, function(err, match) {
