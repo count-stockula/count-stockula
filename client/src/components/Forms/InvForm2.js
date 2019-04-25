@@ -48,8 +48,14 @@ export default function InvForm2(props) {
                     name="qty"
                     ></Input>
                </div>
-               <div className="input-field col s12 m6 center-align"><button className="btn black"onClick={props.saveClick}>Save</button></div>
-               <div className="input-field col s12 m6 center-align"><button className="btn black" onClick={props.cancelEntry}>Cancel</button></div>
+               <div className="col s12 m12 center-align">
+                <div className="input-field col s6 m6 center-align">
+                    <button className="btn black" onClick={props.cancelEntry}>Cancel</button>
+                </div>
+                <div className="input-field col s6 m6 center-align">
+                    <button className="btn black" onClick={props.saveClick}>Save</button>
+                </div>
+            </div>
           </Form>
      )
 }

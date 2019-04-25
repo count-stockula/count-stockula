@@ -11,6 +11,10 @@
   border-radius: 8px;
 }
 
+.backgroundBlack {
+  background-color: black !important;
+}
+
 input {
      background-color: white !important;
      height: 2rem !important;
