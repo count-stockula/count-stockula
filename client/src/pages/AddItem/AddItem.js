@@ -29,11 +29,10 @@ export default class AddItem extends PureComponent {
     // this.setState({showForm: true, upc: data.trim()});
      API.findItemUpc("5cb3247aef86d68b5e0dc795", data.trim())
      .then(retData => {                  
-          this.setState({alertShown:true, errorMessage:`The UPC number ${retData.data.upc} exists in the db as ${retData.data.name}. UPCs can not be duplicated. `}, console.log(this.state));
+          this.setState({alertShown:true, errorMessage:`The UPC number ${retData.data.upc} exists in the db as ${retData.data.name}. UPCs can not be duplicated. `});
          
      })
-     .catch(err => { 
-          console.log(err)           
+     .catch(err => {          
           if( err.message !== "Request failed with status code 404"){
                this.setState({alertShown:true, errorMessage:`Error connecting to db`})
                return;
@@ -42,8 +41,7 @@ export default class AddItem extends PureComponent {
      });
 }
 inputTyping = event => {
-     const { name, value } = event.target;  
-     console.log( name, value )        
+     const { name, value } = event.target;       
      this.setState({
        [name]: value
      });    
@@ -59,7 +57,6 @@ addItem = event =>{
           alertStatus:false,
           storeId:"5cb3247aef86d68b5e0dc795",
      }
-     console.log(this.state)
      API.createItem(prodData)               
      .then(retVal => this.setState({showForm: false, upc:"", prodName:"", description:"", qty:0 }))
      .catch(err => console.log(err));
