@@ -97,7 +97,6 @@ export default {
   },
   // Create an user document in database *userData Must contain storeId to create user
   createUser: function(userData) {
-    console.log("userData:\n", userData);
     return axios.post("/api/users", userData);
   },
   // gets an object by user Uid
@@ -113,8 +112,8 @@ export default {
     return axios.delete("/api/users/forOne/" + userId);
   },
   // checks the given user email and password and returns one of three: "badPass", "badEmail", or the user document object
-  checkPass: function(email, password) {
-    return axios.post("/api/users/checkPass", {
+  login: function(email, password) {
+    return axios.post("/api/users/login", {
       email: email,
       password: password
     });

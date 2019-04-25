@@ -2,7 +2,6 @@ import React, { PureComponent } from "react";
 import API from "../../components/utils/API";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Input/Input";
-import Label from "../../components/Label/Label";
 import Button from "../../components/Button/Button";
 
 export default class Login extends PureComponent {
@@ -24,28 +23,27 @@ export default class Login extends PureComponent {
   handleSubmit = event => {
     const { email, password } = this.state;
     event.preventDefault();
-    API.checkPass(email, password)
+    API.login(email, password)
       .then(serverResponse => {
         this.setState({
-          email: "",
           password: ""
         });
+        console.log("serverResponse:\n", serverResponse);
         // handle response from server
-        if (serverResponse === "badEmail") {
-          // handle bad email
-          console.log("serverResponse:\n", serverResponse);
-          return;
-        } else if (serverResponse === "badPass") {
-          // handle bad password
+        if (
+          serverResponse.data === "email username not found" ||
+          serverResponse.data === "incorrect password"
+        ) {
+          // handle email username not found or incorrect password
           // password: '$2b$10$T/fAJdCJIxwLvhd07RvtS.pwlyMh9klhdXLqaBKFgu2AO6pW.rMMy'
-          console.log("serverResponse:\n", serverResponse);
+          alert(serverResponse.data);
           return;
         }
-        //window.location.href = "/Scan";
-        console.log("serverResponse:\n", serverResponse);
+        //successful login
+        window.location.href = "/Scan";
       })
       .catch(error => {
-        //window.location.href = "/Scan";
+        //window.location.href = "/404";
       });
     // end API.checkPass
   };
@@ -59,28 +57,22 @@ export default class Login extends PureComponent {
           width="300px"
         />
         <Form className="col" id="login">
-          <Label htmlFor="email" className="">
-            Email
-          </Label>
           <Input
             type="email"
-            className="text-center"
+            className="validate"
             id="email"
             name="email"
             value={this.state.email}
-            placeholder="email@domain.com"
+            //placeholder="email@domain.com"
             onChange={this.handleChange}
           />
-          <Label htmlFor="password" className="">
-            Password
-          </Label>
           <Input
             type="password"
-            className="text-center"
+            className="validate"
             id="password"
             name="password"
             value={this.state.password}
-            placeholder="password"
+            //placeholder="password"
             onChange={this.handleChange}
           />
           <Button onClick={this.handleSubmit}>Login</Button>

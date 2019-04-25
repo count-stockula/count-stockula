@@ -41,26 +41,12 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    console.log("req.body:\n", req.body);
     if (req.body.storeId) {
-      /*
-      bcrypt
-        .hash(req.body.password, saltRounds)
-        .then(hash => {
-          req.body.password = hash;
-          //console.log("req.body\n:", req.body);
-          return req;
-        })
-        .then(req => {
-          console.log("req.body:\n", req.body);
-      */
       db.User.create(req.body)
         .then(madeObj => {
-          console.log("madeObj:\n", madeObj);
           db.Store.findOne({
             _id: req.body.storeId
           })
-            //.findOne({ name: req.body.storeId })
             .then(foundObj => {
               let userArray = foundObj.userId;
               userArray.push(madeObj._id);
@@ -78,9 +64,6 @@ module.exports = {
             .catch(err => res.status(422).json(err));
         })
         .catch(err => res.status(422).json(err));
-      /*
-        });
-        */
     } else {
       res.status(400).json("bad request");
     }
@@ -113,27 +96,21 @@ module.exports = {
       .then(removedObj => res.json(removedObj))
       .catch(err => res.status(422).json(err));
   },
-  checkPass: function(req, res) {
-    //console.log("req.query:\n", req.query);
-    //console.log("req.body:\n", req.body);
-    //console.log("req:\n", req);
+  login: function(req, res) {
     db.User.findOne({ email: req.body.email })
       .then(foundObj => {
-        console.log("foundObj:\n", foundObj);
-        console.log("req.body:\n", req.body);
         if (foundObj) {
-          console.log("found it");
           bcrypt
             .compare(req.body.password, foundObj.password)
             .then(compareResult => {
               if (compareResult) {
                 res.json(foundObj);
               } else {
-                res.json("bad password");
+                res.json("incorrect password");
               }
             });
         } else {
-          res.json("bad email");
+          res.json("email username not found");
         }
       })
       .catch(err => res.status(422).json(err));

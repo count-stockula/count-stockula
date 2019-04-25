@@ -16,7 +16,7 @@ router
 
 // Matches with "/api/users/checkPass"
 router
-  .route("/checkPass")
-  .post(usersController.checkPass);
+  .route("/login")
+  .post(usersController.login);
 
 module.exports = router;

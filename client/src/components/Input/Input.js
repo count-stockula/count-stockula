@@ -1,5 +1,6 @@
 import React from "react";
 import "./Input.css";
+import Label from "../../components/Label/Label";
 
 function Input(props) {
   const {
@@ -25,6 +26,9 @@ function Input(props) {
           onChange={onChange}
           disabled={disabled}
         />
+        <Label htmlFor={id} className="active">
+          {id}
+        </Label>
       </div>
     </div>
   );
