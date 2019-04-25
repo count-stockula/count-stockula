@@ -2,7 +2,7 @@ const db = require("../models");
 //const textApiCall = require("./textApiCall");
 
 module.exports = {
-  findAll: function (req, res) {
+  findAll: function (req, res) {     
     if (req.query.storeId) {
       db.StoreItem
         .find({ storeId: req.query.storeId })
@@ -140,7 +140,7 @@ module.exports = {
         .sort({ name: 1 })
         .then(foundArray => {
           let lowStockArray = foundArray.filter(function (item) {
-            return (item.currentQty < item.criticalQty);
+            return (item.currentQty < item.criticalQty || item.currentQty === 0);
           });
           res.json(lowStockArray);
         })
