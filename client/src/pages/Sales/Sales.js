@@ -7,14 +7,11 @@ import BarcodeReader from 'react-barcode-reader'
 import PageHeader from "../../components/Pageheader/Pageheader"
 import BottomBar from "../../components/BottomBar/BottomBar"
 import ListItem from "../../components/ListItem/ListItem"
+import Modal from "../../components/Modal/Modal"
+import Input from "../../components/Input/Input"
 import "./Sales.css";
 
-
 export default class Sales extends PureComponent{
-     constructor(props) {
-          super(props);
-       this.createPdf = this.createPdf.bind(this);
-     }
      state={
           store:{
                name:"Shops at East Peidmont",
@@ -27,29 +24,40 @@ export default class Sales extends PureComponent{
           purchasedItems:[],
           alertShown:false ,
           errorMessage:"",   
+          buttonText:"OK",
+          showEmailDialog:false,
+          emailAddress:""
      }
-     keyPressListener = (event) => {
-         if(event.keyCode===67){
-          API.reduceStock("5cb3247aef86d68b5e0dc795", "1234567", 1)
-          .then(retData => {
-               this.setState({
-                    purchasedItems: [...this.state.purchasedItems, retData.data],
-                    alertShown: false
-               })
-          })
-          .catch(err => {
-               this.setState({
-                    errorMessage: "Failed to find scanned item in the database",
-                    alertShown: true
-               });
-          });
-         }
-      }
      componentDidMount = () =>{
+          this.setState({userEmail:""});
           document.addEventListener("keydown", this.keyPressListener, false);
      }
      componentWillUnmount = () =>{
           document.removeEventListener("keydown", this.keyPressListener, false);
+     }
+     keyPressListener = (event) => {
+     //     if(event.keyCode===67){
+     //      API.reduceStock("5cb3247aef86d68b5e0dc795", "1234567", 1)
+     //      .then(retData => {
+     //           this.setState({
+     //                purchasedItems: [...this.state.purchasedItems, retData.data],
+     //                alertShown: false
+     //           })
+     //      })
+     //      .catch(err => {
+     //           this.setState({
+     //                errorMessage: "Failed to find scanned item in the database",
+     //                alertShown: true
+     //           });
+     //      });
+     //     }
+     }
+     getEmail = () =>{
+          if(this.state.purchasedItems.length <1){
+               this.setState({alertShown:true, showEmailDialog:false, errorMessage:"Empty order, please scan items", buttonText:"OK"});
+               return;
+          }
+          this.setState({alertShown:true, showEmailDialog:true, buttonText:"Send Email"});
      }
      createPdf = () => {
           this.thisObj.blur();
@@ -77,20 +85,25 @@ export default class Sales extends PureComponent{
                     header: {bold: true, fontSize: 18, marginBottom: 24}
                }
           };
+          let userEmail = this.state.userEmail;
           pdfMake.createPdf(documentDefinition).getBase64(function(encodedString) {
                let data = encodedString;
-               API.sendEmail("krtcotmo2@gmail.com", data);
-          });;
+               try{
+                    API.sendEmail(userEmail, data);
+               }catch(err){
+                    console.log(err);
+               }
+          });
           pdfMake.createPdf(documentDefinition).open();
-          
           this.setState({
                purchasedItems: [],
-               alertShown: false
+               alertShown: false,
+               userEmail:"",
+               buttonText:"OK"
           });
      }
      dateFormat = () => {
           let val =  new Date().toLocaleDateString() + " " + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-          console.group(val)
           return "Sales: " + val;
      }
      handleScan = data => { 
@@ -99,27 +112,37 @@ export default class Sales extends PureComponent{
           .then(retData => {
                this.setState({
                     purchasedItems: [...this.state.purchasedItems, retData.data],
-                    alertShown: false
+                    showEmailDialog: false,
+                    alertShown: false,
                })
           })
           .catch(err => {
                this.setState({
                     errorMessage: "Failed to find scanned item with UPC number "+data+" in the database",
-                    alertShown: true
+                    showEmailDialog: false,
+                    alertShown: true,
                });
           });
      }
      modalViews = () => {     
-          return this.state.alertShown ? "modal modalOpen" : "modal";
+          let cssStr = "modal"
+          cssStr += this.state.alertShown ? " modalOpen" : "";
+          cssStr += this.state.showEmailDialog ? " black" : "";
+          return cssStr;
      }
      hideModal = () =>{
-          this.setState({alertShown: false, errorMessage:""})
-     }
-     ocusInput(component) {
-          if (component) {
-              React.findDOMNode(component).focus(); 
+          if(this.state.showEmailDialog && this.state.userEmail !== ""){
+               this.createPdf();
+          }else if(this.state.showEmailDialog && this.state.userEmail === ""){
+               this.setState({userEmail:"", showEmailDialog:true, alertShown: true, errorMessage:"Email Address not provided"});
+               return;
           }
-      }
+          this.setState({userEmail:"", showEmailDialog:false, alertShown: false, errorMessage:""})
+     }     
+     changeEvent = (event) => {
+          const { name, value } = event.target;
+          this.setState({[name]: value});
+     }
      render(){
           return(
                <>
@@ -127,28 +150,35 @@ export default class Sales extends PureComponent{
                     <PageHeader title={this.dateFormat()} isRed="true"/>
                     <div className="row mainWrapper stretched">
                          <div className="sales centralContent">
-                              {/* <div className={this.state.alertShown ? "card red lighten-4":"card red lighten-4 hide"}>
-                                   <div className="card-content">
-                                   {this.state.errorMessage}
-                                   </div>
-                              </div> */}
                               <List>
                                        {this.state.purchasedItems.map((item, i) => {
                                             return <ListItem key={i}>{item.name}</ListItem>
                                        })}             
                               </List>
                               <div className="btnHolder">     
-                                   <button className="btn red darken-3" onClick={() => this.createPdf()} ref={(thisObj) => { this.thisObj = thisObj; }}>Finish Sale</button>
+                                   <button className="btn red darken-3" onClick={() => this.getEmail()} ref={(thisObj) => { this.thisObj = thisObj; }}>Finish Sale</button>
                               </div>
                          </div>
-                         <div id="modal1" className={this.modalViews()}>
+                         <Modal showEmailDialog={this.state.showEmailDialog} buttonText={this.state.buttonText} className={this.modalViews()} onClick={this.hideModal} >
+                                   <p>{this.state.errorMessage}</p>
+                                   <div className={this.state.showEmailDialog ? "show": "hide"}>
+                                        <p>Provide email address:</p>
+                                        <Input textChangeFunc={this.changeEvent} id="userEmail" name="userEmail" textalign="center" required></Input>
+                                   </div>
+                         </Modal>
+                         {/* <div id="modal1" className={this.modalViews()}>
                               <div className="modal-content">                         
                                    <p>{this.state.errorMessage}</p>
+                                   <div className={this.emailVisibility}>
+                                        <p>Provide email address:</p>
+                                       <Input></Input>
+                                   </div>
                               </div>
                               <div className="modal-footer">
                                    <button className="modal-close waves-effect waves-grey btn-flat" onClick={this.hideModal}>OK</button>
+                                   <button className="modal-close waves-effect waves-grey btn-flat" onClick={this.createPdf}>Send</button>
                               </div>
-                         </div>
+                         </div> */}
                     </div>
                     <BottomBar/>
                </>

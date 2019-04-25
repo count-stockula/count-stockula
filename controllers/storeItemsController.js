@@ -43,7 +43,6 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
-       console.log(req.body)
     db.StoreItem
       .create(req.body)
       .then(madeObj => res.json(madeObj))
@@ -110,7 +109,6 @@ module.exports = {
     }
   },
   addStock: function (req, res) {
-       console.log("qty",req.body.addQty)
     if (req.body.storeId && req.body.upc.trim()) {
       db.StoreItem
         .findOne({ storeId: req.body.storeId, upc: req.body.upc.trim() })
@@ -120,7 +118,6 @@ module.exports = {
           if (updatedQty >= foundObj.criticalQty) {
             foundObj.alertStatus = false;
           }
-          console.log("foundObj", foundObj)
           db.StoreItem
             .findOneAndUpdate({ storeId: req.body.storeId, upc: req.body.upc.trim()}, {currentQty: updatedQty, alertStatus: foundObj.alertStatus })
             .then(() => {
