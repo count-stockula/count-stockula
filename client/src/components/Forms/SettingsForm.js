@@ -16,12 +16,7 @@ export default function SettingsForm(props) {
             </div>
             <div className="col s12 m6">
                 <Label labValue="Store No." htmlFor="storeNo" className="active" />
-                <Input type="text"
-                    readOnly={true}
-                    defaultValue={props.storeNo}
-                    id="storeNo"
-                    validate="true"
-                ></Input>
+                
             </div>
             <div className="col s12 m12">
                 <Label labValue="Email" htmlFor="email" />

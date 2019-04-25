@@ -12,7 +12,7 @@ export default class Settings extends PureComponent {
       <>
         <PageHeader title="Settings" />
         <div className="row mainWrapper stretched">
-          <div className="col black inv centralContent">
+          <div className="col red darken-4 inv centralContent">
             <SettingsForm />
           </div>
         </div>
