@@ -1,8 +1,9 @@
-const jwt = require("jsonwebtoken");
-const cookieParser = require("cookie-parser");
+const db = require("../models");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
-const db = require("../models");
+const jwt = require("jsonwebtoken");
+const nonce = "any secret nonce value";
+const cookieParser = require("cookie-parser");
 
 module.exports = {
   findAll: function(req, res) {
@@ -43,7 +44,6 @@ module.exports = {
       .catch(err => res.status(500).json(err));
   },
   create: function(req, res) {
-    console.log("create route");
     if (req.body.storeId) {
       //check for existing user
       db.User.findOne({ email: req.body.email }).then(foundUser => {
@@ -105,21 +105,18 @@ module.exports = {
       .catch(err => res.status(500).json(err));
   },
   login: function(req, res) {
-    console.log("login route");
     const { email, password } = req.body;
     db.User.findOne({ email: email })
       .then(foundUser => {
-        console.log("foundUser:\n", foundUser);
         if (!foundUser) {
           res.status(401).json({
             error: "email username not found"
           });
         } else {
-          /*
-          db.User.isCorrectPassword(password, function(err, match) {
+          bcrypt.compare(password, foundUser.password, function(err, match) {
             if (err) {
               res.status(500).json({
-                error: "db.User.isCorrectPassword error"
+                error: "bcrypt.compare error"
               });
             } else if (!match) {
               res.status(401).json({
@@ -128,22 +125,18 @@ module.exports = {
             } else {
               // Issue token
               const payload = { email };
-              const token = jwt.sign(payload, secret, {
-                expiresIn: "1h"
+              const token = jwt.sign(payload, nonce, {
+                expiresIn: "12h"
               });
-              res.cookie("token", token, { httpOnly: true }).sendStatus(200);
-              res.json("password matches");
+              res
+                .cookie("token", token, {
+                  httpOnly: true
+                })
+                .sendStatus(200);
             }
           });
-          */
-          bcrypt.compare(password, this.password, function(err, match) {
-            if (err) {
-              callback(err);
-            } else {
-              callback(err, match);
-            }
-          })
-      }})
+        }
+      })
       .catch(err => res.status(500).json({ error: "db.User.findOne error" }));
   }
 };

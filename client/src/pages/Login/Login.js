@@ -40,8 +40,8 @@ export default class Login extends PureComponent {
           return;
         }
         //successful login
-        alert("successful login");
-        //window.location.href = "/Scan";
+        //alert("successful login");
+        window.location.href = "/Scan";
       })
       .catch(error => {
         //window.location.href = "/404";
