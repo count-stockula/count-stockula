@@ -29,7 +29,6 @@ export default class Inventory extends PureComponent {
           //data will be the upc
           API.findItemUpc("5cb3247aef86d68b5e0dc795", data)
           .then(retData => {
-               console.log(parseInt(retData.data.currentQty));
                this.setState({showForm: true, upc:data, currentQty:parseInt(retData.data.currentQty), prodName:retData.data.name, description:retData.data.description});
                
           })
@@ -42,18 +41,16 @@ export default class Inventory extends PureComponent {
      }
      cancelEntry = (event) =>{
           event.preventDefault();
-          this.setState({showForm: false, upc:0, prodName:"", description:"", currentQty:0, qty:0},console.log(this.state.upc));
+          this.setState({showForm: false, upc:0, prodName:"", description:"", currentQty:0, qty:0});
      }
      handleChange = event => {
-          console.log( event.target.value)      
           const { name, value } = event.target;    
           this.setState({
             [name]: value
-          }, console.log(name, value));         
+          });         
      };
      saveInventory = (event) =>{
           event.preventDefault();
-           console.log("QTY", this.state.qty)
           API.addStock("5cb3247aef86d68b5e0dc795", this.state.upc, this.state.qty)               
           .then(retVal => this.setState({showForm: false, upc:"", prodName:"", description:"", qty:0 }))
           .catch(err => console.log(err));

@@ -4,25 +4,26 @@ export default {
 
   // Functions involving StoreItem collection
   // gets an array of all items in db or for a certain store
-  getAllItems: function(storeId) {
-    if (storeId) {
-      return axios.get("/api/storeItems", { storeId: storeId });
+  getAllItems: function(storeId) {       
+    if (storeId !== "0") {
+     console.log("API",storeId)  
+          return axios.get("/api/storeItems", {params: { storeId: storeId }});
     } else {
       return axios.get("/api/storeItems");
     };
   },
   // gets an array of all the low qty items in the db or for a certain store
   getLowStock: function(storeId) {
-    if (storeId) {
-      return axios.get("/api/storeItems/lowStock", { storeId: storeId });
+    if (storeId !== "0") {
+      return axios.get("/api/storeItems/lowStock", {params: { storeId: storeId }});
     } else {
       return axios.get("/api/storeItems/lowStock");
     };
   },
   // gets an array of all the zero qty items in the db or for a certain store
   getZeroStock: function(storeId) {
-    if (storeId) {
-      return axios.get("/api/storeItems/zeroStock", { storeId: storeId });
+    if (storeId !== "0") {
+      return axios.get("/api/storeItems/zeroStock", {params: { storeId: storeId }});
     } else {
       return axios.get("/api/storeItems/zeroStock");
     };

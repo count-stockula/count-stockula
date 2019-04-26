@@ -1,4 +1,5 @@
 import React from "react";
+
 import "./Input.css";
 
 function Input(props) {
@@ -13,7 +14,7 @@ function Input(props) {
           disabled={props.disabled}
           readOnly={props.readOnly}
           validate={props.validate}
-          onChange={props.textChangeFunc}
+          onChange={props.textChangeFunc}    
         />
   );
 }
