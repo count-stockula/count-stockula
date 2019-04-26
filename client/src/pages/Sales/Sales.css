@@ -28,24 +28,3 @@ button:focus{
      color:black;
 }
 
-.modal{
-     width:400px;
-     margin-top:30px;
-     border:1px solid #C62828;
-     box-shadow: 0 5px 15px 3px rgba(0,0,0,0.05), 0 9px 15px 8px rgba(0,0,0,0.02), 0 11px 15px -7px rgba(0,0,0,0.05);
-     max-width: 75%;
-}
-.modal .modal-footer{
-     text-align: center;
-     border-top:1px solid #6a6a6a;
-}
-.modal .modal-footer button{
-     background:black;
-     color:white;
-}
-.modal .modal-footer button:hover{
-     background:#C62828;
-}
-.modalOpen{
-     display: block;
-}

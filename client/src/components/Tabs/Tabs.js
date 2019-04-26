@@ -34,7 +34,7 @@ const styles = theme => ({
 function TabControl (props) {
     const { classes } = props;
     return (         
-        <AppBar position="fixed" className={classes.tabAppBar}>
+        <AppBar className={classes.tabAppBar}>
           <Tabs variant="fullWidth" value={props.value} onChange={props.tabClick} indicatorColor="#d32f2f">
             <Tab value="one" className={props.value === "one" ? "tab selected" : "tab"} label="All Products"></Tab>
             <Tab value="two" className={props.value === "two" ? "tab selected" : "tab"}  label="Low Inventory" />
