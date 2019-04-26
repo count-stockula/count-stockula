@@ -2,8 +2,10 @@ import React from 'react';
 import Form from "../Form/Form";
 import Input from "../Input/Input";
 import Label from "../Label/Label";
+import "./Forms.css";
 
 export default function SettingsForm(props) {
+
     return (
         <Form id="aForm">
             <div className="col s12 m6">
@@ -16,7 +18,11 @@ export default function SettingsForm(props) {
             </div>
             <div className="col s12 m6">
                 <Label labValue="Store No." htmlFor="storeNo" className="active" />
-                
+                <select className="storeDropdown">
+                    {props.theStores.map(item => (
+                        <option key={item._id} value={item._id}>{item.name}</option>
+                    ))}
+                </select>
             </div>
             <div className="col s12 m12">
                 <Label labValue="Email" htmlFor="email" />
