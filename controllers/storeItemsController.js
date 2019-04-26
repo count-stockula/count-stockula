@@ -140,7 +140,7 @@ module.exports = {
         .sort({ name: 1 })
         .then(foundArray => {
           let lowStockArray = foundArray.filter(function (item) {
-            return (item.currentQty < item.criticalQty || item.currentQty === 0);
+            return (item.currentQty < item.criticalQty || item.currentQty <= 0);
           });
           res.json(lowStockArray);
         })
@@ -151,7 +151,7 @@ module.exports = {
         .sort({ name: 1 })
         .then(foundArray => {
           let lowStockArray = foundArray.filter(function (item) {
-            return (item.currentQty < item.criticalQty);
+            return (item.currentQty < item.criticalQty || item.currentQty <= 0);
           });
           res.json(lowStockArray);
         })
