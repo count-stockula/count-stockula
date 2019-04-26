@@ -81,7 +81,7 @@ export default class Login extends PureComponent {
             </Form>
           </div>
           <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
-            <Blackbutton onClick={this.handleSubmit} text="log in" />
+            <Button onClick={this.handleSubmit}>Login</Button>
           </div>
           <div className="orSignUp">
             <a href="/SignUp">
