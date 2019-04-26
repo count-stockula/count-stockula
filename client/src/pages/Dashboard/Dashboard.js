@@ -12,13 +12,13 @@ export default class Dashboard extends PureComponent {
     inventoryList: [],
     theStores: [],
     curStore:"0",
-    value: "two"
+    curTab: "two"
   };
 
   handleTabChange = (event, value) => {
     const setVal = value;
     console.log(this.state)
-    switch (value) {
+    switch (setVal) {
       case "one":
         API.getAllItems(this.state.curStore).then(results =>
           this.setState({ inventoryList: results.data })
@@ -37,7 +37,7 @@ export default class Dashboard extends PureComponent {
         );
         break;
     }
-    this.setState({ value: setVal });
+    this.setState({ curTab: setVal });
   };
   componentDidMount = () => {
     API.getLowStock().then(results =>
@@ -48,12 +48,29 @@ export default class Dashboard extends PureComponent {
     })
   };
   filterStore = event =>{
-       console.log(event.target.value)
      let storeNumber = event.target.value;
-     this.setState({ curStore:storeNumber })
-     // API.getAllItems(storeNumber).then(results => {
-          
-     // })
+     this.setState({ curStore:storeNumber }, () =>{
+          switch (this.state.curTab) {
+               case "one":
+                 API.getAllItems(this.state.curStore).then(results =>
+                   this.setState({ inventoryList: results.data })
+                 );
+         
+                 break;
+               case "three":
+                 API.getZeroStock(this.state.curStore).then(results =>
+                   this.setState({ inventoryList: results.data })
+                 );
+         
+                 break;
+               default:
+                 API.getLowStock(this.state.curStore).then(results =>
+                   this.setState({ inventoryList: results.data })
+                 );
+                 break;
+             }
+     })
+     
   }
   render() {
     return (
@@ -69,7 +86,7 @@ export default class Dashboard extends PureComponent {
                               ))}                            
                          </select>
                     
-                         <Tabs tabClick={this.handleTabChange} value={this.state.value} />
+                         <Tabs tabClick={this.handleTabChange} value={this.state.curTab} />
                     </div> 
                     <List>
                     {this.state.inventoryList.map(item => (
