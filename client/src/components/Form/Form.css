@@ -1,17 +1,32 @@
 /* Form.css */
-
 .formContainer {
-  display: block;
+  display: flex;
   margin-left: auto;
   margin-right: auto;
   width: 90%;
-  background-color: #b71c1c;
-  margin-top: 100px;
+  background-color: #C62828;
+  /* margin-top: 100px; */
   height: 100%;
   padding: 20px;
   border-radius: 8px;
 }
 
+.backgroundBlack {
+  background-color: black !important;
+}
+
+input {
+     background-color: white !important;
+     height: 2rem !important;
+     padding-left: 10px !important;
+     border-radius: 3px !important;
+ }
+ textarea {
+     background-color: white !important;
+     height: 4rem !important;
+     padding-left: 10px !important;
+     border-radius: 3px !important;
+ }
 input:not([type]):focus:not([readonly]),
 input[type="text"]:not(.browser-default):focus:not([readonly]),
 input[type="password"]:not(.browser-default):focus:not([readonly]),
@@ -33,11 +48,6 @@ textarea.materialize-textarea:focus:not([readonly]) {
 /* label color */
 .input-field label {
   color: white;
-}
-
-/* label active */
-.input-field label:active {
-  color: white !important;
 }
 
 /* label focus color */
@@ -68,3 +78,6 @@ textarea.materialize-textarea:focus:not([readonly]) {
   color: white;
   border-bottom: 1px solid white;
 }
+.input-field input[type="text"]:focus+label, .input-field label.active{
+     color: white !important ;
+ }

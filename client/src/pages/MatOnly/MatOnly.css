@@ -1,0 +1,16 @@
+/* 
+.centralContent{
+     margin: 0 auto !important;
+     border-radius: 7px;
+     padding:12px 24px !important;
+     width:500px !important;
+}
+input{
+     width: calc(100% - 10px) !important;
+}
+
+@media only screen and (max-width: 601px){
+     .mainWrapper{ margin-top:94px; min-height: calc(100vh - 147px);}
+     .centralContent{width:calc(100% - 72px) !important;}
+}
+ */

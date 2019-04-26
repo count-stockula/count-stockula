@@ -2,43 +2,56 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import "./ContainedButtons.css";
 import {Link}from "react-router-dom";
 
+
+
 const styles = theme => ({
-  button: {
-    margin: 20,
-    color: 'white',
-    height: 48,
-    padding: '0 30px',
-    size: '50pt',
-  }
+     button1: { 
+          width:'170px',
+          color: 'white',
+          height: 48,
+          size: '50pt',
+          cursor:'pointer',  
+          background: '#d32f2f',
+     },
+     button2: {
+          width:'170px',
+          color: 'white',
+          height: 48,
+          size: '50pt',
+          cursor:'pointer',
+          background: 'black',
+     },
+     button3: {
+          width:'170px',
+          color: 'white',
+          height: 48,
+          size: '50pt',
+          cursor:'pointer',
+          background: '#6a6a6a',
+     }
 });
 
 function ContainedButtons(props) {
   const { classes } = props;
   return (
-    <div className="buttonWrapper">
-      <Grid
-      container
-      direction="column"
-      justify="center"
-      alignItems="center">
-      
-      <Link to="/sales"><Button variant="contained" className={classes.button}>
-        SALES
-      </Button></Link>
-      <Link to="/inventory"><Button variant="contained" color="primary" className={classes.button}>
-        INVENTORY
-      </Button></Link>
-      <Link to="/additem"><Button variant="contained" color="secondary" className={classes.button}>
-        ADD NEW ITEM
-      </Button></Link>
-      
-      
-      </Grid>
-    </div>
+       <>
+          <div className="buttonWrapper" >
+               <Link to="/sales"><Button variant="contained" className={classes.button1}>
+               SALES
+               </Button></Link>
+               <p>OR</p>
+               <Link to="/inventory"><Button variant="contained" className={classes.button2}>
+               INVENTORY
+               </Button></Link>
+               <p>OR</p>
+               <Link to="/additem"><Button variant="contained" className={classes.button3}>
+               ADD NEW ITEM
+               </Button></Link>
+          </div>
+    </>
   );
 }
 

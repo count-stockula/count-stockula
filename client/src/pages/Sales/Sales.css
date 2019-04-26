@@ -1,3 +1,30 @@
 .salesTable{
      margin-top:112px;
 }
+
+.sales.centralContent{    
+     margin: 0 auto;
+     position: relative;;
+     border-radius: 7px;
+     padding:24px 0 106px 0 !important;
+     width:500px !important;
+}
+
+.sales .btnHolder{
+     position: fixed;
+     width: inherit;
+     bottom:55px;
+     height: 75px;
+     background: #fff;
+}
+
+.sales .card-content{padding:8px}
+
+@media only screen and (max-width: 601px){
+     .sales .mainWrapper{ margin-top:94px; min-height: calc(100vh - 147px);}
+     .sales.centralContent{width:calc(100% - 72px) !important;}
+}
+button:focus{
+     color:black;
+}
+

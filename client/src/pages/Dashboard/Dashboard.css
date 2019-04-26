@@ -1,0 +1,29 @@
+.topFixed{
+     position: fixed;
+     width:inherit;
+     margin-top:5px;
+}
+.dashboard .invList{
+     padding-top:90px;
+}
+.dashboard.mainWrapper{
+     padding-top:0px
+}
+.dashboard.centralContent{
+     position: relative;
+     margin: 0 auto !important;
+     border-radius: 7px;
+     padding:0 !important;
+     width:500px !important;
+}
+@media only screen and (max-width: 601px){    
+     .dashboard.centralContent{width:calc(100% - 72px) !important;}
+}
+select{
+     display: inline-block;
+     background: #fff;
+     border: 1px solid #6a6a6a;
+}
+select:focus{
+     outline:#d32f2f;
+}

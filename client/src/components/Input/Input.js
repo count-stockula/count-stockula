@@ -1,4 +1,5 @@
 import React from "react";
+
 import "./Input.css";
 import Label from "../../components/Label/Label";
 
@@ -14,23 +15,34 @@ function Input(props) {
     disabled
   } = props;
   return (
-    <div className="row">
-      <div className="input-field col s12">
-        <input
-          type={type}
-          className={className}
-          id={id}
-          name={name}
-          value={value}
-          placeholder={placeholder}
-          onChange={onChange}
-          disabled={disabled}
-        />
-        <Label htmlFor={id} className="active">
-          {id}
-        </Label>
-      </div>
-    </div>
+    <>
+      <input
+        type={type}
+        className={className}
+        id={id}
+        name={name}
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+        //onChange={props.textChangeFunc}
+        disabled={disabled}
+      />
+      <Label htmlFor={id} className="active">
+        {id}
+      </Label>
+      {/* <div>
+        type={props.type}
+        className={props.className}
+        id={props.id}
+        name={props.name}
+        defaultValue={props.defaultValue}
+        placeholder={props.placeholder}
+        disabled={props.disabled}
+        readOnly={props.readOnly}
+        validate={props.validate}
+        onChange={props.textChangeFunc}
+      </div> */}
+    </>
   );
 }
 

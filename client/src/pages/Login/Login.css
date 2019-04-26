@@ -1,1 +1,12 @@
 /* Login.css */
+.logoContainer {
+    padding: 75px;
+}
+
+.login-label {
+    font-size: 12pt;
+}
+
+.orSignUp {
+    padding: 20px;
+}

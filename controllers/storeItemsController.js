@@ -2,7 +2,7 @@ const db = require("../models");
 //const textApiCall = require("./textApiCall");
 
 module.exports = {
-  findAll: function (req, res) {
+  findAll: function (req, res) {     
     if (req.query.storeId) {
       db.StoreItem
         .find({ storeId: req.query.storeId })
@@ -74,12 +74,12 @@ module.exports = {
           if (foundObj) {
             res.json(foundObj);
           } else {
-            res.status(400).json("no items found");
+            return res.status(404).json({message:"no items found"});
           };
         })
-        .catch(err => res.status(422).json(err));
+        .catch(err => res.status(422).json({message:err}));
     } else {
-      res.status(400).json("bad request");
+     return res.status(400).json("bad request");
     }
   },
   reduceStock: function (req, res) {
@@ -109,19 +109,20 @@ module.exports = {
     }
   },
   addStock: function (req, res) {
-    if (req.body.storeId && req.body.upc) {
+    if (req.body.storeId && req.body.upc.trim()) {
       db.StoreItem
-        .findOne({ storeId: req.body.storeId, upc: req.body.upc })
+        .findOne({ storeId: req.body.storeId, upc: req.body.upc.trim() })
         .then(foundObj => {
-          let updatedQty = (foundObj.currentQty + req.body.addQty);
+             
+          let updatedQty = (foundObj.currentQty + parseInt(req.body.addQty));
           if (updatedQty >= foundObj.criticalQty) {
             foundObj.alertStatus = false;
           }
           db.StoreItem
-            .findOneAndUpdate({ storeId: req.body.storeId, upc: req.body.upc }, { currentQty: updatedQty, alertStatus: foundObj.alertStatus })
+            .findOneAndUpdate({ storeId: req.body.storeId, upc: req.body.upc.trim()}, {currentQty: updatedQty, alertStatus: foundObj.alertStatus })
             .then(() => {
               db.StoreItem
-                .findOne({ storeId: req.body.storeId, upc: req.body.upc })
+                .findOne({ storeId: req.body.storeId, upc: req.body.upc.trim() })
                 .then(foundObj => res.json(foundObj))
                 .catch(err => res.status(422).json(err));
             })
@@ -139,7 +140,7 @@ module.exports = {
         .sort({ name: 1 })
         .then(foundArray => {
           let lowStockArray = foundArray.filter(function (item) {
-            return (item.currentQty < item.criticalQty);
+            return (item.currentQty < item.criticalQty || item.currentQty <= 0);
           });
           res.json(lowStockArray);
         })
@@ -150,7 +151,7 @@ module.exports = {
         .sort({ name: 1 })
         .then(foundArray => {
           let lowStockArray = foundArray.filter(function (item) {
-            return (item.currentQty < item.criticalQty);
+            return (item.currentQty < item.criticalQty || item.currentQty <= 0);
           });
           res.json(lowStockArray);
         })

@@ -3,6 +3,7 @@ import API from "../../components/utils/API";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
+import Blackbutton from "../../components/Button/Blackbutton";
 
 export default class SignUp extends PureComponent {
   constructor() {
@@ -84,81 +85,89 @@ export default class SignUp extends PureComponent {
   render() {
     return (
       <>
-        <img
-          src="/images/cntStockLogo.png"
-          alt="Count Stockula Logo"
-          width="300px"
-        />
-        <Form className="col" id="login">
-          <Input
-            type="email"
-            className="validate"
-            id="email"
-            name="email"
-            value={this.state.email}
-            //placeholder="email@domain.com"
-            onChange={this.handleChange}
+        <div className="logoContainer">
+          <img
+            src="/images/logo.png"
+            alt="Count Stockula Logo"
+            width="150px"
           />
-          <Input
-            type="password"
-            className="validate"
-            id="password"
-            name="password"
-            value={this.state.password}
-            //placeholder="password"
-            onChange={this.handleChange}
-          />
-          <Input
-            type="password"
-            className="validate"
-            id="confirmation"
-            name="confirmation"
-            value={this.state.confirmation}
-            //placeholder="confirm password"
-            onChange={this.handleChange}
-          />
-          <Input
-            type="text"
-            className="validate"
-            id="name"
-            name="name"
-            value={this.state.name}
-            //placeholder="name"
-            onChange={this.handleChange}
-          />
-          <Input
-            type="tel"
-            className="validate"
-            id="phone"
-            name="phone"
-            value={this.state.phone}
-            //placeholder="name"
-            onChange={this.handleChange}
-          />
-          <Input
-            type="text"
-            className="validate"
-            id="storeId"
-            name="storeId"
-            value={this.state.storeId}
-            //placeholder="storeId"
-            onChange={this.handleChange}
-          />
-          <Input
-            type="text"
-            className="validate"
-            id="management"
-            name="management"
-            value={this.state.management}
-            //placeholder="name"
-            onClick={this.toggleBoolean}
-            disabled={this.state.disabledInputArray.includes("management")}
-          />
-          <Button onClick={this.handleSubmit}>SignUp</Button>
+        </div>
+        <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
+          <Form className="col" id="login">
+            <Input
+              type="email"
+              className="validate"
+              id="email"
+              name="email"
+              value={this.state.email}
+              //placeholder="email@domain.com"
+              onChange={this.handleChange}
+            />
+            <Input
+              type="password"
+              className="validate"
+              id="password"
+              name="password"
+              value={this.state.password}
+              //placeholder="password"
+              onChange={this.handleChange}
+            />
+            <Input
+              type="password"
+              className="validate"
+              id="confirmation"
+              name="confirmation"
+              value={this.state.confirmation}
+              //placeholder="confirm password"
+              onChange={this.handleChange}
+            />
+            <Input
+              type="text"
+              className="validate"
+              id="name"
+              name="name"
+              value={this.state.name}
+              //placeholder="name"
+              onChange={this.handleChange}
+            />
+            <Input
+              type="tel"
+              className="validate"
+              id="phone"
+              name="phone"
+              value={this.state.phone}
+              //placeholder="name"
+              onChange={this.handleChange}
+            />
+            <Input
+              type="text"
+              className="validate"
+              id="storeId"
+              name="storeId"
+              value={this.state.storeId}
+              //placeholder="storeId"
+              onChange={this.handleChange}
+            />
+            <Input
+              type="text"
+              className="validate"
+              id="management"
+              name="management"
+              value={this.state.management}
+              //placeholder="name"
+              onClick={this.toggleBoolean}
+              disabled={this.state.disabledInputArray.includes(
+                "management"
+              )}
+            />
+          </Form>
+        </div>
+        <Button onClick={this.handleSubmit}>SignUp</Button>
+        <div className="orSignUp">
           <a href="/">
-            <Button>Login</Button>
+            <Button>Returning User? Login</Button>
           </a>
-        </Form>
+        </div>
       </>
     );
   }

@@ -1,0 +1,16 @@
+.mainWrapper{
+     min-height: calc(100vh - 153px);
+     margin-top:106px;
+     padding:24px 0px 36px 0px;
+     display: flex;
+}
+.mainWrapper.stretched{
+     align-items: stretch;
+}
+.mainWrapper.centered{
+     align-items: center;
+}
+.mainWrapper.topped{
+     align-items: flex-start;
+     flex-direction: column;
+}

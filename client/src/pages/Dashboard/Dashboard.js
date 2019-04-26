@@ -5,69 +5,107 @@ import List from "../../components/List/List";
 import PageHeader from "../../components/Pageheader/Pageheader";
 import BottomBar from "../../components/BottomBar/BottomBar";
 import ListItem from "../../components/ListItem/ListItem";
+import "./Dashboard.css";
 
 export default class Dashboard extends PureComponent {
   state = {
     inventoryList: [],
-    value: "two"
+    theStores: [],
+    curStore:"0",
+    curTab: "two"
   };
 
   handleTabChange = (event, value) => {
     const setVal = value;
-    switch (value) {
+    console.log(this.state)
+    switch (setVal) {
       case "one":
-        API.getAllItems().then(results =>
+        API.getAllItems(this.state.curStore).then(results =>
           this.setState({ inventoryList: results.data })
         );
 
         break;
       case "three":
-        API.getZeroStock().then(results =>
+        API.getZeroStock(this.state.curStore).then(results =>
           this.setState({ inventoryList: results.data })
         );
 
         break;
       default:
-        API.getLowStock().then(results =>
+        API.getLowStock(this.state.curStore).then(results =>
           this.setState({ inventoryList: results.data })
         );
         break;
     }
-    this.setState({ value: setVal });
+    this.setState({ curTab: setVal });
   };
   componentDidMount = () => {
     API.getLowStock().then(results =>
       this.setState({ inventoryList: results.data })
     );
+    API.getAllStores().then(results =>{
+          this.setState({ theStores: results.data })
+    })
   };
-
+  filterStore = event =>{
+     let storeNumber = event.target.value;
+     this.setState({ curStore:storeNumber }, () =>{
+          switch (this.state.curTab) {
+               case "one":
+                 API.getAllItems(this.state.curStore).then(results =>
+                   this.setState({ inventoryList: results.data })
+                 );
+         
+                 break;
+               case "three":
+                 API.getZeroStock(this.state.curStore).then(results =>
+                   this.setState({ inventoryList: results.data })
+                 );
+         
+                 break;
+               default:
+                 API.getLowStock(this.state.curStore).then(results =>
+                   this.setState({ inventoryList: results.data })
+                 );
+                 break;
+             }
+     })
+     
+  }
   render() {
     return (
       <>
         <PageHeader title="Dashboard" />
-        <div className="container px-0 w-100">
-          <div className="mx-auto col-12 col-lg-8 col-md-8 col-sm-10 col-xl-7 px-0">
-            <Tabs tabClick={this.handleTabChange} value={this.state.value} />
+          <div className="row dashboard mainWrapper topped">
+               <div className="dashboard centralContent">                   
+                    <div className="topFixed s12">
+                         <select onChange={this.filterStore}>
+                              <option defaultValue="0" value="0">All Stores</option>  
+                              {this.state.theStores.map( item => (
+                                   <option key={item._id} value={item._id}>{item.name}</option>
+                              ))}                            
+                         </select>
+                    
+                         <Tabs tabClick={this.handleTabChange} value={this.state.curTab} />
+                    </div> 
+                    <List>
+                    {this.state.inventoryList.map(item => (
+                         <ListItem
+                         curQty={item.currentQty}
+                         criticalQty={item.criticalQty}
+                         key={item._id}
+                         >
+                         <div className="row">
+                         <span className="col s9">
+                              {item.name} {item.description}
+                         </span>
+                         <span className="col s3"> Current Qty: {item.currentQty}</span>
+                         </div>
+                    </ListItem>
+                    ))}
+                    </List>
+               </div>
           </div>
-        </div>
-        <div className="container px-0 w-100 pb-5">
-          <div className="mx-auto col-12 col-lg-8 col-md-8 col-sm-10 col-xl-7 px-0">
-            <List>
-              {this.state.inventoryList.map(item => (
-                <ListItem
-                  curQty={item.currentQty}
-                  criticalQty={item.criticalQty}
-                  key={item._id}
-                >
-                  <span>
-                    {item.name} {item.description}
-                  </span>
-                  <span>Current Qty: {item.currentQty}</span>
-                </ListItem>
-              ))}
-            </List>
-          </div>
-        </div>
         <BottomBar />
       </>
     );
