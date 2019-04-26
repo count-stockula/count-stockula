@@ -1,6 +1,5 @@
-
-const jwt = require('jsonwebtoken');
-const cookieParser = require('cookie-parser');
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const db = require("../models");
@@ -44,13 +43,13 @@ module.exports = {
       .catch(err => res.status(500).json(err));
   },
   create: function(req, res) {
+    console.log("create route");
     if (req.body.storeId) {
       //check for existing user
       db.User.findOne({ email: req.body.email }).then(foundUser => {
         if (foundUser) {
           res.status(200).json("user already exists");
         } else {
-          console.log("req.body:\n", req.body);
           db.User.create(req.body)
             .then(newUser => {
               db.Store.findOneAndUpdate(
@@ -64,9 +63,15 @@ module.exports = {
                 }
               )
                 .then(() => res.status(200).json(newUser.email))
-                .catch(err => res.status(500).json(err));
+                .catch(err =>
+                  res.status(500).json({
+                    errer: "db.Store.findOneAndUpdate error"
+                  })
+                );
             })
-            .catch(err => res.status(500).json(err));
+            .catch(err =>
+              res.status(500).json({ errer: "db.User.create error" })
+            );
         }
       });
     }
@@ -100,53 +105,45 @@ module.exports = {
       .catch(err => res.status(500).json(err));
   },
   login: function(req, res) {
-    console.log("req.body:\n", req.body);
-    const {email, password} = req.body;
+    console.log("login route");
+    const { email, password } = req.body;
     db.User.findOne({ email: email })
       .then(foundUser => {
         console.log("foundUser:\n", foundUser);
-            
-
-
-if (!foundUser) {
-      res.status(401)
-        .json({
-        error: "email username not found"
-      });
-    } else {
-      db.User.isCorrectPassword(password, function(err, match) {
-        if (err) {
-          res.status(500)
-            .json({
-            error: "internal server error"
-          });
-        } else if (!match) {
-          res.status(401)
-            .json({
-            error: "incorrect password"
+        if (!foundUser) {
+          res.status(401).json({
+            error: "email username not found"
           });
         } else {
-          // Issue token
-          const payload = { email };
-          const token = jwt.sign(payload, secret, {
-            expiresIn: '1h'
+          /*
+          db.User.isCorrectPassword(password, function(err, match) {
+            if (err) {
+              res.status(500).json({
+                error: "db.User.isCorrectPassword error"
+              });
+            } else if (!match) {
+              res.status(401).json({
+                error: "incorrect password"
+              });
+            } else {
+              // Issue token
+              const payload = { email };
+              const token = jwt.sign(payload, secret, {
+                expiresIn: "1h"
+              });
+              res.cookie("token", token, { httpOnly: true }).sendStatus(200);
+              res.json("password matches");
+            }
           });
-          res.cookie('token', token, { httpOnly: true }).sendStatus(200);
-        }
-
-
-
-
-
-
+          */
+          bcrypt.compare(password, this.password, function(err, match) {
+            if (err) {
+              callback(err);
+            } else {
+              callback(err, match);
+            }
           })
-          
-      })
-      .catch(err => res.status(500)
-        .json({
-        error: "internal server error"
-      });
-
-
+      }})
+      .catch(err => res.status(500).json({ error: "db.User.findOne error" }));
   }
 };
