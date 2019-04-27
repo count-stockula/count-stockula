@@ -68,7 +68,7 @@ module.exports = {
                 );
             })
             .catch(err =>
-              res.status(500).json({ error: "db.User.create error" })
+              res.status(500).json(err)
             );
         }
       });

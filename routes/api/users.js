@@ -4,7 +4,7 @@ const usersController = require("../../controllers/usersController");
 // createUser matches with "/api/users"
 router
   .route("/")
-  .get(usersController.findAll)
+  //.get(usersController.findAll)
   .post(usersController.create);
 
 // Matches with "/api/users/forOne/:id"
@@ -19,12 +19,12 @@ router
   .route("/login")
   .post(usersController.login);
 
-// loginUser matches with "/api/users/login"
+// loginUser matches with "/api/users/authenticate"
 router
   .route("/authenticate")
   .post(usersController.authenticate);
 
-// loginUser matches with "/api/users/login"
+// loginUser matches with "/api/users/signout"
 router
   .route("/signout")
   .post(usersController.signout);
