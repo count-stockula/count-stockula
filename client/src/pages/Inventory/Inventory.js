@@ -3,8 +3,9 @@ import API from "../../components/utils/API";
 import BarcodeReader from "react-barcode-reader";
 import PageHeader from "../../components/Pageheader/Pageheader";
 import BottomBar from "../../components/BottomBar/BottomBar";
-import InventoryForm from "../../components/Forms/InventoryForm";
 import InvForm2 from "../../components/Forms/InvForm2";
+import Modal from "../../components/Modal/Modal";
+import Input from "../../components/Input/SimpleInput";
 import "../../components/Form/Form.css";
 import "./Inventory.css";
 
@@ -23,7 +24,11 @@ export default class Inventory extends PureComponent {
     currentQty: "",
     prodName: "",
     description: "",
-    qty: ""
+    qty: "",
+    alertShown:false ,
+     errorMessage:"",   
+     buttonText:"OK",
+     showUpcField:false
   };
   handleScan = data => {
     //data will be the upc
@@ -82,16 +87,30 @@ export default class Inventory extends PureComponent {
     return this.state.alertShown ? "modal modalOpen" : "modal";
   };
   hideModal = () => {
-    this.setState({ alertShown: false, errorMessage: "" });
+     if(this.state.showEmailDialog){
+          
+     }
+    this.setState({ alertShown: false, 
+     errorMessage: "",
+     buttonText:"OK",
+     showEmailDialog:false });
   };
+  manualEntry= () =>{
+this.setState({
+     alertShown:true,
+     errorMessage:"",   
+     buttonText:"OK",
+     showEmailDialog:true
+});
+  }
   render() {
     return (
       <>
         <BarcodeReader onError={this.handleError} onScan={this.handleScan} />
         <PageHeader title="Inventory" />
         <div className="row mainWrapper stretched">
-          <div className="col red darken-4 inv centralContent">
-            <h1 className={this.state.showForm ? "scanText  hide" : "scanText"}>
+          <div className="col red darken-4 inv centralContent" >
+            <h1 className={this.state.showForm ? "scanText  hide" : "scanText"} onClick={this.manualEntry} >
               START SCANNING
               <br className="scanBreak" />
               TO ADD ITEM TO INVENTORY
@@ -108,7 +127,14 @@ export default class Inventory extends PureComponent {
                 saveClick={this.saveInventory}
               />
             </div>
-            <div id="modal1" className={this.modalViews()}>
+            <Modal showEmailDialog={this.state.showEmailDialog} buttonText={this.state.buttonText} className={this.modalViews()} onClick={this.hideModal.bind(this)}>
+                    <p>{this.state.errorMessage}</p>
+                    <div className={this.state.showEmailDialog ? "show": "hide"}>
+                         <p className="black-text">Enter UPC:</p>
+                         <Input textChangeFunc={this.handleChange} id="upc" name="upc" textalign="center" required></Input>
+                    </div>
+            </Modal>
+            {/* <div id="modal1" className={this.modalViews()}>
               <div className="modal-content">
                 <p>{this.state.errorMessage}</p>
               </div>
@@ -120,7 +146,7 @@ export default class Inventory extends PureComponent {
                   OK
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <BottomBar />

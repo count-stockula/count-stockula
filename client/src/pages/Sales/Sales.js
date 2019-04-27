@@ -2,13 +2,13 @@ import React, {PureComponent} from "react";
 import API from "../../components/utils/API"
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
-import List from "../../components/List/List"
-import BarcodeReader from 'react-barcode-reader'
-import PageHeader from "../../components/Pageheader/Pageheader"
-import BottomBar from "../../components/BottomBar/BottomBar"
-import ListItem from "../../components/ListItem/ListItem"
-import Modal from "../../components/Modal/Modal"
-import Input from "../../components/Input/Input"
+import List from "../../components/List/List";
+import BarcodeReader from 'react-barcode-reader';
+import PageHeader from "../../components/Pageheader/Pageheader";
+import BottomBar from "../../components/BottomBar/BottomBar";
+import ListItem from "../../components/ListItem/ListItem";
+import Modal from "../../components/Modal/Modal";
+import Input from "../../components/Input/SimpleInput";
 import "./Sales.css";
 
 export default class Sales extends PureComponent{
@@ -131,7 +131,8 @@ export default class Sales extends PureComponent{
           return cssStr;
      }
      hideModal = () =>{
-          if(this.state.showEmailDialog && this.state.userEmail !== ""){
+          var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          if(this.state.showEmailDialog && re.test(String(this.state.userEmail).toLowerCase())){          
                this.createPdf();
           }else if(this.state.showEmailDialog && this.state.userEmail === ""){
                this.setState({userEmail:"", showEmailDialog:true, alertShown: true, errorMessage:"Email Address not provided"});
