@@ -171,7 +171,7 @@ export default class Sales extends PureComponent {
   };
   modalViews = () => {
     let cssStr = "modal";
-    cssStr += this.state.alertShown ? " modalOpen" : "";git
+    cssStr += this.state.alertShown ? " modalOpen" : "";
     cssStr += this.state.showEmailDialog ? " black" : "";
     return cssStr;
   };
