@@ -121,6 +121,18 @@ export default {
       password: password
     });
   },
+  // token authentication
+  authenticate: function(tokenCookie) {
+    return axios.post("/api/users/authenticate", {
+      tokenCookie: tokenCookie
+    });
+  },
+  // signout
+  signout: function(cb) {
+    // return axios.post("/api/users/signout", {
+    //   tokenCookie: tokenCookie
+    // });
+  },
   // sends email with attached file to the specified address
   sendEmail: function(receiveAddress, pdfFile) {
     return axios.post("/api/emails", {

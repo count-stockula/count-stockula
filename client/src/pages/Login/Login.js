@@ -3,7 +3,6 @@ import API from "../../components/utils/API";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import Blackbutton from "../../components/Button/Blackbutton";
 import "./Login.css";
 
 export default class Login extends PureComponent {
@@ -23,31 +22,29 @@ export default class Login extends PureComponent {
   };
 
   handleSubmit = event => {
-    const { email, password } = this.state;
     event.preventDefault();
-    API.loginUser(email, password)
-      .then(serverResponse => {
-        this.setState({
-          password: ""
-        });
-        // handle response from server
-        if (
-          serverResponse === "email username not found" ||
-          serverResponse === "incorrect password"
-        ) {
-          // handle email username not found or incorrect password
-          // password: '$2b$10$T/fAJdCJIxwLvhd07RvtS.pwlyMh9klhdXLqaBKFgu2AO6pW.rMMy'
-          alert(serverResponse);
-          return;
+    fetch("/api/users/login", {
+      method: "POST",
+      body: JSON.stringify(this.state),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => {
+        if (res.status === 200) {
+          this.props.history.push("/");
+          // successful login
+          //window.location.href = "/testauth";
+          window.location.href = "/scan";
+        } else {
+          const error = new Error(res.error);
+          throw error;
         }
-        //successful login
-        //alert("successful login");
-        window.location.href = "/Scan";
       })
-      .catch(error => {
-        //window.location.href = "/404";
+      .catch(err => {
+        console.error(err);
+        alert("Error logging in please try again");
       });
-    // end API.checkPass
   };
 
   render() {
@@ -85,6 +82,11 @@ export default class Login extends PureComponent {
           <div className="orSignUp">
             <a href="/SignUp">
               <Button>New User? SIGN UP</Button>
+            </a>
+          </div>
+          <div className="TestAuth">
+            <a href="/testauth">
+              <Button>TestAuth</Button>
             </a>
           </div>
         </div>

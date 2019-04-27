@@ -5,6 +5,7 @@ import Input from "../../components/Input/Input";
 import Label from "../../components/Label/Label";
 import Button from "../../components/Button/Button";
 import Blackbutton from "../../components/Button/Blackbutton";
+import "./SignUp.css";
 
 export default class SignUp extends PureComponent {
   constructor() {
