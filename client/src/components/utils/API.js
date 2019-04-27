@@ -71,6 +71,7 @@ export default {
   // Functions involving Stores collection
   // gets an array of all the stores in the database
   getAllStores: function() {
+    console.log("in the API");
     return axios.get("/api/stores");
   },
   // Create an item document in database
