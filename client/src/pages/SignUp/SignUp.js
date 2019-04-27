@@ -94,75 +94,95 @@ export default class SignUp extends PureComponent {
             width="150px"
           />
         </div>
-        <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
-          <Form className="col" id="login">
-              <Label htmlFor="email" className=""/> 
-            <Input
-              type="email"
-              className="validate"
-              id="email"
-              name="email"
-              value={this.state.email}
-              //placeholder="email@domain.com"
-              onChange={this.handleChange}
-            />
-            <Input
-              type="password"
-              className="validate"
-              id="password"
-              name="password"
-              value={this.state.password}
-              //placeholder="password"
-              onChange={this.handleChange}
-            />
-            <Input
-              type="password"
-              className="validate"
-              id="confirmation"
-              name="confirmation"
-              value={this.state.confirmation}
-              //placeholder="confirm password"
-              onChange={this.handleChange}
-            />
-            <Input
-              type="text"
-              className="validate"
-              id="name"
-              name="name"
-              value={this.state.name}
-              //placeholder="name"
-              onChange={this.handleChange}
-            />
-            <Input
-              type="tel"
-              className="validate"
-              id="phone"
-              name="phone"
-              value={this.state.phone}
-              //placeholder="name"
-              onChange={this.handleChange}
-            />
-            <Input
-              type="text"
-              className="validate"
-              id="storeId"
-              name="storeId"
-              value={this.state.storeId}
-              //placeholder="storeId"
-              onChange={this.handleChange}
-            />
-            <Input
-              type="text"
-              className="validate"
-              id="management"
-              name="management"
-              value={this.state.management}
-              //placeholder="name"
-              onClick={this.toggleBoolean}
-              disabled={this.state.disabledInputArray.includes(
-                "management"
-              )}
-            />
+        <div className="col red darken-4 inv centralContent">
+          <Form id="signup">
+            <div className="col s12 m12">
+              <Label htmlFor="Email" className="" />
+              <Input
+                type="email"
+                className="validate"
+                id="email"
+                name="email"
+                value={this.state.email}
+                //placeholder="email@domain.com"
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="col s12 m12">
+            <Label htmlFor="Password" className="" />
+              <Input
+                type="password"
+                className="validate"
+                id="password"
+                name="password"
+                value={this.state.password}
+                //placeholder="password"
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="col s12 m12">
+            <Label htmlFor="Re-type Password" className="" />
+              <Input
+                type="password"
+                className="validate"
+                id="confirmation"
+                name="confirmation"
+                value={this.state.confirmation}
+                //placeholder="confirm password"
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="col s12 m12">
+            <Label htmlFor="Name" className="" />
+              <Input
+                type="text"
+                className="validate"
+                id="name"
+                name="name"
+                value={this.state.name}
+                //placeholder="name"
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="col s12 m12">
+            <Label htmlFor="Phone No." className="" />
+              <Input
+                type="tel"
+                className="validate"
+                id="phone"
+                name="phone"
+                value={this.state.phone}
+                //placeholder="name"
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="col s12 m12">
+            <Label htmlFor="StoreID" className="" />
+              <Input
+                type="text"
+                className="validate"
+                id="storeId"
+                name="storeId"
+                value={this.state.storeId}
+                //placeholder="storeId"
+                onChange={this.handleChange}
+              />
+            </div>
+            <div className="col s12 m12">
+            <Label htmlFor="Management?" className="" />
+              <Input
+                type="text"
+                className="validate"
+                id="management"
+                name="management"
+                value={this.state.management}
+                //placeholder="name"
+                onClick={this.toggleBoolean}
+                disabled={this.state.disabledInputArray.includes(
+                  "management"
+                )}
+              />
+            </div>
           </Form>
         </div>
         <Button onClick={this.handleSubmit}>SignUp</Button>

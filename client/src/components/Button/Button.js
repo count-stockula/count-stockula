@@ -5,12 +5,12 @@ import Button from '@material-ui/core/Button';
 import "./Button.css";
 
 const styles = theme => ({
-  button: {
-    margin: theme.spacing.unit,
-  },
-  input: {
-    display: 'none',
-  },
+  // button: {
+  //   margin: theme.spacing.unit,
+  // },
+  // input: {
+  //   display: 'none',
+  // },
 });
 
 function ContainedButton(props) {
