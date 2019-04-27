@@ -39,7 +39,9 @@ export default class Inventory extends PureComponent {
           upc: data,
           currentQty: parseInt(retData.data.currentQty),
           prodName: retData.data.name,
-          description: retData.data.description
+          description: retData.data.description,
+          showUpcField:false,
+          alertShown:false
         });
       })
       .catch(err => {
@@ -56,11 +58,13 @@ export default class Inventory extends PureComponent {
     event.preventDefault();
     this.setState({
       showForm: false,
-      upc: 0,
+      upc: "",
       prodName: "",
       description: "",
       currentQty: 0,
-      qty: 0
+      qty: 0,
+      showUpcField:false,
+      alertShown:false
     });
   };
   handleChange = event => {
@@ -87,21 +91,51 @@ export default class Inventory extends PureComponent {
     return this.state.alertShown ? "modal modalOpen" : "modal";
   };
   hideModal = () => {
-     if(this.state.showEmailDialog){
-          
+     if(this.state.showUpcField){
+          API.findItemUpc("5cb3247aef86d68b5e0dc795", this.state.upc)
+          .then(retData => {
+          this.setState({
+               showForm: true,
+               upc: this.state.upc,
+               currentQty: parseInt(retData.data.currentQty),
+               prodName: retData.data.name,
+               description: retData.data.description,
+               showUpcField:false,
+               alertShown:false
+          });
+          })
+      .catch(err => {
+        this.setState({
+          errorMessage:
+            "Failed to find scanned item with UPC number " +
+            this.state.upc +
+            " in the database",
+          alertShown: true
+        });
+      });
+     }else{
+          this.setState({ upc: "",
+          showForm: false,
+          currentQty: "",
+          prodName: "",
+          description: "",
+          qty: "",
+          alertShown:false ,
+           errorMessage:"",   
+           buttonText:"OK",
+           showUpcField:false
+          });
      }
-    this.setState({ alertShown: false, 
-     errorMessage: "",
-     buttonText:"OK",
-     showEmailDialog:false });
+    
   };
   manualEntry= () =>{
-this.setState({
-     alertShown:true,
-     errorMessage:"",   
-     buttonText:"OK",
-     showEmailDialog:true
-});
+     this.setState({
+          alertShown:true,
+          errorMessage:"",   
+          buttonText:"OK",
+          showUpcField:true,
+          upc: "",
+     });
   }
   render() {
     return (
@@ -127,11 +161,11 @@ this.setState({
                 saveClick={this.saveInventory}
               />
             </div>
-            <Modal showEmailDialog={this.state.showEmailDialog} buttonText={this.state.buttonText} className={this.modalViews()} onClick={this.hideModal.bind(this)}>
-                    <p>{this.state.errorMessage}</p>
-                    <div className={this.state.showEmailDialog ? "show": "hide"}>
+            <Modal showEmailDialog={this.state.showUpcField} buttonText={this.state.buttonText} className={this.modalViews()} onClick={this.hideModal.bind(this)}>
+                    <p className="black-text">{this.state.errorMessage}</p>
+                    <div className={this.state.showUpcField ? "show": "hide"}>
                          <p className="black-text">Enter UPC:</p>
-                         <Input textChangeFunc={this.handleChange} id="upc" name="upc" textalign="center" required></Input>
+                         <Input textChangeFunc={this.handleChange} value={this.state.upc} id="upc" name="upc" textalign="center" required></Input>
                     </div>
             </Modal>
             {/* <div id="modal1" className={this.modalViews()}>

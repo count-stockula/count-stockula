@@ -157,7 +157,7 @@ export default class Sales extends PureComponent{
                                        })}             
                               </List>
                               <div className="btnHolder">     
-                                   <button className="btn red darken-3" onClick={() => this.getEmail()} ref={(thisObj) => { this.thisObj = thisObj; }}>Finish Sale</button>
+                                   <button className="btn red darken-4" onClick={() => this.getEmail()} ref={(thisObj) => { this.thisObj = thisObj; }}>Finish Sale</button>
                               </div>
                          </div>
                          <Modal showEmailDialog={this.state.showEmailDialog} buttonText={this.state.buttonText} className={this.modalViews()} onClick={this.hideModal} >
