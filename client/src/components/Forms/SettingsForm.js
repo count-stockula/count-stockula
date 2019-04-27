@@ -47,7 +47,7 @@ export default function SettingsForm(props) {
             </div>
             <div className="col s12 m12 center-align">
                 <div className="input-field col s6 m6 center-align">
-                    <button className="btn black" onClick={props.cancelEntry}>Cancel</button>
+                <Link to="/Scan"><button className="btn black">Cancel</button></Link>
                 </div>
                 <div className="input-field col s6 m6 center-align">
                     <button className="btn black" onClick={props.saveClick}>Save</button>

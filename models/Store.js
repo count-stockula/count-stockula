@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const storeSchema = new Schema({
-  name: { type: String, required: true },
+  name: { type: String, required: true, unique: true },
   street: String,
   city: String,
   state: String,
-  phoneNumber: String,
+  phone: String,
   userId: [{
     type: Schema.Types.ObjectId,
     ref: "User"

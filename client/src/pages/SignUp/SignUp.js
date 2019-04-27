@@ -2,23 +2,74 @@ import React, { PureComponent } from "react";
 import API from "../../components/utils/API";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Input/Input";
-import Label from "../../components/Label/Label";
 import Button from "../../components/Button/Button";
 import Blackbutton from "../../components/Button/Blackbutton";
 
 export default class SignUp extends PureComponent {
-  state = {
-    email: "",
-    userPass: "",
-    confPass: "",
-    storeId: "",
-    EXTRA: "",
-    disabledInputArray: ["EXTRA"]
+  constructor() {
+    super();
+    this.state = {
+      email: "email@domain.com",
+      password: "Password123",
+      confirmation: "Password123",
+      name: "",
+      phone: "",
+      storeId: "5cc23c1209d77f5e2b71390c",
+      management: false,
+      disabledInputArray: ["management"]
+    };
+  }
+
+  handleChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
   };
 
-  isDisabled = event => {
-    const { name, disabledInputArray } = event.target;
-    return disabledInputArray.includes(name);
+  handleSubmit = event => {
+    event.preventDefault();
+    const { email, password, confirmation, name, phone, storeId, management } = this.state;
+    if (password !== confirmation) {
+      alert("password must match confirmation");
+      return;
+    }
+    API.createUser({
+      email: email,
+      password: password,
+      name: name,
+      phone: phone,
+      storeId: storeId,
+      management: management
+    })
+      .then(serverResponse => {
+        // handle response from server
+        if (serverResponse === "email username already exists") {
+          // handle bad email
+          return;
+        }
+        this.setState({
+          email: "",
+          password: "",
+          confirmation: "",
+          name: "",
+          phone: "",
+          storeId: "",
+        });
+        alert("Successful SignUp\n\nPlease login with your new username and password");
+        window.location.href = "/";
+      })
+      .catch(error => {
+        //window.location.href = "/Scan";
+      });
+    // end API.checkPass
+  };
+
+  toggleBoolean = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: !value
+    })
   };
 
   toggleDisable = event => {
@@ -29,41 +80,6 @@ export default class SignUp extends PureComponent {
     } else {
       disabledInputArray.push(index);
     }
-  };
-
-  handleChange = event => {
-    const { name, defaultValue } = event.target;
-    this.setState({
-      [name]: defaultValue
-    });
-  };
-
-  handleSubmit = event => {
-    const { email, userPass, confPass, storeId, EXTRA } = this.state;
-    event.preventDefault();
-    API.createUser(email, userPass, confPass, storeId, EXTRA)
-      .then(serverResponse => {
-        this.setState({
-          email: "",
-          userPass: "",
-          confPass: "",
-          storeId: "",
-          EXTRA: ""
-        });
-        // handle response from server
-        if (serverResponse === "badEmail") {
-          // handle bad email
-          return;
-        } else if (serverResponse === "badPass") {
-          // handle bad password
-          return;
-        }
-        window.location.href = "/Scan";
-      })
-      .catch(error => {
-        window.location.href = "/Scan";
-      });
-    // end API.checkPass
   };
 
   render() {
@@ -80,58 +96,76 @@ export default class SignUp extends PureComponent {
           <Form className="col" id="login">
             <Input
               type="email"
-              className="text-center"
+              className="validate"
               id="email"
               name="email"
-              defaultValue={this.state.email}
-              placeholder="email@domain.com"
-              onchange={this.handleChange}
+              value={this.state.email}
+              //placeholder="email@domain.com"
+              onChange={this.handleChange}
             />
             <Input
               type="password"
-              className="text-center"
-              id="userPass"
-              name="userPass"
-              defaultValue={this.state.userPass}
-              placeholder="password"
-              onchange={this.handleChange}
+              className="validate"
+              id="password"
+              name="password"
+              value={this.state.password}
+              //placeholder="password"
+              onChange={this.handleChange}
+            />
+            <Input
+              type="password"
+              className="validate"
+              id="confirmation"
+              name="confirmation"
+              value={this.state.confirmation}
+              //placeholder="confirm password"
+              onChange={this.handleChange}
             />
             <Input
               type="text"
-              className="form-control text-center"
-              id="confPass"
-              name="confPass"
-              defaultValue={this.state.confPass}
-              placeholder="confirm password"
-              onchange={this.handleChange}
+              className="validate"
+              id="name"
+              name="name"
+              value={this.state.name}
+              //placeholder="name"
+              onChange={this.handleChange}
+            />
+            <Input
+              type="tel"
+              className="validate"
+              id="phone"
+              name="phone"
+              value={this.state.phone}
+              //placeholder="name"
+              onChange={this.handleChange}
             />
             <Input
               type="text"
-              className="form-control text-center"
+              className="validate"
               id="storeId"
               name="storeId"
-              defaultValue={this.state.storeId}
-              placeholder="storeId"
-              onchange={this.handleChange}
+              value={this.state.storeId}
+              //placeholder="storeId"
+              onChange={this.handleChange}
             />
             <Input
               type="text"
-              className="form-control text-center"
-              id="EXTRA"
-              name="EXTRA"
-              defaultValue={this.state.EXTRA}
-              placeholder="EXTRA"
-              onchange={this.handleChange}
-              disabled={this.isDisabled ? true : false}
+              className="validate"
+              id="management"
+              name="management"
+              value={this.state.management}
+              //placeholder="name"
+              onClick={this.toggleBoolean}
+              disabled={this.state.disabledInputArray.includes(
+                "management"
+              )}
             />
           </Form>
         </div>
-        <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
-          <Blackbutton onClick={this.handleSubmit} text="sign up"></Blackbutton>
-        </div>
+        <Button onClick={this.handleSubmit}>SignUp</Button>
         <div className="orSignUp">
           <a href="/">
-            <Button>Returning User? SIGN IN</Button>
+            <Button>Returning User? Login</Button>
           </a>
         </div>
       </>
