@@ -9,7 +9,6 @@ function Label(props) {
   //   </label>
   // );
   const { htmlFor, className, labValue } = props;
-  console.log("val", labValue, "htmlFor", htmlFor)
   return <label htmlFor={htmlFor} className={className}>{labValue ==="" || !labValue ? htmlFor:labValue}</label>;
 }
 

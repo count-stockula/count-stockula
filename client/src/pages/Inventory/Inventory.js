@@ -13,7 +13,7 @@ export default class Inventory extends PureComponent {
   state = {
     store: {
       name: "Shops at East Peidmont",
-      address: " 230 E. Peiedmont Ave",
+      address: "230 E. Peiedmont Ave",
       city: "Norcross",
       state: "GA",
       zip: "30010",
@@ -43,7 +43,6 @@ export default class Inventory extends PureComponent {
           description: retData.data.description,
           showUpcField:false,
           alertShown:false,
-          showCancel:false,
           showCancel:false
         });
       })
@@ -59,20 +58,20 @@ export default class Inventory extends PureComponent {
   };
   cancelEntry = event => {
     event.preventDefault();
-    this.setState({
-      showForm: false,
+    this.setState({      
       upc: "",
       prodName: "",
       description: "",
       currentQty: 0,
       qty: 0,
+      showForm: false,
       showUpcField:false,
       alertShown:false,
       showCancel:false
     });
   };
-  handleChange = event => {
-    const { name, value } = event.target;
+  handleChange = event => {       
+    const { name, value } = event.target;    
     this.setState({
       [name]: value
     });
@@ -83,6 +82,7 @@ export default class Inventory extends PureComponent {
       .then(retVal =>
         this.setState({
           showForm: false,
+          alertShown: false,
           upc: "",
           prodName: "",
           description: "",
@@ -127,21 +127,21 @@ export default class Inventory extends PureComponent {
           description: "",
           qty: "",
           alertShown:false ,
-           errorMessage:"",   
-           buttonText:"OK",
-           showUpcField:false,
-           showCancel:false
+          errorMessage:"",   
+          buttonText:"OK",
+          showUpcField:false,
+          showCancel:false
           });
      }
     
   };
   cancelModal = () => {
-     this.setState({alertShown: false, errorMessage:"", upc:"", showCancel:false})
+    this.setState({alertShown: false, errorMessage:"", upc:"", showCancel:false});
 }
   evalCancelVisibillity = () => {
      return this.state.showCancel ? "modal-close waves-effect waves-grey btn-flat":"hide";
  }
-  manualEntry= () =>{
+  manualEntry = () =>{
      this.setState({
           alertShown:true,
           errorMessage:"",   
