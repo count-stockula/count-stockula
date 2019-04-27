@@ -4,6 +4,7 @@ import Form from "../../components/Form/Form";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import Blackbutton from "../../components/Button/Blackbutton";
+import "./SignUp.css";
 
 export default class SignUp extends PureComponent {
   constructor() {

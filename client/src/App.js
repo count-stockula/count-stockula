@@ -9,6 +9,7 @@ import {
 import "./App.css";
 import Login from "./pages/Login/Login";
 import SignUp from "./pages/SignUp/SignUp";
+import API from "./components/utils/API";
 import TestAuth from "./pages/TestAuth/TestAuth";
 import Scan from "./pages/Scan/Scan";
 import Sales from "./pages/Sales/Sales";
@@ -17,32 +18,35 @@ import AddItem from "./pages/AddItem/AddItem";
 import Inventory from "./pages/Inventory/Inventory";
 import Settings from "./pages/Settings/Settings";
 
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    this.Authenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    this.Authenticated = false;
-    setTimeout(cb, 100); // fake async
-  }
-};
-
-const CustomAuthRoute = ({ component: Component, ...rest }) => (
+const AuthRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      fakeAuth.isAuthenticated === true ? (
-        <TestAuth {...props} />
+      // toggle API.authenticate(true/false)
+      API.authenticate(true) === true ? (
+        <Component {...props} />
       ) : (
-        <Redirect to="/login" />
+        <Redirect
+          to={{
+            pathname: "/login",
+            state: { from: props.location }
+          }}
+        />
       )
     }
   />
 );
 
 class App extends PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      authenticated: false,
+      redirectToReferrer: false,
+      tokenCookie: false
+    };
+  }
+
   render() {
     return (
       <Router>
@@ -52,13 +56,14 @@ class App extends PureComponent {
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
             {/* if path works, try with exact path */}
-            <CustomAuthRoute path="/testauth" component={TestAuth} />
+            <AuthRoute path="/testauth" component={TestAuth} />
             <Route exact path="/scan" component={Scan} />
             <Route exact path="/sales" component={Sales} />
             <Route exact path="/inventory" component={Inventory} />
             <Route exact path="/additem" component={AddItem} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/settings" component={Settings} />
+            {/* <Route exact path="/signout" component={SignOut} /> */}
           </Switch>
         </div>
       </Router>

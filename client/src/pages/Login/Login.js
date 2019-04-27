@@ -37,12 +37,10 @@ export default class Login extends PureComponent {
           serverResponse === "incorrect password"
         ) {
           // handle email username not found or incorrect password
-          // password: '$2b$10$T/fAJdCJIxwLvhd07RvtS.pwlyMh9klhdXLqaBKFgu2AO6pW.rMMy'
           alert(serverResponse);
           return;
         }
         //successful login
-        //alert("successful login");
         window.location.href = "/Scan";
       })
       .catch(error => {
@@ -55,7 +53,11 @@ export default class Login extends PureComponent {
     return (
       <>
         <div className="logoContainer">
-          <img src="images/logo.png" alt="Count Stockula Logo" width="150px" />
+          <img
+            src="images/logo.png"
+            alt="Count Stockula Logo"
+            width="150px"
+          />
         </div>
         <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
           <div className="loginContainer">
@@ -86,6 +88,11 @@ export default class Login extends PureComponent {
           <div className="orSignUp">
             <a href="/SignUp">
               <Button>New User? SIGN UP</Button>
+            </a>
+          </div>
+          <div className="TestAuth">
+            <a href="/testauth">
+              <Button>TestAuth</Button>
             </a>
           </div>
         </div>

@@ -130,11 +130,19 @@ export default {
       pdfFile: pdfFile
     });
   },
-  // test token authorization access
-  // testAuth: function(email, password) {
-  //   return axios.post("/api/test", withAuth, {
-  //     email: email,
-  //     password: password
-  //   });
-  // }
+  // token authentication
+  authenticate: function(tokenCookie) {
+    // return axios.post("/api/users/authenticate", {
+    //   tokenCookie: tokenCookie
+    // });
+    const async = () => tokenCookie;
+    setTimeout(async, 100); // fake async
+  },
+  // signout
+  signout: function(cb) {
+    // return axios.post("/api/users/signout", {
+    //   tokenCookie: tokenCookie
+    // });
+    setTimeout(cb, 100); // fake async
+  }
 };

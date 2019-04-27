@@ -139,8 +139,10 @@ module.exports = {
       })
       .catch(err => res.status(500).json({ error: "db.User.findOne error" }));
   },
-  test: function(req, res) {
-    //"/api/secret", withAuth,
-    res.send("successful authorizaton via token");
+  authenticate: function(req, res) {
+    res.send("successful test authorizaton via token");
+  },
+  signout: function(req, res) {
+    res.send("successful test signout");
   }
 };
