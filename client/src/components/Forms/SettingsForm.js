@@ -1,6 +1,7 @@
 import React from 'react';
+import {Link}from "react-router-dom";
 import Form from "../Form/Form";
-import Input from "../Input/Input";
+import Input from "../Input/SimpleInput";
 import Label from "../Label/Label";
 import "./Forms.css";
 
