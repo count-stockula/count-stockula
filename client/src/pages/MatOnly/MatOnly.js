@@ -12,7 +12,7 @@ export default class MatOnly extends PureComponent{
                <>
                <PageHeader title="Materilze only"/>                
                <div className="row mainWrapper stretched">                              
-                    <form className="col red darken-3 centralContent">
+                    <form className="col red darken-4 centralContent">
                          <p>Col 2</p>
                          <input type="text"/>
                     </form>                         

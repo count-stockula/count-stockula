@@ -3,8 +3,9 @@ import API from "../../components/utils/API";
 import BarcodeReader from "react-barcode-reader";
 import PageHeader from "../../components/Pageheader/Pageheader";
 import BottomBar from "../../components/BottomBar/BottomBar";
-import InventoryForm from "../../components/Forms/InventoryForm";
 import InvForm2 from "../../components/Forms/InvForm2";
+import Modal from "../../components/Modal/Modal";
+import Input from "../../components/Input/SimpleInput";
 import "../../components/Form/Form.css";
 import "./Inventory.css";
 
@@ -23,7 +24,12 @@ export default class Inventory extends PureComponent {
     currentQty: "",
     prodName: "",
     description: "",
-    qty: ""
+    qty: "",
+    alertShown:false ,
+     errorMessage:"",   
+     buttonText:"OK",
+     showUpcField:false,
+     showCancel:false
   };
   handleScan = data => {
     //data will be the upc
@@ -34,7 +40,11 @@ export default class Inventory extends PureComponent {
           upc: data,
           currentQty: parseInt(retData.data.currentQty),
           prodName: retData.data.name,
-          description: retData.data.description
+          description: retData.data.description,
+          showUpcField:false,
+          alertShown:false,
+          showCancel:false,
+          showCancel:false
         });
       })
       .catch(err => {
@@ -51,11 +61,14 @@ export default class Inventory extends PureComponent {
     event.preventDefault();
     this.setState({
       showForm: false,
-      upc: 0,
+      upc: "",
       prodName: "",
       description: "",
       currentQty: 0,
-      qty: 0
+      qty: 0,
+      showUpcField:false,
+      alertShown:false,
+      showCancel:false
     });
   };
   handleChange = event => {
@@ -82,16 +95,70 @@ export default class Inventory extends PureComponent {
     return this.state.alertShown ? "modal modalOpen" : "modal";
   };
   hideModal = () => {
-    this.setState({ alertShown: false, errorMessage: "" });
+     if(this.state.showUpcField){
+          API.findItemUpc("5cb3247aef86d68b5e0dc795", this.state.upc)
+          .then(retData => {
+          this.setState({
+               showForm: true,
+               upc: this.state.upc,
+               currentQty: parseInt(retData.data.currentQty),
+               prodName: retData.data.name,
+               description: retData.data.description,
+               showUpcField:false,
+               alertShown:false,
+               showCancel:false
+          });
+          })
+      .catch(err => {
+        this.setState({
+          errorMessage:
+            "Failed to find scanned item with UPC number " +
+            this.state.upc +
+            " in the database",
+          alertShown: true,
+          showCancel:true
+        });
+      });
+     }else{
+          this.setState({ upc: "",
+          showForm: false,
+          currentQty: "",
+          prodName: "",
+          description: "",
+          qty: "",
+          alertShown:false ,
+           errorMessage:"",   
+           buttonText:"OK",
+           showUpcField:false,
+           showCancel:false
+          });
+     }
+    
   };
+  cancelModal = () => {
+     this.setState({alertShown: false, errorMessage:"", upc:"", showCancel:false})
+}
+  evalCancelVisibillity = () => {
+     return this.state.showCancel ? "modal-close waves-effect waves-grey btn-flat":"hide";
+ }
+  manualEntry= () =>{
+     this.setState({
+          alertShown:true,
+          errorMessage:"",   
+          buttonText:"OK",
+          showUpcField:true,
+          upc: "",
+          showCancel:true
+     });
+  }
   render() {
     return (
       <>
         <BarcodeReader onError={this.handleError} onScan={this.handleScan} />
         <PageHeader title="Inventory" />
         <div className="row mainWrapper stretched">
-          <div className="col red darken-4 inv centralContent">
-            <h1 className={this.state.showForm ? "scanText  hide" : "scanText"}>
+          <div className="col red darken-4 inv centralContent" >
+            <h1 className={this.state.showForm ? "scanText  hide" : "scanText"} onClick={this.manualEntry} >
               START SCANNING
               <br className="scanBreak" />
               TO ADD ITEM TO INVENTORY
@@ -108,7 +175,14 @@ export default class Inventory extends PureComponent {
                 saveClick={this.saveInventory}
               />
             </div>
-            <div id="modal1" className={this.modalViews()}>
+            <Modal evalCancelVisibillity={this.evalCancelVisibillity} cancelModal={this.cancelModal} showEmailDialog={this.state.showUpcField} buttonText={this.state.buttonText} className={this.modalViews()} onClick={this.hideModal.bind(this)}>
+                    <p className="black-text">{this.state.errorMessage}</p>
+                    <div className={this.state.showUpcField ? "show": "hide"}>
+                         <p className="black-text">Enter UPC:</p>
+                         <Input textChangeFunc={this.handleChange} value={this.state.upc} id="upc" name="upc" textalign="center" required></Input>
+                    </div>
+            </Modal>
+            {/* <div id="modal1" className={this.modalViews()}>
               <div className="modal-content">
                 <p>{this.state.errorMessage}</p>
               </div>
@@ -120,7 +194,7 @@ export default class Inventory extends PureComponent {
                   OK
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <BottomBar />
