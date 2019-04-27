@@ -5,7 +5,6 @@ export default {
   // gets an array of all items in db or for a certain store
   getAllItems: function(storeId) {
     if (storeId !== "0") {
-      console.log("API", storeId);
       return axios.get("/api/storeItems", { params: { storeId: storeId } });
     } else {
       return axios.get("/api/storeItems");
@@ -71,7 +70,6 @@ export default {
   // Functions involving Stores collection
   // gets an array of all the stores in the database
   getAllStores: function() {
-    console.log("in the API");
     return axios.get("/api/stores");
   },
   // Create an item document in database

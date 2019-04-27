@@ -30,7 +30,6 @@ export default class Login extends PureComponent {
         this.setState({
           password: ""
         });
-        console.log("serverResponse:\n", serverResponse);
         // handle response from server
         if (
           serverResponse === "email username not found" ||
