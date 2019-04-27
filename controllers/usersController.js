@@ -64,13 +64,11 @@ module.exports = {
               )
                 .then(() => res.status(200).json(newUser.email))
                 .catch(err =>
-                  res.status(500).json({
-                    errer: "db.Store.findOneAndUpdate error"
-                  })
+                  res.status(500).json({ error: "db.Store.findOneAndUpdate error" })
                 );
             })
             .catch(err =>
-              res.status(500).json({ errer: "db.User.create error" })
+              res.status(500).json({ error: "db.User.create error" })
             );
         }
       });
