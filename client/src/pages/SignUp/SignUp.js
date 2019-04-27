@@ -16,7 +16,7 @@ export default class SignUp extends PureComponent {
       confirmation: "Password123",
       name: "",
       phone: "",
-      storeId: "5cc23c1209d77f5e2b71390c",
+      storeId: "5cb3247aef86d68b5e0dc795",
       management: false,
       disabledInputArray: ["management"]
     };
