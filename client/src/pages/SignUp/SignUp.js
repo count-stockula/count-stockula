@@ -2,6 +2,7 @@ import React, { PureComponent } from "react";
 import API from "../../components/utils/API";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Input/Input";
+import Label from "../../components/Label/Label";
 import Button from "../../components/Button/Button";
 import Blackbutton from "../../components/Button/Blackbutton";
 import "./SignUp.css";
@@ -95,6 +96,7 @@ export default class SignUp extends PureComponent {
         </div>
         <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
           <Form className="col" id="login">
+              <Label htmlFor="email" className=""/> 
             <Input
               type="email"
               className="validate"
