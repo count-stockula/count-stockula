@@ -18,19 +18,31 @@ import AddItem from "./pages/AddItem/AddItem";
 import Inventory from "./pages/Inventory/Inventory";
 import Settings from "./pages/Settings/Settings";
 
+const fakeAuth = {
+  isAuthenticated: true,
+  authenticate(cb) {
+    this.isAuthenticated = true;
+    setTimeout(cb, 100); // fake async
+  },
+  signout(cb) {
+    this.isAuthenticated = false;
+    setTimeout(cb, 100); // fake async
+  }
+};
+
 const AuthRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      // toggle API.authenticate(true/false)
-      API.authenticate(true) === true ? (
+      fakeAuth.isAuthenticated === true ? (
         <Component {...props} />
       ) : (
         <Redirect
-          to={{
-            pathname: "/login",
-            state: { from: props.location }
-          }}
+          to="/login"
+          // to={{
+          //   pathname: "/login",
+          //   state: { from: props.location }
+          // }}
         />
       )
     }
@@ -41,9 +53,7 @@ class App extends PureComponent {
   constructor() {
     super();
     this.state = {
-      authenticated: false,
-      redirectToReferrer: false,
-      tokenCookie: false
+      isAuthenticated: false
     };
   }
 
@@ -55,8 +65,7 @@ class App extends PureComponent {
             <Route exact path="/" component={Login} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={SignUp} />
-            {/* if path works, try with exact path */}
-            <AuthRoute path="/testauth" component={TestAuth} />
+            <AuthRoute exact path="/testauth" component={TestAuth} />
             <Route exact path="/scan" component={Scan} />
             <Route exact path="/sales" component={Sales} />
             <Route exact path="/inventory" component={Inventory} />

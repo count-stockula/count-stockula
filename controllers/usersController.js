@@ -126,7 +126,7 @@ module.exports = {
               // Issue token
               const payload = { email };
               const token = jwt.sign(payload, nonce, {
-                expiresIn: "12h"
+                expiresIn: "1h"
               });
               res
                 .cookie("token", token, {
@@ -140,7 +140,9 @@ module.exports = {
       .catch(err => res.status(500).json({ error: "db.User.findOne error" }));
   },
   authenticate: function(req, res) {
-    res.send("successful test authorizaton via token");
+    //console.log("req.body:\n", req.body);
+    const test = req.body.tokenCookie;
+    res.send(true);
   },
   signout: function(req, res) {
     res.send("successful test signout");

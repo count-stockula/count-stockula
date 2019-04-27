@@ -3,7 +3,6 @@ import API from "../../components/utils/API";
 import Form from "../../components/Form/Form";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import Blackbutton from "../../components/Button/Blackbutton";
 import "./Login.css";
 
 export default class Login extends PureComponent {
@@ -23,41 +22,36 @@ export default class Login extends PureComponent {
   };
 
   handleSubmit = event => {
-    const { email, password } = this.state;
     event.preventDefault();
-    API.loginUser(email, password)
-      .then(serverResponse => {
-        this.setState({
-          password: ""
-        });
-        console.log("serverResponse:\n", serverResponse);
-        // handle response from server
-        if (
-          serverResponse === "email username not found" ||
-          serverResponse === "incorrect password"
-        ) {
-          // handle email username not found or incorrect password
-          alert(serverResponse);
-          return;
+    fetch("/api/users/login", {
+      method: "POST",
+      body: JSON.stringify(this.state),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => {
+        if (res.status === 200) {
+          this.props.history.push("/");
+          // successful login
+          //window.location.href = "/testauth";
+          window.location.href = "/scan";
+        } else {
+          const error = new Error(res.error);
+          throw error;
         }
-        //successful login
-        window.location.href = "/Scan";
       })
-      .catch(error => {
-        //window.location.href = "/404";
+      .catch(err => {
+        console.error(err);
+        alert("Error logging in please try again");
       });
-    // end API.checkPass
   };
 
   render() {
     return (
       <>
         <div className="logoContainer">
-          <img
-            src="images/logo.png"
-            alt="Count Stockula Logo"
-            width="150px"
-          />
+          <img src="images/logo.png" alt="Count Stockula Logo" width="150px" />
         </div>
         <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
           <div className="loginContainer">

@@ -123,26 +123,23 @@ export default {
       password: password
     });
   },
-  // sends email with attached file to the specified address
-  sendEmail: function(receiveAddress, pdfFile) {
-    return axios.post("/api/emails", {
-      receiveAddress: receiveAddress,
-      pdfFile: pdfFile
-    });
-  },
   // token authentication
   authenticate: function(tokenCookie) {
-    // return axios.post("/api/users/authenticate", {
-    //   tokenCookie: tokenCookie
-    // });
-    const async = () => tokenCookie;
-    setTimeout(async, 100); // fake async
+    return axios.post("/api/users/authenticate", {
+      tokenCookie: tokenCookie
+    });
   },
   // signout
   signout: function(cb) {
     // return axios.post("/api/users/signout", {
     //   tokenCookie: tokenCookie
     // });
-    setTimeout(cb, 100); // fake async
+  },
+  // sends email with attached file to the specified address
+  sendEmail: function(receiveAddress, pdfFile) {
+    return axios.post("/api/emails", {
+      receiveAddress: receiveAddress,
+      pdfFile: pdfFile
+    });
   }
 };
