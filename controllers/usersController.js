@@ -50,6 +50,7 @@ module.exports = {
         if (foundUser) {
           res.status(200).json("user already exists");
         } else {
+          console.log("req.body:\n", req.body);
           db.User.create(req.body)
             .then(newUser => {
               db.Store.findOneAndUpdate(
@@ -65,15 +66,17 @@ module.exports = {
                 .then(() => res.status(200).json(newUser.email))
                 .catch(err =>
                   res.status(500).json({
-                    errer: "db.Store.findOneAndUpdate error"
+                    error: "db.Store.findOneAndUpdate error"
                   })
                 );
             })
             .catch(err =>
-              res.status(500).json({ errer: "db.User.create error" })
+              res.status(500).json({ error: "db.User.create error" })
             );
         }
       });
+    } else {
+      res.status(500).json({error: "storeId is required"});
     }
   },
   update: function(req, res) {
