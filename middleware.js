@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const secret = "mysecretsshhh";
+const nonce = "any secret nonce value";
 
 const withAuth = function(req, res, next) {
   const token =
@@ -9,11 +9,11 @@ const withAuth = function(req, res, next) {
     req.cookies.token;
 
   if (!token) {
-    res.status(401).send("Unauthorized: No token provided");
+    res.status(401).send("Authorization failure: token not provided");
   } else {
-    jwt.verify(token, secret, function(err, decoded) {
+    jwt.verify(token, nonce, function(err, decoded) {
       if (err) {
-        res.status(401).send("Unauthorized: Invalid token");
+        res.status(401).send("Authorization failure: token not valid");
       } else {
         req.email = decoded.email;
         next();

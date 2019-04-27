@@ -27,8 +27,7 @@ function Input(props) {
         //onChange={props.textChangeFunc}
         disabled={disabled}
       />
-      <Label htmlFor={id} className="active">
-        {id}
+      <Label htmlFor={id} className="active" labValue="">
       </Label>
       {/* <div>
         type={props.type}
