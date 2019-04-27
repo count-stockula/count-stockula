@@ -12,6 +12,7 @@ export default function InvForm2(props) {
                     id="prodName"
                     name="prodName"
                     defaultValue={props.prodName}
+                    value={props.prodName}
                     ></Input>
                </div>
                <div className="col s12 m6">
@@ -19,6 +20,7 @@ export default function InvForm2(props) {
                     <Input type="text"
                     readOnly={true}
                     defaultValue={props.upc}
+                    value={props.upc}
                     id="upc"
                     validate="true"
                     ></Input>
@@ -29,13 +31,15 @@ export default function InvForm2(props) {
                     <Input type="text"
                     id="description"
                     name="description"
-                    defaultValue={props.description} />
+                    defaultValue={props.description}
+                    value={props.description} />
                </div>
                <div className="col s12 m6">
                     <Label labValue="Current Quantity" htmlFor="currentQty" className="active"/>
                     <Input type="text"
                     name="currentQty"
                     defaultValue={props.currentQty}
+                    value={props.currentQty}
                     id="currentQty"
                     ></Input>
                </div>
@@ -44,6 +48,7 @@ export default function InvForm2(props) {
                     <Input type="number"
                     textChangeFunc = {props.typingEvent}
                     defaultValue={props.qty}
+                    value={props.qty}
                     id="qty"
                     name="qty"
                     ></Input>

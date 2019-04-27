@@ -30,7 +30,7 @@ export default class AddItem extends PureComponent {
      this.setState({showForm: false, upc:"", currentQty:"", prodName:""});
 }     
   handleScan = data => {
-    // this.setState({showForm: true, upc: data.trim()});
+     this.setState({showForm: true, upc: data.trim()});
      API.findItemUpc("5cb3247aef86d68b5e0dc795", data.trim())
      .then(retData => {                  
           this.setState({alertShown:true, errorMessage:`The UPC number ${retData.data.upc} exists in the db as ${retData.data.name}. UPCs can not be duplicated. `, showUpcField:false});
@@ -48,7 +48,9 @@ export default class AddItem extends PureComponent {
      });
 }
 inputTyping = event => {
+     
      const { name, value } = event.target;     
+     console.log(value)
      this.setState({
        [name]: value
      });    
@@ -75,6 +77,7 @@ modalViews = () => {
      return this.state.alertShown ? "modal modalOpen modalDismissable" : "modal";
 }
 hideModal = () =>{
+     console.log(this.state.upc)
      if(this.state.showUpcField){
           API.findItemUpc("5cb3247aef86d68b5e0dc795", this.state.upc)
           .then(retData => {                  

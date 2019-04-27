@@ -21,6 +21,7 @@ export default function AddItemForm2 (props) {
                     id="upc"
                     name="upc"
                     defaultValue={props.upc}
+                    value={props.upc}
                     textChangeFunc={props.typingEvent}/>
                </div>
                <div className="col s12">
