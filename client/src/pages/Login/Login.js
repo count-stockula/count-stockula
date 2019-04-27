@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
-import API from "../../components/utils/API";
+//import API from "../../components/utils/API";
 import Form from "../../components/Form/Form";
+import Label from "../../components/Label/Label";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import "./Login.css";
@@ -51,11 +52,16 @@ export default class Login extends PureComponent {
     return (
       <>
         <div className="logoContainer">
-          <img src="images/logo.png" alt="Count Stockula Logo" width="150px" />
+          <img
+            src="images/logo.png"
+            alt="Count Stockula Logo"
+            width="150px"
+          />
         </div>
         <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
           <div className="loginContainer">
             <Form className="col" id="login">
+              <Label htmlFor="email" className="" />
               <Input
                 type="email"
                 className="validate"
@@ -65,6 +71,7 @@ export default class Login extends PureComponent {
                 //placeholder="email@domain.com"
                 onChange={this.handleChange}
               />
+              <Label htmlFor="password" className="" />
               <Input
                 type="password"
                 className="validate"
