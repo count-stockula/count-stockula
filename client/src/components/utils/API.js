@@ -1,4 +1,5 @@
 import axios from "axios";
+const withAuth = require("../../../../middleware");
 
 export default {
   // Functions involving StoreItem collection
@@ -128,6 +129,13 @@ export default {
     return axios.post("/api/emails", {
       receiveAddress: receiveAddress,
       pdfFile: pdfFile
+    });
+  },
+  // test token authorization access
+  test: function(email, password) {
+    return axios.post("/api/test", withAuth, {
+      email: email,
+      password: password
     });
   }
 };

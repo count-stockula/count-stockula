@@ -1,9 +1,9 @@
 const db = require("../models");
 const bcrypt = require("bcrypt");
-const saltRounds = 10;
 const jwt = require("jsonwebtoken");
-const nonce = "any secret nonce value";
 const cookieParser = require("cookie-parser");
+const saltRounds = 10;
+const nonce = "any secret nonce value";
 
 module.exports = {
   findAll: function(req, res) {
@@ -138,5 +138,9 @@ module.exports = {
         }
       })
       .catch(err => res.status(500).json({ error: "db.User.findOne error" }));
+  },
+  test: function(req, res) {
+    //"/api/secret", withAuth,
+    res.send("successful authorizaton via token");
   }
 };
