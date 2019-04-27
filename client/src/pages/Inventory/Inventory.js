@@ -139,7 +139,6 @@ export default class Inventory extends PureComponent {
      this.setState({alertShown: false, errorMessage:"", upc:"", showCancel:false})
 }
   evalCancelVisibillity = () => {
-     console.log("csncel shown", this.state.showCancel)
      return this.state.showCancel ? "modal-close waves-effect waves-grey btn-flat":"hide";
  }
   manualEntry= () =>{

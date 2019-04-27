@@ -48,8 +48,7 @@ export default class AddItem extends PureComponent {
      });
 }
 inputTyping = event => {
-     const { name, value } = event.target;    
-     console.log(name, value)   
+     const { name, value } = event.target;     
      this.setState({
        [name]: value
      });    
