@@ -77,26 +77,13 @@ module.exports = {
     }
   },
   update: function(req, res) {
-    if (req.body.password) {
-      bcrypt.hash(req.body.password, saltRounds).then(hash => {
-        req.body.password = hash;
-        db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
-          .then(() => {
-            db.User.findOne({ _id: req.params.id })
-              .then(foundUser => res.json(foundUser.email))
-              .catch(err => res.status(500).json(err));
-          })
+    db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
+      .then(() => {
+        db.User.findOne({ _id: req.params.id })
+          .then(foundUser => res.json(foundUser.email))
           .catch(err => res.status(500).json(err));
-      });
-    } else {
-      db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
-        .then(() => {
-          db.User.findOne({ _id: req.params.id })
-            .then(foundUser => res.json(foundUser.email))
-            .catch(err => res.status(500).json(err));
-        })
-        .catch(err => res.status(500).json(err));
-    }
+      })
+      .catch(err => res.status(500).json(err));
   },
   remove: function(req, res) {
     db.User.findById({ _id: req.params.id })
