@@ -4,7 +4,7 @@ import AddItem2 from "../../components/Forms/AddItemForm2"
 import BarcodeReader from 'react-barcode-reader'
 import PageHeader from "../../components/Pageheader/Pageheader"
 import BottomBar from "../../components/BottomBar/BottomBar"
-import AddItemForm from "../../components/Forms/AddItemForm";
+import Input from "../../components/Input/SimpleInput";
 
 import "./AddItem.css";
 
@@ -20,6 +20,10 @@ export default class AddItem extends PureComponent {
     caseSize:0,
     addedQty:0,
     alertShown:false,
+    errorMessage:"",   
+     buttonText:"OK",
+     showUpcField:false,
+     showCancel:false
   } 
   cancelEntry = event =>{
        event.preventDefault();
@@ -34,14 +38,18 @@ export default class AddItem extends PureComponent {
      })
      .catch(err => {          
           if( err.message !== "Request failed with status code 404"){
-               this.setState({alertShown:true, errorMessage:`Error connecting to db`})
+               this.setState({alertShown:true, 
+                    errorMessage:`Error connecting to db`,
+                    buttonText:"OK",
+                    showUpcField:false})
                return;
           }
           this.setState({alertShown:false, showForm: true, upc: data.trim()});
      });
 }
 inputTyping = event => {
-     const { name, value } = event.target;       
+     const { name, value } = event.target;    
+     console.log(name, value)   
      this.setState({
        [name]: value
      });    
@@ -61,30 +69,53 @@ addItem = event =>{
      .then(retVal => this.setState({showForm: false, upc:"", prodName:"", description:"", qty:0 }))
      .catch(err => console.log(err));
 }
+evalCancelVisibillity = () => {
+    return this.state.showCancel ? "modal-close waves-effect waves-grey btn-flat":"hide";
+}
 modalViews = () => {     
-     return this.state.alertShown ? "modal modalOpen" : "modal";
+     return this.state.alertShown ? "modal modalOpen modalDismissable" : "modal";
 }
 hideModal = () =>{
-     this.setState({alertShown: false, errorMessage:""})
+     if(this.state.showUpcField){
+          API.findItemUpc("5cb3247aef86d68b5e0dc795", this.state.upc)
+          .then(retData => {                  
+               this.setState({alertShown:true, errorMessage:`The UPC number ${retData.data.upc} exists in the db as ${retData.data.name}. UPCs can not be duplicated. `, showCancel:true});
+              
+          })
+          .catch(err => {          
+               if( err.message !== "Request failed with status code 404"){
+                    this.setState({alertShown:true, errorMessage:`Error connecting to db`, showCancel:true})
+                    return;
+               }
+               this.setState({alertShown:false, showForm: true, upc: this.state.upc.trim(), showCancel:true});
+          });
+     }else{
+          this.setState({alertShown: false, errorMessage:"", showCancel:false})
+     }
 }
+cancelModal = () => {
+     this.setState({alertShown: false, errorMessage:"", upc:"", showCancel:false})
+}
+manualEntry= () =>{    
+     this.setState({
+          alertShown:true,
+          errorMessage:"",   
+          buttonText:"OK",
+          showUpcField:true,
+          upc: "",
+          showCancel:true
+     });     
+  }
   render() {
     return (
       <>
           <BarcodeReader  onError={this.handleError} onScan={this.handleScan}/>
           <PageHeader title="Add Item" />          
           <div className="row mainWrapper stretched">    
-               <div className="col s12 red darken-3 addItem centralContent">  
-                    <h1 className={this.state.showForm ? "scanText  hide" : "scanText"}>START SCANNING
+               <div className="col s12 red darken-4 addItem centralContent">  
+                    <h1 className={this.state.showForm ? "scanText  hide" : "scanText"} onClick={this.manualEntry} >START SCANNING
                     <br className="scanBreak"></br>
-                    TO ADD NEW ITEM</h1>
-                    {/* <div className={this.state.showForm ? "" : "hide"}>
-                         <AddItemForm isFormShown={this.state.showForm}
-                         upc= {this.state.upc}
-                         cancelEntry = {this.cancelEntry}
-                         inputTyping = {this.inputTyping}
-                         addItem= {this.addItem}/>
-                    </div> */}
-
+                    TO ADD NEW ITEM</h1>                    
                     <div className={this.state.showForm ? "" : "hide"}>
                          <AddItem2
                          upc={this.state.upc}
@@ -96,9 +127,12 @@ hideModal = () =>{
                <div id="modal1" className={this.modalViews()}>
                     <div className="modal-content">                         
                          <p>{this.state.errorMessage}</p>
+                         <p className="black-text">Enter UPC:</p>
+                         <Input textChangeFunc={this.inputTyping} value={this.state.upc} id="upc" name="upc" textalign="center" required></Input>
                     </div>
                     <div className="modal-footer">
                          <button className="modal-close waves-effect waves-grey btn-flat" onClick={this.hideModal}>OK</button>
+                         <button className={this.evalCancelVisibillity()} onClick={this.cancelModal}>Cancel</button>
                     </div>
                </div>
         </div>

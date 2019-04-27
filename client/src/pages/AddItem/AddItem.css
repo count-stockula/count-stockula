@@ -42,3 +42,6 @@
 .modalOpen{
      display: block;
 }
+.modal .modal-footer .btn-flat{
+     margin:6px;
+}

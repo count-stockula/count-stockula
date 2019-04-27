@@ -9,6 +9,7 @@ return (
           </div>
           <div className="modal-footer">
                <button className={props.showEmailDialog ? "modal-close waves-effect waves-grey btn-flat red darken-4" :"modal-close waves-effect waves-grey btn-flat" } onClick={props.onClick}>{props.buttonText}</button>
+               <button className={props.evalCancelVisibillity()} onClick={props.cancelModal}>Cancel</button>
           </div>
      </div>
 );}

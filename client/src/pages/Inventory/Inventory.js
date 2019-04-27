@@ -28,7 +28,8 @@ export default class Inventory extends PureComponent {
     alertShown:false ,
      errorMessage:"",   
      buttonText:"OK",
-     showUpcField:false
+     showUpcField:false,
+     showCancel:false
   };
   handleScan = data => {
     //data will be the upc
@@ -41,7 +42,9 @@ export default class Inventory extends PureComponent {
           prodName: retData.data.name,
           description: retData.data.description,
           showUpcField:false,
-          alertShown:false
+          alertShown:false,
+          showCancel:false,
+          showCancel:false
         });
       })
       .catch(err => {
@@ -64,7 +67,8 @@ export default class Inventory extends PureComponent {
       currentQty: 0,
       qty: 0,
       showUpcField:false,
-      alertShown:false
+      alertShown:false,
+      showCancel:false
     });
   };
   handleChange = event => {
@@ -101,7 +105,8 @@ export default class Inventory extends PureComponent {
                prodName: retData.data.name,
                description: retData.data.description,
                showUpcField:false,
-               alertShown:false
+               alertShown:false,
+               showCancel:false
           });
           })
       .catch(err => {
@@ -110,7 +115,8 @@ export default class Inventory extends PureComponent {
             "Failed to find scanned item with UPC number " +
             this.state.upc +
             " in the database",
-          alertShown: true
+          alertShown: true,
+          showCancel:true
         });
       });
      }else{
@@ -123,11 +129,19 @@ export default class Inventory extends PureComponent {
           alertShown:false ,
            errorMessage:"",   
            buttonText:"OK",
-           showUpcField:false
+           showUpcField:false,
+           showCancel:false
           });
      }
     
   };
+  cancelModal = () => {
+     this.setState({alertShown: false, errorMessage:"", upc:"", showCancel:false})
+}
+  evalCancelVisibillity = () => {
+     console.log("csncel shown", this.state.showCancel)
+     return this.state.showCancel ? "modal-close waves-effect waves-grey btn-flat":"hide";
+ }
   manualEntry= () =>{
      this.setState({
           alertShown:true,
@@ -135,6 +149,7 @@ export default class Inventory extends PureComponent {
           buttonText:"OK",
           showUpcField:true,
           upc: "",
+          showCancel:true
      });
   }
   render() {
@@ -161,7 +176,7 @@ export default class Inventory extends PureComponent {
                 saveClick={this.saveInventory}
               />
             </div>
-            <Modal showEmailDialog={this.state.showUpcField} buttonText={this.state.buttonText} className={this.modalViews()} onClick={this.hideModal.bind(this)}>
+            <Modal evalCancelVisibillity={this.evalCancelVisibillity} cancelModal={this.cancelModal} showEmailDialog={this.state.showUpcField} buttonText={this.state.buttonText} className={this.modalViews()} onClick={this.hideModal.bind(this)}>
                     <p className="black-text">{this.state.errorMessage}</p>
                     <div className={this.state.showUpcField ? "show": "hide"}>
                          <p className="black-text">Enter UPC:</p>

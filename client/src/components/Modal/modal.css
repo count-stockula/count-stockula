@@ -25,3 +25,6 @@
 .modal-content input:hover{
      box-shadow:none !important;
 }
+.modal .modal-footer .btn-flat{
+     margin:6px;
+}
