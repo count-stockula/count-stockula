@@ -56,7 +56,6 @@ export default class AddItem extends PureComponent {
   };
   inputTyping = event => {
     const { name, value } = event.target;
-    console.log(value);
     this.setState({
       [name]: value
     });
@@ -93,7 +92,6 @@ export default class AddItem extends PureComponent {
     return this.state.alertShown ? "modal modalOpen modalDismissable" : "modal";
   };
   hideModal = () => {
-    console.log(this.state.upc);
     if (this.state.showUpcField) {
       API.findItemUpc("5cb3247aef86d68b5e0dc795", this.state.upc)
         .then(retData => {

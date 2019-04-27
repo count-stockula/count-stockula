@@ -26,7 +26,9 @@ export default class Sales extends PureComponent {
     errorMessage: "",
     buttonText: "OK",
     showEmailDialog: false,
-    emailAddress: ""
+    showUPCDialog: false,
+    emailAddress: "",
+    upc: ""
   };
   componentDidMount = () => {
     this.setState({ userEmail: "" });
@@ -58,14 +60,16 @@ export default class Sales extends PureComponent {
         alertShown: true,
         showEmailDialog: false,
         errorMessage: "Empty order, please scan items",
-        buttonText: "OK"
+        buttonText: "OK",
+        showUPCDialog: false
       });
       return;
     }
     this.setState({
       alertShown: true,
       showEmailDialog: true,
-      buttonText: "Send Email"
+      buttonText: "Send Email",
+      showUPCDialog: false
     });
   };
   createPdf = () => {
@@ -167,17 +171,19 @@ export default class Sales extends PureComponent {
   };
   modalViews = () => {
     let cssStr = "modal";
-    cssStr += this.state.alertShown ? " modalOpen" : "";
+    cssStr += this.state.alertShown ? " modalOpen" : "";git
     cssStr += this.state.showEmailDialog ? " black" : "";
     return cssStr;
   };
   hideModal = () => {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (
       this.state.showEmailDialog &&
       re.test(String(this.state.userEmail).toLowerCase())
     ) {
       this.createPdf();
+    } else if (this.state.showUPCDialog && this.state.upc !== "") {
+      this.handleScan(this.state.upc);
     } else if (this.state.showEmailDialog && this.state.userEmail === "") {
       this.setState({
         userEmail: "",
@@ -201,6 +207,14 @@ export default class Sales extends PureComponent {
   evalCancelVisibillity = () => {
     return "hide";
   };
+  enterUPC = () => {
+    this.setState({
+      alertShown: true,
+      showEmailDialog: false,
+      showUPCDialog: true,
+      upc: ""
+    });
+  };
   render() {
     return (
       <>
@@ -223,6 +237,15 @@ export default class Sales extends PureComponent {
               >
                 Finish Sale
               </button>
+              <button
+                className="btn red darken-4"
+                ref={manBtn => {
+                  this.manBtn = manBtn;
+                }}
+                onClick={() => this.enterUPC()}
+              >
+                Manual Entry
+              </button>
             </div>
           </div>
           <Modal
@@ -243,20 +266,18 @@ export default class Sales extends PureComponent {
                 required
               />
             </div>
+            <div className={this.state.showUPCDialog ? "show" : "hide"}>
+              <p>Enter in UPC:</p>
+              <Input
+                textChangeFunc={this.changeEvent}
+                id="upc"
+                name="upc"
+                textalign="center"
+                value={this.state.upc}
+                required
+              />
+            </div>
           </Modal>
-          {/* <div id="modal1" className={this.modalViews()}>
-                              <div className="modal-content">                         
-                                   <p>{this.state.errorMessage}</p>
-                                   <div className={this.emailVisibility}>
-                                        <p>Provide email address:</p>
-                                       <Input></Input>
-                                   </div>
-                              </div>
-                              <div className="modal-footer">
-                                   <button className="modal-close waves-effect waves-grey btn-flat" onClick={this.hideModal}>OK</button>
-                                   <button className="modal-close waves-effect waves-grey btn-flat" onClick={this.createPdf}>Send</button>
-                              </div>
-                         </div> */}
         </div>
         <BottomBar />
       </>
