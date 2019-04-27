@@ -11,14 +11,15 @@ export default function InvForm2(props) {
                     <Input type="text"
                     id="prodName"
                     name="prodName"
-                    defaultValue={props.prodName}
+                    value={props.prodName}
+                    readOnly={true}
                     ></Input>
                </div>
                <div className="col s12 m6">
                     <Label labValue="UPC" htmlFor="upc" className="active"/>
                     <Input type="text"
                     readOnly={true}
-                    defaultValue={props.upc}
+                    value={props.upc}
                     id="upc"
                     validate="true"
                     ></Input>
@@ -29,21 +30,23 @@ export default function InvForm2(props) {
                     <Input type="text"
                     id="description"
                     name="description"
-                    defaultValue={props.description} />
+                    value={props.description} 
+                    readOnly={true}/>
                </div>
                <div className="col s12 m6">
                     <Label labValue="Current Quantity" htmlFor="currentQty" className="active"/>
                     <Input type="text"
                     name="currentQty"
-                    defaultValue={props.currentQty}
+                    value={props.currentQty}
                     id="currentQty"
+                    readOnly={true}
                     ></Input>
                </div>
                <div className="col s12 m6">
                     <Label labValue="Units Added" htmlFor="addedQty" className="active"/>
                     <Input type="number"
                     textChangeFunc = {props.typingEvent}
-                    defaultValue={props.qty}
+                    value={props.qty}
                     id="qty"
                     name="qty"
                     ></Input>
