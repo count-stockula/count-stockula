@@ -12,7 +12,6 @@ export default function AddItemForm2 (props) {
                     <Input type="text"
                     id="prodName"
                     name="prodName"
-                    defaultValue={props.prodName}
                     textChangeFunc={props.typingEvent}/>
                </div>
                <div className="col s12 m6">
@@ -20,7 +19,6 @@ export default function AddItemForm2 (props) {
                     <Input type="text"
                     id="upc"
                     name="upc"
-                    defaultValue={props.upc}
                     value={props.upc}
                     textChangeFunc={props.typingEvent}/>
                </div>
@@ -30,7 +28,6 @@ export default function AddItemForm2 (props) {
                     <Input type="text"
                     id="description"
                     name="description"
-                    defaultValue={props.description}
                     textChangeFunc={props.typingEvent}/>
                </div>
                <div className="col s12 m6">
@@ -38,7 +35,6 @@ export default function AddItemForm2 (props) {
                     <Input type="number"
                     id="criticalQty"
                     name="criticalQty"
-                    defaultValue={props.prodName}
                     textChangeFunc={props.typingEvent}/>
                </div>
                <div className="col s12 m6">
@@ -46,7 +42,6 @@ export default function AddItemForm2 (props) {
                     <Input type="number"
                     id="caseSize"
                     name="caseSize"
-                    defaultValue={props.caseSize}
                     textChangeFunc={props.typingEvent}/>
                </div>
                <div className="col s12 m6 offset-m3">
@@ -55,7 +50,6 @@ export default function AddItemForm2 (props) {
                     <Input type="number"
                     id="addedQty"
                     name="addedQty"
-                    defaultValue={props.description}
                     textChangeFunc={props.typingEvent}/>
                </div>
                <div className="col s12 m12 center-align">
