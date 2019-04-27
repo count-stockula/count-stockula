@@ -9,7 +9,7 @@ function Label(props) {
   //   </label>
   // );
   const { htmlFor, className, labValue } = props;
-  return <label htmlFor={htmlFor} className={className}>{labValue}</label>;
+  return <label htmlFor={htmlFor} className={className}>{labValue ? labValue : htmlFor}</label>;
 }
 
 export default Label;
