@@ -37,8 +37,7 @@ export default {
   },
   // gets an object by storeId and upc
   findItemUpc: function(storeId, upc) {
-    let args = { params: { storeId: storeId, upc: upc.trim() } };
-    return axios.get("/api/storeItems/upc", args);
+    return axios.get("/api/storeItems/upc", {params: { storeId: storeId, upc: upc.trim() }});
   },
   // Create an item document in database
   createItem: function(itemData) {
@@ -95,7 +94,7 @@ export default {
   // gets an array of all the users in db or for a certain store
   getAllUsers: function(storeId) {
     if (storeId) {
-      return axios.get("/api/users", { storeId: storeId });
+      return axios.get("/api/users", { params: { storeId: storeId }});
     } else {
       return axios.get("/api/users");
     }
