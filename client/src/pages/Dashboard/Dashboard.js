@@ -17,7 +17,6 @@ export default class Dashboard extends PureComponent {
 
   handleTabChange = (event, value) => {
     const setVal = value;
-    console.log(this.state)
     switch (setVal) {
       case "one":
         API.getAllItems(this.state.curStore).then(results =>

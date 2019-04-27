@@ -1,6 +1,6 @@
 import React from 'react';
 import Form from "../Form/Form";
-import Input from "../Input/Input";
+import Input from "../Input/SimpleInput";
 import Label from "../Label/Label";
 
 export default function InvForm2(props) {

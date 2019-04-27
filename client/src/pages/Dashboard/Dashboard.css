@@ -18,6 +18,9 @@
 }
 @media only screen and (max-width: 601px){    
      .dashboard.centralContent{width:calc(100% - 72px) !important;}
+     .topFixed{
+          margin-top:0px;
+     }
 }
 select{
      display: inline-block;

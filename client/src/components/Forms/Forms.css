@@ -81,3 +81,8 @@ textarea{
     color: white;
     border-bottom: 1px solid white;
 }
+
+.storeDropdown {
+    display: block !important;
+    height: 2.15rem;
+}
