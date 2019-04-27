@@ -11,6 +11,7 @@ export default function SettingsForm(props) {
             <div className="col s12 m6">
                 <Label labValue="Username" htmlFor="userName" className="active" />
                 <Input type="text"
+                    textChangeFunc={props.typingEvent}
                     id="userName"
                     name="userName"
                     defaultValue={props.userName}
@@ -18,7 +19,9 @@ export default function SettingsForm(props) {
             </div>
             <div className="col s12 m6">
                 <Label labValue="Store No." htmlFor="storeNo" className="active" />
-                <select className="storeDropdown">
+                <select name="storeId"
+                    onChange={props.selectStore}
+                    className="storeDropdown">
                     {props.theStores.map(item => (
                         <option key={item._id} value={item._id}>{item.name}</option>
                     ))}
@@ -28,6 +31,7 @@ export default function SettingsForm(props) {
                 <Label labValue="Email" htmlFor="email" />
                 {/* <textarea type="text" id="description" name="description" className="materialize-textarea" defaultValue={props.description}></textarea> */}
                 <Input type="text"
+                    textChangeFunc={props.typingEvent}
                     id="email"
                     name="email"
                     defaultValue={props.email} />
@@ -35,6 +39,7 @@ export default function SettingsForm(props) {
             <div className="col s12 m12">
                 <Label labValue="Phone No." htmlFor="phoneNo" className="active" />
                 <Input type="text"
+                    textChangeFunc={props.typingEvent}
                     name="phoneNo"
                     defaultValue={props.phoneNo}
                     id="phoneNo"
