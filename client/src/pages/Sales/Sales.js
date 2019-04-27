@@ -144,6 +144,9 @@ export default class Sales extends PureComponent{
           const { name, value } = event.target;
           this.setState({[name]: value});
      }
+     evalCancelVisibillity = () => {
+          return "hide";
+      }
      render(){
           return(
                <>
@@ -160,7 +163,7 @@ export default class Sales extends PureComponent{
                                    <button className="btn red darken-4" onClick={() => this.getEmail()} ref={(thisObj) => { this.thisObj = thisObj; }}>Finish Sale</button>
                               </div>
                          </div>
-                         <Modal showEmailDialog={this.state.showEmailDialog} buttonText={this.state.buttonText} className={this.modalViews()} onClick={this.hideModal} >
+                         <Modal evalCancelVisibillity={this.evalCancelVisibillity} showEmailDialog={this.state.showEmailDialog} buttonText={this.state.buttonText} className={this.modalViews()} onClick={this.hideModal} >
                                    <p>{this.state.errorMessage}</p>
                                    <div className={this.state.showEmailDialog ? "show": "hide"}>
                                         <p>Provide email address:</p>

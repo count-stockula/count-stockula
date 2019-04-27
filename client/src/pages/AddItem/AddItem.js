@@ -33,7 +33,7 @@ export default class AddItem extends PureComponent {
     // this.setState({showForm: true, upc: data.trim()});
      API.findItemUpc("5cb3247aef86d68b5e0dc795", data.trim())
      .then(retData => {                  
-          this.setState({alertShown:true, errorMessage:`The UPC number ${retData.data.upc} exists in the db as ${retData.data.name}. UPCs can not be duplicated. `});
+          this.setState({alertShown:true, errorMessage:`The UPC number ${retData.data.upc} exists in the db as ${retData.data.name}. UPCs can not be duplicated. `, showUpcField:false});
          
      })
      .catch(err => {          
@@ -126,8 +126,10 @@ manualEntry= () =>{
                <div id="modal1" className={this.modalViews()}>
                     <div className="modal-content">                         
                          <p>{this.state.errorMessage}</p>
+                         <div className={this.state.showUpcField ? "show": "hide"}>
                          <p className="black-text">Enter UPC:</p>
                          <Input textChangeFunc={this.inputTyping} value={this.state.upc} id="upc" name="upc" textalign="center" required></Input>
+                         </div>
                     </div>
                     <div className="modal-footer">
                          <button className="modal-close waves-effect waves-grey btn-flat" onClick={this.hideModal}>OK</button>
