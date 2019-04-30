@@ -133,7 +133,7 @@ module.exports = {
         .catch(err => res.status(422).json(err));
     } else {
       db.StoreItem
-        .find( req.query )
+        .find({})
         .sort({ name: 1 })
         .then(foundArray => {
           let lowStockArray = foundArray.filter(function (item) {
