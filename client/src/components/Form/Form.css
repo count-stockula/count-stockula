@@ -1,13 +1,12 @@
 /* Form.css */
 .formContainer {
   display: flex;
-  margin-left: auto;
-  margin-right: auto;
-  width: 90%;
+  width: 100%;
+  margin: auto;
   background-color: #B71C1C;
-  /* margin-top: 100px; */
   height: 100%;
   padding: 20px;
+  padding-top: 30px;
   border-radius: 8px;
 }
 

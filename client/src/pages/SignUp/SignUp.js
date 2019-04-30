@@ -119,61 +119,90 @@ export default class SignUp extends PureComponent {
     return (
       <>
         <div className="logoContainer">
-          <img src="/images/logo.png" alt="Count Stockula Logo" width="150px" />
+          <img
+            src="/images/logo.png"
+            alt="Count Stockula Logo"
+            width="150px"
+          />
         </div>
-        <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
-          <Form className="col" id="login">
-            <Label htmlFor="email" className="" />
-            <Input
-              type="email"
-              className="validate"
-              id="email"
-              name="email"
-              value={this.state.email}
-              //placeholder="email@domain.com"
-              onChange={this.handleChange}
-            />
-            <Label htmlFor="password" className="" />
-            <Input
-              type="password"
-              className="validate"
-              id="password"
-              name="password"
-              value={this.state.password}
-              //placeholder="password"
-              onChange={this.handleChange}
-            />
-            <Label htmlFor="confirmation" className="" />
-            <Input
-              type="password"
-              className="validate"
-              id="confirmation"
-              name="confirmation"
-              value={this.state.confirmation}
-              //placeholder="confirm password"
-              onChange={this.handleChange}
-            />
-            <Label htmlFor="name" className="" />
-            <Input
-              type="text"
-              className="validate"
-              id="name"
-              name="name"
-              value={this.state.name}
-              //placeholder="name"
-              onChange={this.handleChange}
-            />
-            <Label htmlFor="phone" className="" />
-            <Input
-              type="tel"
-              className="validate"
-              id="phone"
-              name="phone"
-              value={this.state.phone}
-              //placeholder="name"
-              onChange={this.handleChange}
-            />
-            {/* <Input
+        <div className="row">
+          <div className="col s1 m3 l4"></div>
+          <div className="col s10 m6 l4">
+            <Form className="col" id="login">
+              <div class="input-field col s12">
+                <Label htmlFor="name" className="" />
+                <Input
+                  type="text"
+                  className="validate"
+                  id="name"
+                  name="name"
+                  value={this.state.name}
+                  //placeholder="name"
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div class="input-field col s12">
+                {/* <Label htmlFor="store" className="" /> */}
+                <select onChange={this.handleChange} name="storeId" id="store">
+                  {/* <option defaultValue="0" value="0">
+                Select a store...
+              </option> */}
+                  {this.state.theStores.map(item => (
+                    <option key={item._id} value={item._id}>
+                      {item.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div class="input-field col s12">
+                <Label htmlFor="phone" className="" />
+                <Input
+                  type="tel"
+                  className="validate"
+                  id="phone"
+                  name="phone"
+                  value={this.state.phone}
+                  //placeholder="name"
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div class="input-field col s12">
+                <Label htmlFor="email" className="" />
+                <Input
+                  type="email"
+                  className="validate"
+                  id="email"
+                  name="email"
+                  value={this.state.email}
+                  //placeholder="email@domain.com"
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div class="input-field col s12">
+                <Label htmlFor="password" className="" />
+                <Input
+                  type="password"
+                  className="validate"
+                  id="password"
+                  name="password"
+                  value={this.state.password}
+                  //placeholder="password"
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div class="input-field col s12">
+                <Label htmlFor="confirmation" className="" />
+                <Input
+                  type="password"
+                  className="validate"
+                  id="confirmation"
+                  name="confirmation"
+                  value={this.state.confirmation}
+                  //placeholder="confirm password"
+                  onChange={this.handleChange}
+                />
+              </div>
+              {/* <Input
               type="text"
               className="validate"
               id="storeId"
@@ -182,18 +211,7 @@ export default class SignUp extends PureComponent {
               //placeholder="storeId"
               onChange={this.handleChange}
             /> */}
-            <Label htmlFor="store" className="" />
-            <select onChange={this.handleChange} name="storeId" id="store">
-              {/* <option defaultValue="0" value="0">
-                Select a store...
-              </option> */}
-              {this.state.theStores.map(item => (
-                <option key={item._id} value={item._id}>
-                  {item.name}
-                </option>
-              ))}
-            </select>
-            {/* <Input
+              {/* <Input
               type="text"
               className="validate"
               id="management"
@@ -203,9 +221,12 @@ export default class SignUp extends PureComponent {
               onClick={this.toggleBoolean}
               disabled={this.state.disabledInputArray.includes("management")}
             /> */}
-          </Form>
+            </Form>
+          </div>
         </div>
-        <Button onClick={this.handleSubmit}>SignUp</Button>
+        <div className="signUpButton">
+          <Button onClick={this.handleSubmit}>Login</Button>
+        </div>
         <div className="orSignUp">
           <a href="/">
             <Button>Returning User? Login</Button>

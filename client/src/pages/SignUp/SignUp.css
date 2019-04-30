@@ -2,3 +2,11 @@
 .logoContainer {
     padding: 75px;
 }
+
+.signUpButton {
+    padding: 20px;
+}
+
+select {
+    height: 2.3rem;
+}
