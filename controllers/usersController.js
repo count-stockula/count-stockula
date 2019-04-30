@@ -6,7 +6,7 @@ const saltRounds = 10;
 const nonce = "any secret nonce value";
 
 module.exports = {
-  findAll: function(req, res) {
+  findAll: function (req, res) {
     if (req.query.storeId) {
       db.User.find({ storeId: req.query.storeId })
         .sort({ name: 1 })
@@ -31,7 +31,7 @@ module.exports = {
         .catch(err => res.status(500).json(err));
     }
   },
-  findById: function(req, res) {
+  findById: function (req, res) {
     db.User.findById(req.params.id)
       .populate("storeId")
       .then(foundUser => {
@@ -43,7 +43,7 @@ module.exports = {
       })
       .catch(err => res.status(500).json(err));
   },
-  create: function(req, res) {
+  create: function (req, res) {
     if (req.body.storeId) {
       //check for existing user
       db.User.findOne({ email: req.body.email }).then(foundUser => {
@@ -65,9 +65,7 @@ module.exports = {
               )
                 .then(() => res.status(200).json(newUser.email))
                 .catch(err =>
-                  res.status(500).json({
-                    error: "db.Store.findOneAndUpdate error"
-                  })
+                  res.status(500).json({ error: "db.Store.findOneAndUpdate error" })
                 );
             })
             .catch(err =>
@@ -76,38 +74,25 @@ module.exports = {
         }
       });
     } else {
-      res.status(500).json({error: "storeId is required"});
+      res.status(500).json({ error: "storeId is required" });
     }
   },
-  update: function(req, res) {
-    if (req.body.password) {
-      bcrypt.hash(req.body.password, saltRounds).then(hash => {
-        req.body.password = hash;
-        db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
-          .then(() => {
-            db.User.findOne({ _id: req.params.id })
-              .then(foundUser => res.json(foundUser.email))
-              .catch(err => res.status(500).json(err));
-          })
+  update: function (req, res) {
+    db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
+      .then(() => {
+        db.User.findOne({ _id: req.params.id })
+          .then(foundUser => res.json(foundUser.email))
           .catch(err => res.status(500).json(err));
-      });
-    } else {
-      db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
-        .then(() => {
-          db.User.findOne({ _id: req.params.id })
-            .then(foundUser => res.json(foundUser.email))
-            .catch(err => res.status(500).json(err));
-        })
-        .catch(err => res.status(500).json(err));
-    }
+      })
+      .catch(err => res.status(500).json(err));
   },
-  remove: function(req, res) {
+  remove: function (req, res) {
     db.User.findById({ _id: req.params.id })
       .then(foundUser => foundUser.remove())
       .then(removedUser => res.json(removedUser.email))
       .catch(err => res.status(500).json(err));
   },
-  login: function(req, res) {
+  login: function (req, res) {
     const { email, password } = req.body;
     db.User.findOne({ email: email })
       .then(foundUser => {
@@ -116,7 +101,7 @@ module.exports = {
             error: "email username not found"
           });
         } else {
-          bcrypt.compare(password, foundUser.password, function(err, match) {
+          bcrypt.compare(password, foundUser.password, function (err, match) {
             if (err) {
               res.status(500).json({
                 error: "bcrypt.compare error"
@@ -142,12 +127,12 @@ module.exports = {
       })
       .catch(err => res.status(500).json({ error: "db.User.findOne error" }));
   },
-  authenticate: function(req, res) {
+  authenticate: function (req, res) {
     //console.log("req.body:\n", req.body);
     const test = req.body.tokenCookie;
     res.send(true);
   },
-  signout: function(req, res) {
+  signout: function (req, res) {
     res.send("successful test signout");
   }
 };

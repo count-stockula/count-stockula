@@ -26,7 +26,8 @@ const storeSeed = [
     street: "1234 john hwy",
     city: "Canton",
     state: "GA",
-    phoneNumber: "6786666666"
+    phoneNumber: "6786666666",
+    userId: []
   }
 ];
 
@@ -51,34 +52,36 @@ db.Store.remove({})
     db.Store.findOne({ name: "Johnsonville Chevron" }).then(foundObj => {
       storeItemSeed[0].storeId = foundObj._id;
       storeItemSeed[1].storeId = foundObj._id;
-      userSeed.storeId = foundObj._id;
+      //userSeed.storeId = foundObj._id;
     }).then(() => {
       db.StoreItem.collection.insertMany(storeItemSeed)
         .then(() => {
           console.log("store item records inserted!");
+          process.exit(0);
         }).catch(err => {
           console.error(err);
           process.exit(1);
-        }).then(() => {
-          db.User.create(userSeed)
-            .then(newUser => {
-              db.Store.findOneAndUpdate(
-                {
-                  _id: newUser.storeId
-                },
-                {
-                  $push: {
-                    userId: newUser._id
-                  }
-                }
-              ).then(() => {
-                console.log("user record inserted!");
-                process.exit(0);
-              }).catch(err => {
-                console.error(err);
-                process.exit(1);
-              });
-            });
-        });
+        })
+        // .then(() => {
+        //   db.User.create(userSeed)
+        //     .then(newUser => {
+        //       db.Store.findOneAndUpdate(
+        //         {
+        //           _id: newUser.storeId
+        //         },
+        //         {
+        //           $push: {
+        //             userId: newUser._id
+        //           }
+        //         }
+        //       ).then(() => {
+        //         console.log("user record inserted!");
+        //         process.exit(0);
+        //       }).catch(err => {
+        //         console.error(err);
+        //         process.exit(1);
+        //       });
+        //     });
+        // });
     });
   });

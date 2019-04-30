@@ -10,6 +10,7 @@ const storeItemSchema = new Schema({
   criticalQty: { type: Number, required: true, default: 0 },
   alertStatus: { type: Boolean, default: true},
   pictureUrl: String,
+  noScan: { type: Boolean, default: false },
   storeId: {
     type: Schema.Types.ObjectId,
     ref: "Store"

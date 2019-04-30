@@ -19,12 +19,12 @@ router
   .route("/login")
   .post(usersController.login);
 
-// loginUser matches with "/api/users/login"
+// loginUser matches with "/api/users/authenticate"
 router
   .route("/authenticate")
   .post(usersController.authenticate);
 
-// loginUser matches with "/api/users/login"
+// loginUser matches with "/api/users/signout"
 router
   .route("/signout")
   .post(usersController.signout);
