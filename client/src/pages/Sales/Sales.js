@@ -9,6 +9,7 @@ import BottomBar from "../../components/BottomBar/BottomBar";
 import ListItem from "../../components/ListItem/ListItem";
 import Modal from "../../components/Modal/Modal";
 import Input from "../../components/Input/SimpleInput";
+import SideNav from "../../components/SideNav/
 import "./Sales.css";
 
 export default class Sales extends PureComponent {
@@ -28,12 +29,28 @@ export default class Sales extends PureComponent {
     showEmailDialog: false,
     showUPCDialog: false,
     emailAddress: "",
-    upc: ""
+    upc: "",
+    nonScanItems:[]
   };
   componentDidMount = () => {
     this.setState({ userEmail: "" });
     document.addEventListener("keydown", this.keyPressListener, false);
+    API.getNoScanItems()
+    .then(results => {
+      this.setState({ nonScanItems: results.data});
+      console.log(results.data); 
+    })
+    .catch((err) => {
+      this.setState({
+        alertShown: true,
+        showEmailDialog: false,
+        errorMessage: "Error loading non scan items " + err,
+        buttonText: "OK",
+        showUPCDialog: false
+      });
+    })
   };
+
   componentWillUnmount = () => {
     document.removeEventListener("keydown", this.keyPressListener, false);
   };
