@@ -5,7 +5,9 @@ export default {
   // gets an array of all items in db or for a certain store
   getAllItems: function(storeId) {
     if (storeId !== "0") {
-      return axios.get("/api/storeItems", { params: { storeId: storeId } });
+      return axios.get("/api/storeItems", { 
+        params: { storeId: storeId } 
+      });
     } else {
       return axios.get("/api/storeItems");
     }
@@ -30,13 +32,27 @@ export default {
       return axios.get("/api/storeItems/zeroStock");
     }
   },
+  // gets an array of all non-scannable items in db or for a certain store
+  getNoScanItems: function(storeId) {
+    if (storeId !== "0") {
+      return axios.get("/api/storeItems", { 
+        params: { storeId: storeId , noScan: true }
+      });
+    } else {
+      return axios.get("/api/storeItems", { 
+        params: { noScan: true }
+      });
+    }
+  },
   // gets an object by item Id
   findItemId: function(itemId) {
     return axios.get("/api/storeItems/forOne/" + itemId);
   },
   // gets an object by storeId and upc
   findItemUpc: function(storeId, upc) {
-    return axios.get("/api/storeItems/upc", {params: { storeId: storeId, upc: upc.trim() }});
+    return axios.get("/api/storeItems/upc", {
+      params: { storeId: storeId, upc: upc.trim() }
+    });
   },
   // Create an item document in database
   createItem: function(itemData) {
@@ -93,7 +109,9 @@ export default {
   // gets an array of all the users in db or for a certain store
   getAllUsers: function(storeId) {
     if (storeId) {
-      return axios.get("/api/users", { params: { storeId: storeId }});
+      return axios.get("/api/users", { 
+        params: { storeId: storeId }
+      });
     } else {
       return axios.get("/api/users");
     }
