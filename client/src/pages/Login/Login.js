@@ -1,9 +1,9 @@
 import React, { PureComponent } from "react";
-import API from "../../components/utils/API";
+//import API from "../../components/utils/API";
 import Form from "../../components/Form/Form";
+import Label from "../../components/Label/Label";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import Label from "../../components/Label/Label";
 import "./Login.css";
 
 export default class Login extends PureComponent {
@@ -52,12 +52,16 @@ export default class Login extends PureComponent {
     return (
       <>
         <div className="logoContainer">
-          <img src="images/logo.png" alt="Count Stockula Logo" width="150px" />
+          <img
+            src="images/logo.png"
+            alt="Count Stockula Logo"
+            width="150px"
+          />
         </div>
-        <div className="col red darken-4 inv centralContent">
-          <Form id="login">
-            <div className="col s12 m6">
-              <Label htmlFor="Email" className="" />
+        <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
+          <div className="loginContainer">
+            <Form className="col" id="login">
+              <Label htmlFor="email" className="" />
               <Input
                 type="email"
                 className="validate"
@@ -67,9 +71,7 @@ export default class Login extends PureComponent {
                 //placeholder="email@domain.com"
                 onChange={this.handleChange}
               />
-            </div>
-            <div className="col s12 m6">
-            <Label htmlFor="Password" className="" />
+              <Label htmlFor="password" className="" />
               <Input
                 type="password"
                 className="validate"
@@ -79,17 +81,21 @@ export default class Login extends PureComponent {
                 //placeholder="password"
                 onChange={this.handleChange}
               />
-            </div>
-          </Form>
-        </div>
-        <Button onClick={this.handleSubmit}>Login</Button>
-        <div className="orSignUp">
-          <a href="/SignUp">
-            <Button>New User? SIGN UP</Button>
-          </a>
-          <a href="/testauth">
-            <Button>TestAuth</Button>
-          </a>
+            </Form>
+          </div>
+          <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
+            <Button onClick={this.handleSubmit}>Login</Button>
+          </div>
+          <div className="orSignUp">
+            <a href="/SignUp">
+              <Button>New User? SIGN UP</Button>
+            </a>
+          </div>
+          <div className="TestAuth">
+            <a href="/testauth">
+              <Button>TestAuth</Button>
+            </a>
+          </div>
         </div>
       </>
     );

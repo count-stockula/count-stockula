@@ -24,6 +24,9 @@
      .sales .mainWrapper{ margin-top:94px; min-height: calc(100vh - 147px);}
      .sales.centralContent{width:calc(100% - 72px) !important;}
 }
+.btnHolder button{
+margin:0 6px;
+}
 button:focus{
      color:black;
 }

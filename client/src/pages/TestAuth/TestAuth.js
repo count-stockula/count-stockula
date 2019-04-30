@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import API from "../../components/utils/API";
+//import API from "../../components/utils/API";
 import Button from "../../components/Button/Button";
 import "./TestAuth.css";
 

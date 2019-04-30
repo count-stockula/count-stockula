@@ -14,6 +14,7 @@ function Input(props) {
           readOnly={props.readOnly}
           validate={props.validate}
           onChange={props.textChangeFunc}
+          value={props.value}
         />
   );
 }
