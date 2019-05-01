@@ -8,5 +8,7 @@
 }
 
 select {
-    height: 2.3rem;
+    height: 29px !important;
+    margin-bottom: 8px;
 }
+

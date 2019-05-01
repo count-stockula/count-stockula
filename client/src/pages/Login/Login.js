@@ -4,14 +4,15 @@ import Form from "../../components/Form/Form";
 import Label from "../../components/Label/Label";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
+import BlackButton from "../../components/Button/Blackbutton"
 import "./Login.css";
 
 export default class Login extends PureComponent {
   constructor() {
     super();
     this.state = {
-      email: "email@domain.com",
-      password: "Password123"
+      email: "",
+      password: ""
     };
   }
 
@@ -62,27 +63,27 @@ export default class Login extends PureComponent {
           <div className="col s1 m3 l4"></div>
           <div className="col s10 m6 l4">
             <Form className="col" id="login">
-              <div class="input-field col s12">
-                <Label labvalue="Email" htmlFor="email" className="" />
+              <div class="col s12">
                 <Input
+                icon = "fas fa-envelope icon"
                   type="email"
                   className="validate"
                   id="email"
                   name="email"
                   value={this.state.email}
-                  // placeholder="email@domain.com"
+                  placeholder="email@domain.com"
                   onChange={this.handleChange}
                 />
               </div>
-              <div class="input-field col s12">
-                <Label htmlFor="password" className=""></Label>
+              <div class="col s12">
                 <Input
+                  icon = "fas fa-key icon"
                   type="password"
                   className="validate"
                   id="password"
                   name="password"
                   value={this.state.password}
-                  //placeholder="password"
+                  placeholder="password"
                   onChange={this.handleChange}
                 />
               </div>
@@ -93,7 +94,7 @@ export default class Login extends PureComponent {
         <div className="col s1 m3 l4"></div>
         <div className="row">
           <div className="loginButton">
-            <Button onClick={this.handleSubmit}>Login</Button>
+          <BlackButton onClick={this.handleSubmit} text="Login"></BlackButton>
           </div>
           <div className="orSignUp">
             <a href="/SignUp">
