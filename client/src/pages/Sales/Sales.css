@@ -31,3 +31,11 @@ button:focus{
      color:black;
 }
 
+.openIcon{
+  position: fixed;
+  left:0px;
+  top:106px;
+}
+i{
+  cursor:pointer;
+}
