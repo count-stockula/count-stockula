@@ -47,7 +47,7 @@ export default class AddItem extends PureComponent {
             alertShown: true,
             errorMessage: `Error connecting to db`,
             buttonText: "OK",
-            showUpcField: false
+            showUpcField: false,
           });
           return;
         }
@@ -81,7 +81,14 @@ export default class AddItem extends PureComponent {
           qty: 0
         })
       )
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({
+          alertShown: true,
+          errorMessage: `Error occured while saving to the db, ${err}`,
+          showCancel: false,
+          showUpcField: false,
+        });
+      });
   };
   evalCancelVisibillity = () => {
     return this.state.showCancel

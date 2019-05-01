@@ -9,7 +9,7 @@ import BottomBar from "../../components/BottomBar/BottomBar";
 import ListItem from "../../components/ListItem/ListItem";
 import Modal from "../../components/Modal/Modal";
 import Input from "../../components/Input/SimpleInput";
-import SideNav from "../../components/SideNav/
+import SideNav from "../../components/SideNav/SideNav"
 import "./Sales.css";
 
 export default class Sales extends PureComponent {
@@ -32,6 +32,8 @@ export default class Sales extends PureComponent {
     upc: "",
     nonScanItems:[]
   };
+ 
+
   componentDidMount = () => {
     this.setState({ userEmail: "" });
     document.addEventListener("keydown", this.keyPressListener, false);
@@ -147,7 +149,12 @@ export default class Sales extends PureComponent {
       try {
         API.sendEmail(userEmail, data);
       } catch (err) {
-        console.log(err);
+        this.setState({
+          alertShown: true,
+          errorMessage: `Error occured while attempting to create the pdf, ${err}`,
+          showEmailDialog: false,
+          showUPCDialog: false,
+        });
       }
     });
     pdfMake.createPdf(documentDefinition).open();
@@ -237,6 +244,7 @@ export default class Sales extends PureComponent {
       <>
         <BarcodeReader onError={this.handleError} onScan={this.handleScan} />
         <PageHeader title={this.dateFormat()} isRed="true" />
+        
         <div className="row mainWrapper stretched">
           <div className="sales centralContent">
             <List>
