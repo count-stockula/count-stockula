@@ -60,7 +60,10 @@ export default class Sales extends PureComponent {
     elems.className = "sidenav opened";
   }
   closeSide = (event) =>{
-    this.handleScan(event.target.id)
+    if(event.target.textContent !=="close"){
+      this.handleScan(event.target.id)
+
+    }
     var elems = document.getElementById('sidenav');
     elems.className = "sidenav";
   }
