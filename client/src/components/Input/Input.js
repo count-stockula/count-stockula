@@ -12,21 +12,25 @@ function Input(props) {
     value,
     placeholder,
     onChange,
-    disabled
+    disabled,
+    icon
   } = props;
   return (
     <>
-      <input
-        type={type}
-        className={className}
-        id={id}
-        name={name}
-        value={value}
-        placeholder={placeholder}
-        onChange={onChange}
-        //onChange={props.textChangeFunc}
-        disabled={disabled}
-      />
+    <div class="input-container">
+        <i class={icon}></i>
+        <input
+          type={type}
+          className="inputField"
+          id={id}
+          name={name}
+          value={value}
+          placeholder={placeholder}
+          onChange={onChange}
+          //onChange={props.textChangeFunc}
+          disabled={disabled}
+        />
+    </div>
       {/* <Label htmlFor={id} className="active" labValue="">
       </Label> */}
       {/* <div>
