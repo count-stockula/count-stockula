@@ -9,8 +9,10 @@ import BottomBar from "../../components/BottomBar/BottomBar";
 import ListItem from "../../components/ListItem/ListItem";
 import Modal from "../../components/Modal/Modal";
 import Input from "../../components/Input/SimpleInput";
-import SideNav from "../../components/SideNav/SideNav"
-import "./Sales.css";
+import SideNav from "../../components/SideNav/SideNav";
+import "./Sales.css"
+
+
 
 export default class Sales extends PureComponent {
   state = {
@@ -34,13 +36,13 @@ export default class Sales extends PureComponent {
   };
  
 
-  componentDidMount = () => {
+  componentDidMount = () => {    
     this.setState({ userEmail: "" });
     document.addEventListener("keydown", this.keyPressListener, false);
-    API.getNoScanItems()
+    API.getNoScanItems("5cb3247aef86d68b5e0dc795")
     .then(results => {
       this.setState({ nonScanItems: results.data});
-      console.log(results.data); 
+
     })
     .catch((err) => {
       this.setState({
@@ -50,28 +52,20 @@ export default class Sales extends PureComponent {
         buttonText: "OK",
         showUPCDialog: false
       });
-    })
+    });
+    
   };
-
+  openSide = () =>{
+    var elems = document.getElementById('sidenav');
+    elems.className = "sidenav opened";
+  }
+  closeSide = (event) =>{
+    this.handleScan(event.target.id)
+    var elems = document.getElementById('sidenav');
+    elems.className = "sidenav";
+  }
   componentWillUnmount = () => {
     document.removeEventListener("keydown", this.keyPressListener, false);
-  };
-  keyPressListener = event => {
-    //     if(event.keyCode===67){
-    //      API.reduceStock("5cb3247aef86d68b5e0dc795", "1234567", 1)
-    //      .then(retData => {
-    //           this.setState({
-    //                purchasedItems: [...this.state.purchasedItems, retData.data],
-    //                alertShown: false
-    //           })
-    //      })
-    //      .catch(err => {
-    //           this.setState({
-    //                errorMessage: "Failed to find scanned item in the database",
-    //                alertShown: true
-    //           });
-    //      });
-    //     }
   };
   getEmail = () => {
     if (this.state.purchasedItems.length < 1) {
@@ -244,10 +238,11 @@ export default class Sales extends PureComponent {
       <>
         <BarcodeReader onError={this.handleError} onScan={this.handleScan} />
         <PageHeader title={this.dateFormat()} isRed="true" />
-        
+        <SideNav closeWin={this.closeSide} theItems={this.state.nonScanItems}></SideNav>
+        <i className="material-icons openIcon" onClick={() => this.openSide()}>chevron_right</i>
         <div className="row mainWrapper stretched">
           <div className="sales centralContent">
-            <List>
+            <List className="ListOfGroceries">
               {this.state.purchasedItems.map((item, i) => {
                 return <ListItem key={i}>{item.name}</ListItem>;
               })}
@@ -271,8 +266,10 @@ export default class Sales extends PureComponent {
               >
                 Manual Entry
               </button>
+             
             </div>
           </div>
+          
           <Modal
             evalCancelVisibillity={this.evalCancelVisibillity}
             showEmailDialog={this.state.showEmailDialog}
