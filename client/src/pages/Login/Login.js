@@ -11,7 +11,8 @@ export default class Login extends PureComponent {
     super();
     this.state = {
       email: "email@domain.com",
-      password: "Password123"
+      password: "Password123",
+      redirectToReferrer: false
     };
   }
 
@@ -24,7 +25,7 @@ export default class Login extends PureComponent {
 
   handleSubmit = event => {
     event.preventDefault();
-    fetch("/api/users/login", {
+    fetch("/api/login/login", {
       method: "POST",
       body: JSON.stringify(this.state),
       headers: {
@@ -33,10 +34,14 @@ export default class Login extends PureComponent {
     })
       .then(res => {
         if (res.status === 200) {
-          this.props.history.push("/");
           // successful login
-          //window.location.href = "/testauth";
-          window.location.href = "/scan";
+          console.log(res);
+          const { email, storeId } = res;
+          window.localStorage.setItem("email", email);
+          window.localStorage.setItem("storeId", storeId);
+          // redirect to secure site
+          this.props.history.push("/scan");
+          //this.props.history.push("/testauth");
         } else {
           const error = new Error(res.error);
           throw error;
@@ -49,14 +54,11 @@ export default class Login extends PureComponent {
   };
 
   render() {
+    console.log(this.props);
     return (
       <>
         <div className="logoContainer">
-          <img
-            src="images/logo.png"
-            alt="Count Stockula Logo"
-            width="150px"
-          />
+          <img src="images/logo.png" alt="Count Stockula Logo" width="150px" />
         </div>
         <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
           <div className="loginContainer">

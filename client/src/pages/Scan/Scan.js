@@ -9,11 +9,11 @@ export default class Scan extends PureComponent {
   render() {
     return (
       <>
-          <PageHeader title="Scan" />
-          <div className="row mainWrapper centered"> 
-               <ContainedButtons />
+        <PageHeader title="Scan" />
+        <div className="row mainWrapper centered">
+          <ContainedButtons />
           <BottomBar />
-          </div>
+        </div>
       </>
     );
   }

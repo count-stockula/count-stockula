@@ -81,7 +81,7 @@ export default class AddItem extends PureComponent {
           qty: 0
         })
       )
-      .catch(err => console.log(err));
+      .catch(error => this.props.history.push("/"));
   };
   evalCancelVisibillity = () => {
     return this.state.showCancel

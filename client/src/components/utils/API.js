@@ -36,7 +36,9 @@ export default {
   },
   // gets an object by storeId and upc
   findItemUpc: function(storeId, upc) {
-    return axios.get("/api/storeItems/upc", {params: { storeId: storeId, upc: upc.trim() }});
+    return axios.get("/api/storeItems/upc", {
+      params: { storeId: storeId, upc: upc.trim() }
+    });
   },
   // Create an item document in database
   createItem: function(itemData) {
@@ -93,14 +95,14 @@ export default {
   // gets an array of all the users in db or for a certain store
   getAllUsers: function(storeId) {
     if (storeId) {
-      return axios.get("/api/users", { params: { storeId: storeId }});
+      return axios.get("/api/users", { params: { storeId: storeId } });
     } else {
       return axios.get("/api/users");
     }
   },
   // Create an user document in database *userData Must contain storeId to create user
   createUser: function(newUser) {
-    return axios.post("/api/users", newUser);
+    return axios.post("/api/login/create", newUser);
   },
   // gets an object by user Uid
   findUserId: function(userId) {
@@ -110,25 +112,27 @@ export default {
   updateUser: function(userId, userData) {
     return axios.put("/api/users/forOne/" + userId, userData);
   },
-  // Deletes the user with the given user Uid
-  deleteUser: function(userId) {
-    return axios.delete("/api/users/forOne/" + userId);
-  },
   // checks the given user email and password and returns one of three: "badPass", "badEmail", or the user document object
   loginUser: function(email, password) {
-    return axios.post("/api/users/login", {
+    return axios.post("/api/login/login", {
       email: email,
       password: password
     });
   },
-  // token authentication
+  // passport signup user
+  signupUser: function(tokenCookie) {
+    return axios.post("/api/login/signup", {
+      tokenCookie: tokenCookie
+    });
+  },
+  // passport login user
   authenticate: function(tokenCookie) {
-    return axios.post("/api/users/authenticate", {
+    return axios.post("/api/login/authenticate", {
       tokenCookie: tokenCookie
     });
   },
   // signout
-  signout: function(cb) {
+  signoutUser: function(cb) {
     // return axios.post("/api/users/signout", {
     //   tokenCookie: tokenCookie
     // });
@@ -139,5 +143,9 @@ export default {
       receiveAddress: receiveAddress,
       pdfFile: pdfFile
     });
+  },
+  // Deletes the user with the given user Uid
+  deleteUser: function(userId) {
+    return axios.delete("/api/users/forOne/" + userId);
   }
 };

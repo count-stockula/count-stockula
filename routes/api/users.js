@@ -1,30 +1,18 @@
 const router = require("express").Router();
 const usersController = require("../../controllers/usersController");
 
-// createUser matches with "/api/users"
-router
-  .route("/")
-  //.get(usersController.findAll)
-  .post(usersController.create);
+//middleware
+const middleware = require("../middleware");
+router.use(middleware);
 
 // Matches with "/api/users/forOne/:id"
 router
   .route("/forOne/:id")
-  .get(usersController.findById)
+  //.get(usersController.findById)
   .put(usersController.update)
   .delete(usersController.remove);
 
-// loginUser matches with "/api/users/login"
-router
-  .route("/login")
-  .post(usersController.login);
-
-// loginUser matches with "/api/users/login"
-router
-  .route("/authenticate")
-  .post(usersController.authenticate);
-
-// loginUser matches with "/api/users/login"
+// loginUser matches with "/api/users/signout"
 router
   .route("/signout")
   .post(usersController.signout);

@@ -25,9 +25,8 @@ export default class Settings extends PureComponent {
       phone: this.state.phoneNo
     }
     API.updateUser(userId, userData)
-    .then((results) => console.log(results))
-    .catch((error) => console.log(error))
-
+      .then(results => console.log(results))
+      .catch(error => this.props.history.push("/"));
   }
 
   onChange = event => {
@@ -42,13 +41,12 @@ export default class Settings extends PureComponent {
     this.setState({
       [name]: value
     });    
-
   }
 
   componentDidMount = () => {
-    API.getAllStores().then(res => {
-      this.setState({theStores: res.data})
-    })
+    API.getAllStores()
+      .then(res => this.setState({ theStores: res.data }))
+      .catch(error => this.props.history.push("/"));
   }
 
   render() {

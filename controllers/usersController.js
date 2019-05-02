@@ -1,4 +1,5 @@
 const db = require("../models");
+//const passport = require("../passport");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
@@ -50,7 +51,6 @@ module.exports = {
         if (foundUser) {
           res.status(200).json("user already exists");
         } else {
-          console.log("req.body:\n", req.body);
           db.User.create(req.body)
             .then(newUser => {
               db.Store.findOneAndUpdate(
@@ -76,29 +76,73 @@ module.exports = {
         }
       });
     } else {
-      res.status(500).json({error: "storeId is required"});
+      res.status(500).json({ error: "storeId is required" });
+    }
+  },
+  signup: function(req, res) {
+    if (req.body.storeId) {
+      //check for existing user
+      db.User.findOne({ email: req.body.email }).then(foundUser => {
+        if (foundUser) {
+          res.status(200).json("user already exists");
+        } else {
+          db.User.create(req.body)
+            .then(newUser => {
+              db.Store.findOneAndUpdate(
+                {
+                  _id: newUser.storeId
+                },
+                {
+                  $push: {
+                    userId: newUser._id
+                  }
+                }
+              )
+                .then(() => res.status(200).json(newUser.email))
+                .catch(err =>
+                  res.status(500).json({
+                    error: "db.Store.findOneAndUpdate error"
+                  })
+                );
+            })
+            .catch(err =>
+              res.status(500).json({ error: "db.User.create error" })
+            );
+        }
+      });
+    } else {
+      res.status(500).json({ error: "storeId is required" });
     }
   },
   update: function(req, res) {
     if (req.body.password) {
-      bcrypt.hash(req.body.password, saltRounds).then(hash => {
-        req.body.password = hash;
-        db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
-          .then(() => {
-            db.User.findOne({ _id: req.params.id })
-              .then(foundUser => res.json(foundUser.email))
-              .catch(err => res.status(500).json(err));
-          })
-          .catch(err => res.status(500).json(err));
-      });
-    } else {
+      // bcrypt.hash(req.body.password, saltRounds).then(hash => {
+      //   req.body.password = hash;
       db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
         .then(() => {
           db.User.findOne({ _id: req.params.id })
             .then(foundUser => res.json(foundUser.email))
-            .catch(err => res.status(500).json(err));
+            .catch(err =>
+              res.status(500).json({ error: "error on db.User.findOne" })
+            );
         })
-        .catch(err => res.status(500).json(err));
+        .catch(err =>
+          res.status(500).json({ error: "error on db.User.findOneAndUpdate" })
+        );
+      // });
+    } else {
+      // why do we do the same thing on else ???
+      db.User.findOneAndUpdate({ _id: req.params.id }, req.body)
+        .then(() => {
+          db.User.findOne({ _id: req.params.id })
+            .then(foundUser => res.json(foundUser.email))
+            .catch(err =>
+              res.status(500).json({ error: "error on db.User.findOne" })
+            );
+        })
+        .catch(err =>
+          res.status(500).json({ error: "error on db.User.findOneAndUpdate" })
+        );
     }
   },
   remove: function(req, res) {
@@ -127,25 +171,28 @@ module.exports = {
               });
             } else {
               // Issue token
-              const payload = { email };
+              const payload = {
+                isAuthenticated: true,
+                email: foundUser.email,
+                storeId: foundUser.storeId
+              };
               const token = jwt.sign(payload, nonce, {
                 expiresIn: "1h"
               });
               res
                 .cookie("token", token, {
                   httpOnly: true
+                  //httpOnly: false
                 })
                 .sendStatus(200);
             }
-          });
+          })
         }
       })
-      .catch(err => res.status(500).json({ error: "db.User.findOne error" }));
+      .catch(err => res.status(500).json({ error: "db.User.findOne error" }))
   },
   authenticate: function(req, res) {
-    //console.log("req.body:\n", req.body);
-    const test = req.body.tokenCookie;
-    res.send(true);
+    res.send({isAuthenticated: req.body.tokenCookie});
   },
   signout: function(req, res) {
     res.send("successful test signout");

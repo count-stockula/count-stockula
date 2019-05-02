@@ -37,6 +37,7 @@ const AuthRoute = ({ component: Component, ...rest }) => (
       fakeAuth.isAuthenticated === true ? (
         <Component {...props} />
       ) : (
+
         <Redirect
           to="/login"
           // to={{
@@ -50,12 +51,12 @@ const AuthRoute = ({ component: Component, ...rest }) => (
 );
 
 class App extends PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      isAuthenticated: false
-    };
-  }
+  // constructor() {
+  //   super();
+  //   this.state = {
+  //     isAuthenticated: false
+  //   };
+  // }
 
   render() {
     return (

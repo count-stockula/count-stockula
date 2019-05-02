@@ -1,5 +1,8 @@
 const router = require("express").Router();
 const storesController = require("../../controllers/storesController");
+//middleware
+const middleware = require("../middleware");
+router.use(middleware);
 
 // Matches with "/api/stores"
 router.route("/")
