@@ -3,7 +3,12 @@ const usersController = require("../../controllers/usersController");
 
 //middleware
 const middleware = require("../middleware");
-router.use(middleware);
+router.use(middleware.authenticate);
+
+// Matches with "/api/users/forOne/:id"
+router
+  .route("/authenticate")
+  .get(usersController.authenticate);
 
 // Matches with "/api/users/forOne/:id"
 router

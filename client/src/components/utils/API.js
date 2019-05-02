@@ -120,15 +120,13 @@ export default {
     });
   },
   // passport signup user
-  signupUser: function(tokenCookie) {
+  signupUser: function() {
     return axios.post("/api/login/signup", {
-      tokenCookie: tokenCookie
     });
   },
   // passport login user
-  authenticate: function(tokenCookie) {
-    return axios.post("/api/login/authenticate", {
-      tokenCookie: tokenCookie
+  authenticate: function() {
+    return axios.get("/api/users/authenticate", {
     });
   },
   // signout

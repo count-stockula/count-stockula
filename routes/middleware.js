@@ -1,15 +1,17 @@
 const jwt = require("jsonwebtoken");
+const secret = process.env.JWT_SECRET;
 
-const middleware = (req, res, next) => {
-  console.log("Called middleware authenticator");
-
-  console.log(req.cookies.token);
-
-  if (req.cookies.token) {
-    next();
-  } else {
-    res.status(400).end();
+module.exports = {
+  authenticate: (req, res, next) => {
+    console.log("called middleware.authenticate");
+    console.log("cookie:\n", req.cookies.token);
+    if (jwt.verify(req.cookies.token, secret)) {
+      const { email, storeId } = jwt.verify(req.cookies.token, secret);
+      console.log(email, storeId);
+      next();
+    } else {
+      //res.status(400).end();
+      res.status(400).json(false).end();
+    }
   }
 };
-
-module.exports = middleware;

@@ -35,10 +35,6 @@ export default class Login extends PureComponent {
       .then(res => {
         if (res.status === 200) {
           // successful login
-          console.log(res);
-          const { email, storeId } = res;
-          window.localStorage.setItem("email", email);
-          window.localStorage.setItem("storeId", storeId);
           // redirect to secure site
           this.props.history.push("/scan");
           //this.props.history.push("/testauth");

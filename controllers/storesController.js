@@ -2,7 +2,6 @@ const db = require("../models");
 
 module.exports = {
   findAll: function(req, res) {
-    console.log('Called find all')
     db.Store
       .find({})
       .sort({ name: 1 })

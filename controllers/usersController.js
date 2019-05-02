@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const saltRounds = 10;
-const nonce = "any secret nonce value";
+const secret = process.env.JWT_SECRET;
 
 module.exports = {
   findAll: function(req, res) {
@@ -172,27 +172,24 @@ module.exports = {
             } else {
               // Issue token
               const payload = {
-                isAuthenticated: true,
                 email: foundUser.email,
                 storeId: foundUser.storeId
               };
-              const token = jwt.sign(payload, nonce, {
-                expiresIn: "1h"
+              const token = jwt.sign(payload, secret, {
+                expiresIn: "6h"
               });
-              res
-                .cookie("token", token, {
-                  httpOnly: true
-                  //httpOnly: false
-                })
-                .sendStatus(200);
+              res.sendStatus(200).cookie("token", token, {
+                httpOnly: true
+              });
+              //.sendStatus(200);
             }
-          })
+          });
         }
       })
-      .catch(err => res.status(500).json({ error: "db.User.findOne error" }))
+      .catch(err => res.status(500).json({ error: "db.User.findOne error" }));
   },
   authenticate: function(req, res) {
-    res.send({isAuthenticated: req.body.tokenCookie});
+    res.status(200).json(true);
   },
   signout: function(req, res) {
     res.send("successful test signout");

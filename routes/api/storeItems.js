@@ -2,7 +2,7 @@ const router = require("express").Router();
 const storeItemsController = require("../../controllers/storeItemsController");
 //middleware
 const middleware = require("../middleware");
-router.use(middleware);
+router.use(middleware.authenticate);
 
 // Matches with "/api/storeItems"
 router.route("/")

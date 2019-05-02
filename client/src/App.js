@@ -19,25 +19,25 @@ import Inventory from "./pages/Inventory/Inventory";
 import Settings from "./pages/Settings/Settings";
 
 const fakeAuth = {
-  isAuthenticated: true,
-  authenticate(cb) {
-    this.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    this.isAuthenticated = false;
-    setTimeout(cb, 100); // fake async
+    isAuthenticated: false,
+    authenticate(cb) {
+      this.isAuthenticated = true;
+      setTimeout(cb, 100); // fake async
+    },
+    signout(cb) {
+      this.isAuthenticated = false;
+      setTimeout(cb, 100); // fake async
+    }
   }
-};
 
 const AuthRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
-      fakeAuth.isAuthenticated === true ? (
+      // fakeAuth.isAuthenticated === true ? (
+      API.authenticate === true ? (
         <Component {...props} />
       ) : (
-
         <Redirect
           to="/login"
           // to={{
