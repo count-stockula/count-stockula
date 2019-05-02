@@ -86,3 +86,21 @@ textarea{
     display: block !important;
     height: 2.15rem;
 }
+.switch label input[type=checkbox]:checked+.lever {
+  background-color: #fafafa;
+}
+
+
+.switch label input[type=checkbox]:checked+.lever:after {
+  background-color: black;
+}
+input[type=checkbox]:checked:not(:disabled) ~ .lever:active::before, input[type=checkbox]:checked:not(:disabled).tabbed:focus ~ .lever::before {
+  -webkit-transform: scale(2.4);
+  transform: scale(2.4);
+  background-color: rgba(183, 28, 28, 0.3);
+}
+.switch label .lever:after {
+  background-color: black;
+  -webkit-box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
+  box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
+}

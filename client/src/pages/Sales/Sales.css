@@ -35,6 +35,7 @@ button:focus{
   position: fixed;
   left:0px;
   top:106px;
+  margin-top:8px;
 }
 i{
   cursor:pointer;

@@ -28,6 +28,16 @@
   right:20px;
   top:20px;
 }
+.sidenav  li{
+  border-top:1px solid #ccc;
+  border-bottom:1px solid #ccc;
+  margin-top:-1px;
+  cursor:pointer;
+}
+.sidenav  li:hover{
+  background: #B71C1C;
+  color:white;
+}
 .opened{
   transition: 1s;
   left:300px;
