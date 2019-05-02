@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import API from "../../components/utils/API";
 import Form from "../../components/Form/Form";
-import Label from "../../components/Label/Label";
+
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import BlackButton from "../../components/Button/Blackbutton"

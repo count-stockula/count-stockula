@@ -7,13 +7,15 @@ import Label from "../Label/Label";
 export default function AddItemForm2 (props) {
      return (
           <Form id="aForm">
-               <div className="col s12 m6">
+               <div className="col s12">
                     <Label labValue="Product Name" htmlFor="prodName" className="active"/>
                     <Input type="text"
                     id="prodName"
                     name="prodName"
                     textChangeFunc={props.typingEvent}/>
                </div>
+               
+
                <div className="col s12 m6">
                <Label labValue="UPC" htmlFor="upc" className="active"/>
                     <Input type="text"
@@ -22,7 +24,18 @@ export default function AddItemForm2 (props) {
                     value={props.upc}
                     textChangeFunc={props.typingEvent}/>
                </div>
-               <div className="col s12">
+               <div className="col s12 m6 center">
+                  <Label labValue="Non Scannable Item" htmlFor="upc" className="active"/>
+                  <div className="switch">
+                    <label>
+                      False
+                      <input type="checkbox" onChange={props.onChange} checked={props.noScan}/>
+                      <span className="lever"></span>
+                      True
+                    </label>
+                    </div>
+               </div>
+               <div className="col s12"> 
                     <Label labValue="Description" htmlFor="description"/>
                     {/* <textarea type="text" id="description" name="description" className="materialize-textarea" defaultValue={props.description}></textarea> */}
                     <Input type="text"

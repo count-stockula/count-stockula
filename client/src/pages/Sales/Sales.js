@@ -10,9 +10,7 @@ import ListItem from "../../components/ListItem/ListItem";
 import Modal from "../../components/Modal/Modal";
 import Input from "../../components/Input/SimpleInput";
 import SideNav from "../../components/SideNav/SideNav";
-import "./Sales.css"
-
-
+import "./Sales.css";
 
 export default class Sales extends PureComponent {
   state = {
@@ -32,45 +30,42 @@ export default class Sales extends PureComponent {
     showUPCDialog: false,
     emailAddress: "",
     upc: "",
-    nonScanItems:[]
+    nonScanItems: []
   };
- 
 
-  componentDidMount = () => {    
+  componentDidMount = () => {
     this.setState({ userEmail: "" });
     document.addEventListener("keydown", this.keyPressListener, false);
     API.getNoScanItems("5cb3247aef86d68b5e0dc795")
-    .then(results => {
-      this.setState({ nonScanItems: results.data});
-
-    })
-    .catch((err) => {
-      this.setState({
-        alertShown: true,
-        showEmailDialog: false,
-        errorMessage: "Error loading non scan items " + err,
-        buttonText: "OK",
-        showUPCDialog: false
+      .then(results => {
+        this.setState({ nonScanItems: results.data });
+      })
+      .catch(err => {
+        this.setState({
+          alertShown: true,
+          showEmailDialog: false,
+          errorMessage: "Error loading non scan items " + err,
+          buttonText: "OK",
+          showUPCDialog: false
+        });
       });
-    });
-    
   };
-  openSide = () =>{
-    var elems = document.getElementById('sidenav');
+  openSide = () => {
+    var elems = document.getElementById("sidenav");
     elems.className = "sidenav opened";
-  }
-  closeSide = (event) =>{
-    if(event.target.textContent !=="close"){
-      this.handleScan(event.target.id)
-
+  };
+  closeSide = event => {
+    if (event.target.textContent !== "close") {
+      this.handleScan(event.target.id);
     }
-    var elems = document.getElementById('sidenav');
+    var elems = document.getElementById("sidenav");
     elems.className = "sidenav";
-  }
+  };
   componentWillUnmount = () => {
     document.removeEventListener("keydown", this.keyPressListener, false);
   };
   getEmail = () => {
+    
     if (this.state.purchasedItems.length < 1) {
       this.setState({
         alertShown: true,
@@ -82,11 +77,14 @@ export default class Sales extends PureComponent {
       return;
     }
     this.setState({
+      errorMessage:"",
       alertShown: true,
       showEmailDialog: true,
       buttonText: "Send Email",
       showUPCDialog: false
     });
+    let inp = document.getElementById("userEmail");
+    inp.focus();
   };
   createPdf = () => {
     this.thisObj.blur();
@@ -150,7 +148,7 @@ export default class Sales extends PureComponent {
           alertShown: true,
           errorMessage: `Error occured while attempting to create the pdf, ${err}`,
           showEmailDialog: false,
-          showUPCDialog: false,
+          showUPCDialog: false
         });
       }
     });
@@ -197,7 +195,7 @@ export default class Sales extends PureComponent {
     return cssStr;
   };
   hideModal = () => {
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (
       this.state.showEmailDialog &&
       re.test(String(this.state.userEmail).toLowerCase())
@@ -241,8 +239,10 @@ export default class Sales extends PureComponent {
       <>
         <BarcodeReader onError={this.handleError} onScan={this.handleScan} />
         <PageHeader title={this.dateFormat()} isRed="true" />
-        <SideNav closeWin={this.closeSide} theItems={this.state.nonScanItems}></SideNav>
-        <i className="material-icons openIcon" onClick={() => this.openSide()}>chevron_right</i>
+        <SideNav closeWin={this.closeSide} theItems={this.state.nonScanItems} />
+        <i className="material-icons openIcon" onClick={() => this.openSide()}>
+          chevron_right
+        </i>
         <div className="row mainWrapper stretched">
           <div className="sales centralContent">
             <List className="ListOfGroceries">
@@ -269,10 +269,9 @@ export default class Sales extends PureComponent {
               >
                 Manual Entry
               </button>
-             
             </div>
           </div>
-          
+
           <Modal
             evalCancelVisibillity={this.evalCancelVisibillity}
             showEmailDialog={this.state.showEmailDialog}
@@ -288,7 +287,7 @@ export default class Sales extends PureComponent {
                 id="userEmail"
                 name="userEmail"
                 textalign="center"
-                required
+                required                
               />
             </div>
             <div className={this.state.showUPCDialog ? "show" : "hide"}>
@@ -300,6 +299,7 @@ export default class Sales extends PureComponent {
                 textalign="center"
                 value={this.state.upc}
                 required
+                forwardRef={(ip) => this.myInp = ip}
               />
             </div>
           </Modal>
