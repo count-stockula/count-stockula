@@ -178,10 +178,10 @@ module.exports = {
               const token = jwt.sign(payload, secret, {
                 expiresIn: "6h"
               });
-              res.sendStatus(200).cookie("token", token, {
+              res.cookie("token", token, {
                 httpOnly: true
-              });
-              //.sendStatus(200);
+              })
+              .sendStatus(200);
             }
           });
         }

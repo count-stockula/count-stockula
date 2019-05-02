@@ -18,24 +18,24 @@ import AddItem from "./pages/AddItem/AddItem";
 import Inventory from "./pages/Inventory/Inventory";
 import Settings from "./pages/Settings/Settings";
 
-const fakeAuth = {
-    isAuthenticated: false,
-    authenticate(cb) {
-      this.isAuthenticated = true;
-      setTimeout(cb, 100); // fake async
-    },
-    signout(cb) {
-      this.isAuthenticated = false;
-      setTimeout(cb, 100); // fake async
-    }
-  }
+// const fakeAuth = {
+//     isAuthenticated: false,
+//     authenticate(cb) {
+//       this.isAuthenticated = true;
+//       setTimeout(cb, 100); // fake async
+//     },
+//     signout(cb) {
+//       this.isAuthenticated = false;
+//       setTimeout(cb, 100); // fake async
+//     }
+//   }
 
 const AuthRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props =>
       // fakeAuth.isAuthenticated === true ? (
-      API.authenticate === true ? (
+      API.authenticate() === true ? (
         <Component {...props} />
       ) : (
         <Redirect
