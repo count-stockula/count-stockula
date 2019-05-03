@@ -2,16 +2,18 @@ import React, { PureComponent } from "react";
 import API from "../../components/utils/API";
 import PageHeader from "../../components/Pageheader/Pageheader";
 import BottomBar from "../../components/BottomBar/BottomBar";
-import SettingsForm from "../../components/Forms/SettingsForm"
+import SettingsForm2 from "../../components/Forms/SettingsForm2";
 import Modal from "../../components/Modal/Modal";
+import "./Settings.css";
 
 export default class Settings extends PureComponent {
   state = {
       storeId: "",
       theStores: [],
-      userName: "asylvestercat",
-      email: "annasylvester@bellsouth.net",
-      phoneNo: "4047758598",
+      userName: "",
+      userId: "5cc48b5340ab79002a6b9ef8",
+      email: "",
+      phoneNo: "",
       alertShown: false,
       errorMessage:"",
       buttonText:"OK"
@@ -19,8 +21,8 @@ export default class Settings extends PureComponent {
 
   saveClick = event => {
     event.preventDefault();
-    // This will become get cookie function
-    let userId = "5cb67993ed72c8002a0bd15d"
+    // This will become get cookie function!!!
+    let userId = this.state.userId
     const userData = {
       name: this.state.userName,
       storeId: this.state.storeId,
@@ -71,14 +73,21 @@ export default class Settings extends PureComponent {
     const { name, value } = event.target;   
     this.setState({
       [name]: value
-    });    
-
+    });
   }
 
   componentDidMount = () => {
-    API.getAllStores().then(res => {
-      this.setState({theStores: res.data})
-    })
+    API.getAllStores().then(storeRes => {
+      this.setState({theStores: storeRes.data})
+    },
+    API.findUserId(this.state.userId).then(userRes => {
+      this.setState({
+      storeId: userRes.data.storeId,
+      userName: userRes.data.name,
+      email: userRes.data.email,
+      phoneNo: userRes.data.phone
+      })
+    }))
   }
 
   render() {
@@ -86,9 +95,10 @@ export default class Settings extends PureComponent {
       <>
         <PageHeader title="Settings" />
         <div className="row mainWrapper stretched">
-          <div className="col red darken-4 inv centralContent">
-            <SettingsForm 
+          <div className="col red darken-4 inv centralContent settingsContainer">
+            <SettingsForm2 
             selectStore={this.selectStore}
+            storeId={this.state.storeId}
             typingEvent = {this.onChange}
             saveClick={this.saveClick}
             theStores={this.state.theStores}
