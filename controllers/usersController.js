@@ -190,6 +190,7 @@ module.exports = {
   },
   authenticate: function(req, res) {
     res.status(200).json(true);
+    //res.status(200).send(true);
   },
   signout: function(req, res) {
     res.send("successful test signout");

@@ -1,7 +1,6 @@
 import React from "react";
-
 import "./Input.css";
-import Label from "../../components/Label/Label";
+//import Label from "../../components/Label/Label";
 
 function Input(props) {
   const {

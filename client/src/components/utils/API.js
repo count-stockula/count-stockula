@@ -126,8 +126,7 @@ export default {
   },
   // passport login user
   authenticate: function() {
-    return axios.get("/api/users/authenticate", {
-    });
+    return axios.get("/api/users/authenticate");
   },
   // signout
   signoutUser: function(cb) {

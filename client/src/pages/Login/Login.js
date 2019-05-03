@@ -44,13 +44,12 @@ export default class Login extends PureComponent {
         }
       })
       .catch(err => {
-        console.error(err);
+        //console.error(err);
         alert("Error logging in please try again");
       });
   };
 
   render() {
-    console.log(this.props);
     return (
       <>
         <div className="logoContainer">

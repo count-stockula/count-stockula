@@ -2,9 +2,16 @@ import React, { PureComponent } from "react";
 import PageHeader from "../../components/Pageheader/Pageheader";
 import BottomBar from "../../components/BottomBar/BottomBar";
 import ContainedButtons from "../../components/ContainedButtons/ContainedButtons";
+import API from "../../components/utils/API";
 
 export default class Scan extends PureComponent {
   state = {};
+
+  componentDidMount = () => {
+    API.authenticate()
+      .then(results => this.setState({}))
+      .catch(error => this.props.history.push("/"));
+  };
 
   render() {
     return (
