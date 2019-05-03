@@ -1,4 +1,8 @@
-.settingsContainer {
-    background-color: black;
-    margin-top: 150px;
+.settingsContainer input[type=text]  {
+  border-top-left-radius: 0px !important;
+  border-bottom-left-radius: 0px !important;
 }
+
+.settingsContainer select {
+    margin-bottom: 8px;
+  }

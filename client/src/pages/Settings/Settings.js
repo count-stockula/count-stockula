@@ -2,105 +2,122 @@ import React, { PureComponent } from "react";
 import API from "../../components/utils/API";
 import PageHeader from "../../components/Pageheader/Pageheader";
 import BottomBar from "../../components/BottomBar/BottomBar";
-import SettingsForm from "../../components/Forms/SettingsForm"
+import SettingsForm2 from "../../components/Forms/SettingsForm2";
 import Modal from "../../components/Modal/Modal";
+import "./Settings.css";
 
 export default class Settings extends PureComponent {
   state = {
-      storeId: "",
-      theStores: [],
-      userName: "asylvestercat",
-      email: "annasylvester@bellsouth.net",
-      phoneNo: "4047758598",
-      alertShown: false,
-      errorMessage:"",
-      buttonText:"OK"
-   };
+    storeId: "",
+    theStores: [],
+    userName: "",
+    userId: "5cc48b5340ab79002a6b9ef8",
+    email: "",
+    phoneNo: "",
+    alertShown: false,
+    errorMessage: "",
+    buttonText: "OK"
+  };
 
   saveClick = event => {
     event.preventDefault();
-    // This will become get cookie function
-    let userId = "5cb67993ed72c8002a0bd15d"
+    // This will become get cookie function!!!
+    let userId = this.state.userId;
     const userData = {
       name: this.state.userName,
       storeId: this.state.storeId,
       email: this.state.email,
       phone: this.state.phoneNo
-    }
-  
+    };
+
     API.updateUser(userId, userData)
-    .then((results) => {
-      this.setState({
-        alertShown: true,
-        errorMessage: `User settings saved`,
+      .then(results => {
+        this.setState({
+          alertShown: true,
+          errorMessage: `User settings saved`
+        });
+      })
+      .catch(error => {
+        this.setState({
+          alertShown: true,
+          errorMessage: `Error occured while updating user settings to the db, ${error}`
+        });
       });
-    })
-    .catch((error) => {
-      this.setState({
-        alertShown: true,
-        errorMessage: `Error occured while updating user settings to the db, ${error}`,
-      });
-    });
     // handle with componentWillMount API.authenticate()
     //.catch(error => this.props.history.push("/"));
-
-  }
+  };
   modalViews = () => {
     return this.state.alertShown ? "modal modalOpen" : "modal";
   };
-  hideModal = () => {     
-          this.setState({          
-          alertShown:false ,
-          errorMessage:"",   
-          buttonText:"OK",         
-          });
-     }
-     evalCancelVisibillity = () => {
-      return "hide";
-  }
-  
+  hideModal = () => {
+    this.setState({
+      alertShown: false,
+      errorMessage: "",
+      buttonText: "OK"
+    });
+  };
+  evalCancelVisibillity = () => {
+    return "hide";
+  };
+
   cancelModal = () => {
-    this.setState({alertShown: false, errorMessage:"", upc:""});
-  }
+    this.setState({ alertShown: false, errorMessage: "", upc: "" });
+  };
   onChange = event => {
-    const { name, value } = event.target;  
+    const { name, value } = event.target;
     this.setState({
       [name]: value
-    });         
-  }
+    });
+  };
 
   selectStore = event => {
-    const { name, value } = event.target;   
+    const { name, value } = event.target;
     this.setState({
       [name]: value
-    });    
-  }
+    });
+  };
 
   componentDidMount = () => {
-    API.getAllStores()
-      .then(res => this.setState({ theStores: res.data }))
-      .catch(error => this.props.history.push("/"));
-  }
+    API.getAllStores().then(
+      storeRes => {
+        this.setState({ theStores: storeRes.data });
+      },
+      API.findUserId(this.state.userId).then(userRes => {
+        this.setState({
+          storeId: userRes.data.storeId,
+          userName: userRes.data.name,
+          email: userRes.data.email,
+          phoneNo: userRes.data.phone
+        });
+      })
+    );
+  };
 
   render() {
     return (
       <>
         <PageHeader title="Settings" />
         <div className="row mainWrapper stretched">
-          <div className="col red darken-4 inv centralContent">
-            <SettingsForm 
-            selectStore={this.selectStore}
-            typingEvent = {this.onChange}
-            saveClick={this.saveClick}
-            theStores={this.state.theStores}
-            userName={this.state.userName} 
-            email={this.state.email}
-            phoneNo={this.state.phoneNo}
+          <div className="col red darken-4 inv centralContent settingsContainer">
+            <SettingsForm2
+              selectStore={this.selectStore}
+              storeId={this.state.storeId}
+              typingEvent={this.onChange}
+              saveClick={this.saveClick}
+              theStores={this.state.theStores}
+              userName={this.state.userName}
+              email={this.state.email}
+              phoneNo={this.state.phoneNo}
             />
           </div>
-          <Modal cancelModal={this.cancelModal}  buttonText={this.state.buttonText} className={this.modalViews()} onClick={this.hideModal.bind(this)}>
-                    <p className="black-text">{this.state.errorMessage}</p>                   
-            </Modal>
+          <Modal
+            cancelModal={this.cancelModal}
+            buttonText={this.state.buttonText}
+            className={this.modalViews()}
+            onClick={this.hideModal.bind(this)}
+          >
+            <p className="black-text">{this.state.errorMessage}</p>
+          </Modal>
         </div>
         <BottomBar />
       </>
