@@ -19,6 +19,12 @@ export default class Settings extends PureComponent {
     buttonText: "OK"
   };
 
+  componentWillMount = () => {
+    API.authenticate()
+      .then(results => this.setState({}))
+      .catch(error => this.props.history.push("/"));
+  };
+  
   saveClick = event => {
     event.preventDefault();
     // This will become get cookie function!!!
@@ -61,7 +67,11 @@ export default class Settings extends PureComponent {
   };
 
   cancelModal = () => {
-    this.setState({ alertShown: false, errorMessage: "", upc: "" });
+    this.setState({
+      alertShown: false,
+      errorMessage: "",
+      upc: ""
+    });
   };
   onChange = event => {
     const { name, value } = event.target;
@@ -80,7 +90,9 @@ export default class Settings extends PureComponent {
   componentDidMount = () => {
     API.getAllStores().then(
       storeRes => {
-        this.setState({ theStores: storeRes.data });
+        this.setState({
+          theStores: storeRes.data
+        });
       },
       API.findUserId(this.state.userId).then(userRes => {
         this.setState({

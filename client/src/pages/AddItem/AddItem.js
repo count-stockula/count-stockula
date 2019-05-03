@@ -22,14 +22,29 @@ export default class AddItem extends PureComponent {
     buttonText: "OK",
     showUpcField: false,
     showCancel: false,
-    noScan: true,
+    noScan: true
   };
+
+  componentWillMount = () => {
+    API.authenticate()
+      .then(results => this.setState({}))
+      .catch(error => this.props.history.push("/"));
+  };
+  
   cancelEntry = event => {
     event.preventDefault();
-    this.setState({ showForm: false, upc: "", currentQty: "", prodName: "" });
+    this.setState({
+      showForm: false,
+      upc: "",
+      currentQty: "",
+      prodName: ""
+    });
   };
   handleScan = data => {
-    this.setState({ showForm: true, upc: data.trim() });
+    this.setState({
+      showForm: true,
+      upc: data.trim()
+    });
     API.findItemUpc("5cb3247aef86d68b5e0dc795", data.trim())
       .then(retData => {
         this.setState({
@@ -48,11 +63,15 @@ export default class AddItem extends PureComponent {
             alertShown: true,
             errorMessage: `Error connecting to db`,
             buttonText: "OK",
-            showUpcField: false,
+            showUpcField: false
           });
           return;
         }
-        this.setState({ alertShown: false, showForm: true, upc: data.trim() });
+        this.setState({
+          alertShown: false,
+          showForm: true,
+          upc: data.trim()
+        });
       });
   };
   inputTyping = event => {
@@ -71,7 +90,7 @@ export default class AddItem extends PureComponent {
       currentQty: this.state.addedQty,
       alertStatus: false,
       storeId: "5cb3247aef86d68b5e0dc795",
-      noScan:this.state.noScan
+      noScan: this.state.noScan
     };
     API.createItem(prodData)
       .then(retVal =>
@@ -88,7 +107,7 @@ export default class AddItem extends PureComponent {
           alertShown: true,
           errorMessage: `Error occured while saving to the db, ${err}`,
           showCancel: false,
-          showUpcField: false,
+          showUpcField: false
         });
         // handle failed token auth
         //.catch(error => this.props.history.push("/"));
@@ -133,7 +152,11 @@ export default class AddItem extends PureComponent {
           });
         });
     } else {
-      this.setState({ alertShown: false, errorMessage: "", showCancel: false });
+      this.setState({
+        alertShown: false,
+        errorMessage: "",
+        showCancel: false
+      });
     }
   };
   cancelModal = () => {
@@ -155,8 +178,8 @@ export default class AddItem extends PureComponent {
     });
   };
   toggleScanCheck = evt => {
-    this.setState({noScan:evt.target.checked})
-  }
+    this.setState({ noScan: evt.target.checked });
+  };
   render() {
     return (
       <>
@@ -178,7 +201,7 @@ export default class AddItem extends PureComponent {
                 typingEvent={this.inputTyping}
                 saveClick={this.addItem}
                 cancelEntry={this.cancelEntry}
-                noScan = {this.state.noScan}
+                noScan={this.state.noScan}
                 onChange={this.toggleScanCheck}
               />
             </div>

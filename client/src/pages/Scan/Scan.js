@@ -7,7 +7,7 @@ import API from "../../components/utils/API";
 export default class Scan extends PureComponent {
   state = {};
 
-  componentDidMount = () => {
+  componentWillMount = () => {
     API.authenticate()
       .then(results => this.setState({}))
       .catch(error => this.props.history.push("/"));

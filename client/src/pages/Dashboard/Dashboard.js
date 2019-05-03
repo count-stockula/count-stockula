@@ -15,22 +15,40 @@ export default class Dashboard extends PureComponent {
     curTab: "two"
   };
 
+  componentWillMount = () => {
+    API.authenticate()
+      .then(results => this.setState({}))
+      .catch(error => this.props.history.push("/"));
+  };
+  
   handleTabChange = (event, value) => {
     const setVal = value;
     switch (setVal) {
       case "one":
         API.getAllItems(this.state.curStore)
-          .then(results => this.setState({ inventoryList: results.data }))
+          .then(results =>
+            this.setState({
+              inventoryList: results.data
+            })
+          )
           .catch(error => this.props.history.push("/"));
         break;
       case "three":
         API.getZeroStock(this.state.curStore)
-          .then(results => this.setState({ inventoryList: results.data }))
+          .then(results =>
+            this.setState({
+              inventoryList: results.data
+            })
+          )
           .catch(error => this.props.history.push("/"));
         break;
       default:
         API.getLowStock(this.state.curStore)
-          .then(results => this.setState({ inventoryList: results.data }))
+          .then(results =>
+            this.setState({
+              inventoryList: results.data
+            })
+          )
           .catch(error => this.props.history.push("/"));
         break;
     }
@@ -38,7 +56,11 @@ export default class Dashboard extends PureComponent {
   };
   componentDidMount = () => {
     API.getLowStock()
-      .then(results => this.setState({ inventoryList: results.data }))
+      .then(results =>
+        this.setState({
+          inventoryList: results.data
+        })
+      )
       .catch(error => this.props.history.push("/"));
     API.getAllStores()
       .then(results => this.setState({ theStores: results.data }))
@@ -50,17 +72,29 @@ export default class Dashboard extends PureComponent {
       switch (this.state.curTab) {
         case "one":
           API.getAllItems(this.state.curStore)
-            .then(results => this.setState({ inventoryList: results.data }))
+            .then(results =>
+              this.setState({
+                inventoryList: results.data
+              })
+            )
             .catch(error => this.props.history.push("/"));
           break;
         case "three":
           API.getZeroStock(this.state.curStore)
-            .then(results => this.setState({ inventoryList: results.data }))
+            .then(results =>
+              this.setState({
+                inventoryList: results.data
+              })
+            )
             .catch(error => this.props.history.push("/"));
           break;
         default:
           API.getLowStock(this.state.curStore)
-            .then(results => this.setState({ inventoryList: results.data }))
+            .then(results =>
+              this.setState({
+                inventoryList: results.data
+              })
+            )
             .catch(error => this.props.history.push("/"));
           break;
       }

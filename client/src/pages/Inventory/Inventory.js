@@ -31,9 +31,15 @@ export default class Inventory extends PureComponent {
     showUpcField: false,
     showCancel: false
   };
+
+  componentWillMount = () => {
+    API.authenticate()
+      .then(results => this.setState({}))
+      .catch(error => this.props.history.push("/"));
+  };
+  
   handleScan = data => {
     //data will be the upc
-
     API.findItemUpc("5cb3247aef86d68b5e0dc795", data)
       .then(retData => {
         this.setState({
@@ -95,7 +101,7 @@ export default class Inventory extends PureComponent {
           alertShown: true,
           errorMessage: `Error occured while updating inventory to the db, ${err}`,
           showCancel: false,
-          showUpcField: false,
+          showUpcField: false
         });
       });
   };

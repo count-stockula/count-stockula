@@ -32,13 +32,21 @@ export default class Sales extends PureComponent {
     upc: "",
     nonScanItems: []
   };
+  
+  componentWillMount = () => {
+    API.authenticate()
+      .then(results => this.setState({}))
+      .catch(error => this.props.history.push("/"));
+  };
 
   componentDidMount = () => {
     this.setState({ userEmail: "" });
     document.addEventListener("keydown", this.keyPressListener, false);
     API.getNoScanItems("5cb3247aef86d68b5e0dc795")
       .then(results => {
-        this.setState({ nonScanItems: results.data });
+        this.setState({
+          nonScanItems: results.data
+        });
       })
       .catch(err => {
         this.setState({
@@ -65,7 +73,6 @@ export default class Sales extends PureComponent {
     document.removeEventListener("keydown", this.keyPressListener, false);
   };
   getEmail = () => {
-    
     if (this.state.purchasedItems.length < 1) {
       this.setState({
         alertShown: true,
@@ -77,7 +84,7 @@ export default class Sales extends PureComponent {
       return;
     }
     this.setState({
-      errorMessage:"",
+      errorMessage: "",
       alertShown: true,
       showEmailDialog: true,
       buttonText: "Send Email",
@@ -135,7 +142,11 @@ export default class Sales extends PureComponent {
         }
       ],
       styles: {
-        header: { bold: true, fontSize: 18, marginBottom: 24 }
+        header: {
+          bold: true,
+          fontSize: 18,
+          marginBottom: 24
+        }
       }
     };
     let userEmail = this.state.userEmail;
@@ -164,7 +175,10 @@ export default class Sales extends PureComponent {
     let val =
       new Date().toLocaleDateString() +
       " " +
-      new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
     return "Sales: " + val;
   };
   handleScan = data => {
@@ -287,7 +301,7 @@ export default class Sales extends PureComponent {
                 id="userEmail"
                 name="userEmail"
                 textalign="center"
-                required                
+                required
               />
             </div>
             <div className={this.state.showUPCDialog ? "show" : "hide"}>
@@ -299,7 +313,7 @@ export default class Sales extends PureComponent {
                 textalign="center"
                 value={this.state.upc}
                 required
-                forwardRef={(ip) => this.myInp = ip}
+                forwardRef={ip => (this.myInp = ip)}
               />
             </div>
           </Modal>
