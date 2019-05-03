@@ -82,9 +82,7 @@ export default class Sales extends PureComponent {
       showEmailDialog: true,
       buttonText: "Send Email",
       showUPCDialog: false
-    });
-    let inp = document.getElementById("userEmail");
-    inp.focus();
+    },this.componentDidUpdate = () =>{document.getElementById("userEmail").focus();});
   };
   createPdf = () => {
     this.thisObj.blur();
@@ -232,7 +230,7 @@ export default class Sales extends PureComponent {
       showEmailDialog: false,
       showUPCDialog: true,
       upc: ""
-    });
+    },this.componentDidUpdate = () =>{document.getElementById("upc").focus();});
   };
   render() {
     return (
@@ -299,7 +297,6 @@ export default class Sales extends PureComponent {
                 textalign="center"
                 value={this.state.upc}
                 required
-                forwardRef={(ip) => this.myInp = ip}
               />
             </div>
           </Modal>
