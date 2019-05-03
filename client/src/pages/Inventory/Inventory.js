@@ -45,7 +45,9 @@ export default class Inventory extends PureComponent {
           showUpcField:false,
           alertShown:false,
           showCancel:false
-        });
+        },this.componentDidUpdate = () =>{
+          let ind = document.getElementById("qty")
+          ind.focus();});
       })
       .catch(err => {
         this.setState({
@@ -115,7 +117,9 @@ export default class Inventory extends PureComponent {
                showUpcField:false,
                alertShown:false,
                showCancel:false
-          });
+          },this.componentDidUpdate = () =>{
+            let ind = document.getElementById("qty")
+            ind.focus();});
           })
       .catch(err => {
         this.setState({
@@ -157,7 +161,9 @@ export default class Inventory extends PureComponent {
           showUpcField:true,
           upc: "",
           showCancel:true
-     });
+     },this.componentDidUpdate = () =>{
+            let ind = document.getElementById("upc2")
+            ind.focus();});
   }
   render() {
     return (
@@ -187,7 +193,7 @@ export default class Inventory extends PureComponent {
                     <p className="black-text">{this.state.errorMessage}</p>
                     <div className={this.state.showUpcField ? "show": "hide"}>
                          <p className="black-text">Enter UPC:</p>
-                         <Input textChangeFunc={this.handleChange} value={this.state.upc} id="upc" name="upc" textalign="center" required></Input>
+                         <Input textChangeFunc={this.handleChange} value={this.state.upc} id="upc2" name="upc" textalign="center" required></Input>
                     </div>
             </Modal>
             {/* <div id="modal1" className={this.modalViews()}>
