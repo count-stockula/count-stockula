@@ -90,7 +90,14 @@ export default class Inventory extends PureComponent {
           qty: 0
         })
       )
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.setState({
+          alertShown: true,
+          errorMessage: `Error occured while updating inventory to the db, ${err}`,
+          showCancel: false,
+          showUpcField: false,
+        });
+      });
   };
   modalViews = () => {
     return this.state.alertShown ? "modal modalOpen" : "modal";

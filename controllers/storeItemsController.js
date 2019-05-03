@@ -2,32 +2,18 @@ const db = require("../models");
 //const textApiCall = require("./textApiCall");
 
 module.exports = {
-  findAll: function (req, res) {     
-    if (req.query.storeId) {
-      db.StoreItem
-        .find({ storeId: req.query.storeId })
-        .sort({ name: 1 })
-        .then(foundArray => {
-          if (foundArray) {
-            res.json(foundArray);
-          } else {
-            res.status(400).json("no items found");
-          };
-        })
-        .catch(err => res.status(422).json(err));
-    } else {
-      db.StoreItem
-        .find({})
-        .sort({ name: 1 })
-        .then(foundArray => {
-          if (foundArray) {
-            res.json(foundArray);
-          } else {
-            res.status(400).json("no items found");
-          };
-        })
-        .catch(err => res.status(422).json(err));
-    }
+  findAll: function (req, res) {
+    db.StoreItem
+      .find(req.query)
+      .sort({ name: 1 })
+      .then(foundArray => {
+        if (foundArray) {
+          res.json(foundArray);
+        } else {
+          res.status(400).json("no items found");
+        };
+      })
+      .catch(err => res.status(422).json(err));
   },
   findById: function (req, res) {
     db.StoreItem
@@ -74,12 +60,12 @@ module.exports = {
           if (foundObj) {
             res.json(foundObj);
           } else {
-            return res.status(404).json({message:"no items found"});
+            return res.status(404).json({ message: "no items found" });
           };
         })
-        .catch(err => res.status(422).json({message:err}));
+        .catch(err => res.status(422).json({ message: err }));
     } else {
-     return res.status(400).json("bad request");
+      return res.status(400).json("bad request");
     }
   },
   reduceStock: function (req, res) {
@@ -113,13 +99,13 @@ module.exports = {
       db.StoreItem
         .findOne({ storeId: req.body.storeId, upc: req.body.upc.trim() })
         .then(foundObj => {
-             
+
           let updatedQty = (foundObj.currentQty + parseInt(req.body.addQty));
           if (updatedQty >= foundObj.criticalQty) {
             foundObj.alertStatus = false;
           }
           db.StoreItem
-            .findOneAndUpdate({ storeId: req.body.storeId, upc: req.body.upc.trim()}, {currentQty: updatedQty, alertStatus: foundObj.alertStatus })
+            .findOneAndUpdate({ storeId: req.body.storeId, upc: req.body.upc.trim() }, { currentQty: updatedQty, alertStatus: foundObj.alertStatus })
             .then(() => {
               db.StoreItem
                 .findOne({ storeId: req.body.storeId, upc: req.body.upc.trim() })

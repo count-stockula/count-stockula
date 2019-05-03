@@ -1,1 +1,44 @@
 /* Input.css */
+
+
+.input-container {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .icon {
+    padding: 10px;
+    background: white;
+    color: #a3a3a3;
+    min-width: 40px;
+    text-align: center;
+    border-right-style: solid;
+    border-right-width: 2px;
+    border-color: #a3a3a3;
+    height: 28.5px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    padding-bottom: 10px;
+  }
+  
+  .inputField {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+    border-bottom-left-radius: 0px !important;
+    border-top-left-radius: 0px !important;
+    height: 28px !important;
+  }
+
+  
+  .inputField:focus {
+    box-shadow: none !important;
+  }
+
+  ::placeholder {
+    color:  #a3a3a3;
+    font-size: 12pt;
+  }
+  

@@ -4,15 +4,15 @@ import Form from "../../components/Form/Form";
 import Label from "../../components/Label/Label";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
+import BlackButton from "../../components/Button/Blackbutton"
 import "./Login.css";
 
 export default class Login extends PureComponent {
   constructor() {
     super();
     this.state = {
-      email: "email@domain.com",
-      password: "Password123",
-      redirectToReferrer: false
+      email: "",
+      password: ""
     };
   }
 
@@ -55,33 +55,42 @@ export default class Login extends PureComponent {
         <div className="logoContainer">
           <img src="images/logo.png" alt="Count Stockula Logo" width="150px" />
         </div>
-        <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
-          <div className="loginContainer">
+        <div className="row">
+          <div className="col s1 m3 l4"></div>
+          <div className="col s10 m6 l4">
             <Form className="col" id="login">
-              <Label htmlFor="email" className="" />
-              <Input
-                type="email"
-                className="validate"
-                id="email"
-                name="email"
-                value={this.state.email}
-                //placeholder="email@domain.com"
-                onChange={this.handleChange}
-              />
-              <Label htmlFor="password" className="" />
-              <Input
-                type="password"
-                className="validate"
-                id="password"
-                name="password"
-                value={this.state.password}
-                //placeholder="password"
-                onChange={this.handleChange}
-              />
+              <div class="col s12">
+                <Input
+                icon = "fas fa-envelope icon"
+                  type="email"
+                  className="validate"
+                  id="email"
+                  name="email"
+                  value={this.state.email}
+                  placeholder="email@domain.com"
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div class="col s12">
+                <Input
+                  icon = "fas fa-key icon"
+                  type="password"
+                  className="validate"
+                  id="password"
+                  name="password"
+                  value={this.state.password}
+                  placeholder="password"
+                  onChange={this.handleChange}
+                />
+              </div>
             </Form>
+
           </div>
-          <div className="mx-auto col-10 col-lg-4 col-md-6 col-sm-6 col-xl-4 px-0">
-            <Button onClick={this.handleSubmit}>Login</Button>
+        </div>
+        <div className="col s1 m3 l4"></div>
+        <div className="row">
+          <div className="loginButton">
+          <BlackButton onClick={this.handleSubmit} text="Login"></BlackButton>
           </div>
           <div className="orSignUp">
             <a href="/SignUp">

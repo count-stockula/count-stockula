@@ -5,7 +5,9 @@ export default {
   // gets an array of all items in db or for a certain store
   getAllItems: function(storeId) {
     if (storeId !== "0") {
-      return axios.get("/api/storeItems", { params: { storeId: storeId } });
+      return axios.get("/api/storeItems", {
+        params: { storeId: storeId }
+      });
     } else {
       return axios.get("/api/storeItems");
     }
@@ -28,6 +30,18 @@ export default {
       });
     } else {
       return axios.get("/api/storeItems/zeroStock");
+    }
+  },
+  // gets an array of all non-scannable items in db or for a certain store
+  getNoScanItems: function(storeId) {
+    if (storeId !== "0") {
+      return axios.get("/api/storeItems", {
+        params: { storeId: storeId, noScan: true }
+      });
+    } else {
+      return axios.get("/api/storeItems", {
+        params: { noScan: true }
+      });
     }
   },
   // gets an object by item Id
@@ -95,7 +109,9 @@ export default {
   // gets an array of all the users in db or for a certain store
   getAllUsers: function(storeId) {
     if (storeId) {
-      return axios.get("/api/users", { params: { storeId: storeId } });
+      return axios.get("/api/users", {
+        params: { storeId: storeId }
+      });
     } else {
       return axios.get("/api/users");
     }
@@ -121,8 +137,7 @@ export default {
   },
   // passport signup user
   signupUser: function() {
-    return axios.post("/api/login/signup", {
-    });
+    return axios.post("/api/login/signup", {});
   },
   // passport login user
   authenticate: function() {

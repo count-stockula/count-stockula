@@ -21,7 +21,8 @@ export default class AddItem extends PureComponent {
     errorMessage: "",
     buttonText: "OK",
     showUpcField: false,
-    showCancel: false
+    showCancel: false,
+    noScan: true,
   };
   cancelEntry = event => {
     event.preventDefault();
@@ -47,7 +48,7 @@ export default class AddItem extends PureComponent {
             alertShown: true,
             errorMessage: `Error connecting to db`,
             buttonText: "OK",
-            showUpcField: false
+            showUpcField: false,
           });
           return;
         }
@@ -69,7 +70,8 @@ export default class AddItem extends PureComponent {
       criticalQty: this.state.criticalQty,
       currentQty: this.state.addedQty,
       alertStatus: false,
-      storeId: "5cb3247aef86d68b5e0dc795"
+      storeId: "5cb3247aef86d68b5e0dc795",
+      noScan:this.state.noScan
     };
     API.createItem(prodData)
       .then(retVal =>
@@ -81,7 +83,16 @@ export default class AddItem extends PureComponent {
           qty: 0
         })
       )
-      .catch(error => this.props.history.push("/"));
+      .catch(err => {
+        this.setState({
+          alertShown: true,
+          errorMessage: `Error occured while saving to the db, ${err}`,
+          showCancel: false,
+          showUpcField: false,
+        });
+        // handle failed token auth
+        //.catch(error => this.props.history.push("/"));
+      });
   };
   evalCancelVisibillity = () => {
     return this.state.showCancel
@@ -143,6 +154,9 @@ export default class AddItem extends PureComponent {
       showCancel: true
     });
   };
+  toggleScanCheck = evt => {
+    this.setState({noScan:evt.target.checked})
+  }
   render() {
     return (
       <>
@@ -164,6 +178,8 @@ export default class AddItem extends PureComponent {
                 typingEvent={this.inputTyping}
                 saveClick={this.addItem}
                 cancelEntry={this.cancelEntry}
+                noScan = {this.state.noScan}
+                onChange={this.toggleScanCheck}
               />
             </div>
           </div>

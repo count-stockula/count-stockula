@@ -3,6 +3,7 @@ import API from "../../components/utils/API";
 import PageHeader from "../../components/Pageheader/Pageheader";
 import BottomBar from "../../components/BottomBar/BottomBar";
 import SettingsForm from "../../components/Forms/SettingsForm"
+import Modal from "../../components/Modal/Modal";
 
 export default class Settings extends PureComponent {
   state = {
@@ -10,9 +11,11 @@ export default class Settings extends PureComponent {
       theStores: [],
       userName: "asylvestercat",
       email: "annasylvester@bellsouth.net",
-      phoneNo: "4047758598"
-      
-  };
+      phoneNo: "4047758598",
+      alertShown: false,
+      errorMessage:"",
+      buttonText:"OK"
+   };
 
   saveClick = event => {
     event.preventDefault();
@@ -24,11 +27,41 @@ export default class Settings extends PureComponent {
       email: this.state.email,
       phone: this.state.phoneNo
     }
+  
     API.updateUser(userId, userData)
-      .then(results => console.log(results))
-      .catch(error => this.props.history.push("/"));
-  }
+    .then((results) => {
+      this.setState({
+        alertShown: true,
+        errorMessage: `User settings saved`,
+      });
+    })
+    .catch((error) => {
+      this.setState({
+        alertShown: true,
+        errorMessage: `Error occured while updating user settings to the db, ${error}`,
+      });
+    });
+    // handle with componentWillMount API.authenticate()
+    //.catch(error => this.props.history.push("/"));
 
+  }
+  modalViews = () => {
+    return this.state.alertShown ? "modal modalOpen" : "modal";
+  };
+  hideModal = () => {     
+          this.setState({          
+          alertShown:false ,
+          errorMessage:"",   
+          buttonText:"OK",         
+          });
+     }
+     evalCancelVisibillity = () => {
+      return "hide";
+  }
+  
+  cancelModal = () => {
+    this.setState({alertShown: false, errorMessage:"", upc:""});
+  }
   onChange = event => {
     const { name, value } = event.target;  
     this.setState({
@@ -65,6 +98,9 @@ export default class Settings extends PureComponent {
             phoneNo={this.state.phoneNo}
             />
           </div>
+          <Modal cancelModal={this.cancelModal}  buttonText={this.state.buttonText} className={this.modalViews()} onClick={this.hideModal.bind(this)}>
+                    <p className="black-text">{this.state.errorMessage}</p>                   
+            </Modal>
         </div>
         <BottomBar />
       </>
