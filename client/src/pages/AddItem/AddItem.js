@@ -52,7 +52,10 @@ export default class AddItem extends PureComponent {
           });
           return;
         }
-        this.setState({ alertShown: false, showForm: true, upc: data.trim() });
+        this.setState({ alertShown: false, showForm: true, upc: data.trim() },this.componentDidUpdate = () =>{
+          console.log("ASASDSD")
+          let ind = document.getElementById("prodName")
+          ind.focus();});
       });
   };
   inputTyping = event => {
@@ -128,7 +131,9 @@ export default class AddItem extends PureComponent {
             showForm: true,
             upc: this.state.upc.trim(),
             showCancel: true
-          });
+          },this.componentDidUpdate = () =>{
+            let ind = document.getElementById("prodName")
+            ind.focus();});
         });
     } else {
       this.setState({ alertShown: false, errorMessage: "", showCancel: false });
@@ -150,7 +155,10 @@ export default class AddItem extends PureComponent {
       showUpcField: true,
       upc: "",
       showCancel: true
-    });
+    },this.componentDidUpdate = () => {
+      let ind =  document.getElementById("upc2")
+      ind.focus();
+    })
   };
   toggleScanCheck = evt => {
     this.setState({noScan:evt.target.checked})
@@ -189,7 +197,7 @@ export default class AddItem extends PureComponent {
                 <Input
                   textChangeFunc={this.inputTyping}
                   value={this.state.upc}
-                  id="upc"
+                  id="upc2"
                   name="upc"
                   textalign="center"
                   required
