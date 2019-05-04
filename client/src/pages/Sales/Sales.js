@@ -28,7 +28,7 @@ export default class Sales extends PureComponent {
     buttonText: "OK",
     showEmailDialog: false,
     showUPCDialog: false,
-    emailAddress: "",
+    userEmail: "",
     upc: "",
     nonScanItems: []
   };
@@ -64,12 +64,12 @@ export default class Sales extends PureComponent {
   componentWillUnmount = () => {
     document.removeEventListener("keydown", this.keyPressListener, false);
   };
-  getEmail = () => {
-    
+  getEmail = () => {    
     if (this.state.purchasedItems.length < 1) {
       this.setState({
         alertShown: true,
-        showEmailDialog: false,
+        showEmailDialog: false,        
+        userEmail: "",
         errorMessage: "Empty order, please scan items",
         buttonText: "OK",
         showUPCDialog: false
@@ -79,6 +79,7 @@ export default class Sales extends PureComponent {
     this.setState({
       errorMessage:"",
       alertShown: true,
+      userEmail: "",
       showEmailDialog: true,
       buttonText: "Send Email",
       showUPCDialog: false
@@ -150,13 +151,14 @@ export default class Sales extends PureComponent {
         });
       }
     });
-    pdfMake.createPdf(documentDefinition).open();
     this.setState({
       purchasedItems: [],
       alertShown: false,
       userEmail: "",
       buttonText: "OK"
     });
+    pdfMake.createPdf(documentDefinition).open();
+    
   };
   dateFormat = () => {
     let val =
@@ -198,7 +200,24 @@ export default class Sales extends PureComponent {
       this.state.showEmailDialog &&
       re.test(String(this.state.userEmail).toLowerCase())
     ) {
-      this.createPdf();
+      let orderBody = {
+        storeId:"5cb3247aef86d68b5e0dc795",
+        customerEmail: this.state.userEmail,
+        purchaseDate: new Date(),
+        employeeId: "5cc4758fbf3bef4644a72bc4",
+        items: this.state.purchasedItems.map(item => item._id)
+      }
+      API.saveOrder(orderBody).then(result => {
+        this.createPdf();
+      }).catch(err => {
+        this.setState({
+          userEmail: "",
+          showEmailDialog: true,
+          alertShown: true,
+          errorMessage: err
+        });
+        return;
+      });
     } else if (this.state.showUPCDialog && this.state.upc !== "") {
       this.handleScan(this.state.upc);
     } else if (this.state.showEmailDialog && this.state.userEmail === "") {
@@ -285,6 +304,7 @@ export default class Sales extends PureComponent {
                 id="userEmail"
                 name="userEmail"
                 textalign="center"
+                value={this.state.userEmail}
                 required                
               />
             </div>

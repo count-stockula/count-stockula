@@ -50,7 +50,6 @@ module.exports = {
         if (foundUser) {
           res.status(200).json("user already exists");
         } else {
-          console.log("req.body:\n", req.body);
           db.User.create(req.body)
             .then(newUser => {
               db.Store.findOneAndUpdate(
