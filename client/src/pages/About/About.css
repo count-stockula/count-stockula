@@ -40,7 +40,7 @@
  @media only screen and (max-width: 480px) {
     /* For mobile phones: */
     .headerPhoto {
-      width: 300px;
+      width: 320px;
       padding-top: 60px;
     }
 
@@ -49,33 +49,13 @@
       }
   }
 
-  .parallax-container {
-    min-height: 380px;
-    line-height: 0;
-    height: auto;
-    color: rgba(255,255,255,.9);
-  }
-    .parallax-container .section {
-      width: 100%;
-    }
-  
-  @media only screen and (max-width : 992px) {
-    .parallax-container .section {
-      position: absolute;
-      top: 40%;
-    }
-    #index-banner .section {
-      top: 10%;
-    }
-  }
-  
-  .redFiller {
-      background-color: #F7F7F7;
-      height: 60px;
-  }
 
   .grayFiller {
     background-color: #F7F7F7;
     width: 100%;
+  }
+
+  .instructionsContainer {
+    height: 100px;
   }
   
