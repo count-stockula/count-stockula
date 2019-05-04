@@ -1,7 +1,6 @@
 import React from "react";
-
 import "./Input.css";
-import Label from "../../components/Label/Label";
+//import Label from "../../components/Label/Label";
 
 function Input(props) {
   const {
@@ -17,8 +16,8 @@ function Input(props) {
   } = props;
   return (
     <>
-    <div class="input-container">
-        <i class={icon}></i>
+    <div className="input-container">
+        <i className={icon}></i>
         <input
           type={type}
           className="inputField"

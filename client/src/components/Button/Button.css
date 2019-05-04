@@ -1,3 +1,47 @@
 .btn {
     background-color: #b71c1c;
 }
+
+.backToApp{
+    position: fixed;
+    width:100%;
+    bottom: 0px;
+    z-index: 1200;
+    justify-content:center;
+    background-color: none;
+}
+.backToApp .center{
+    padding-top:10px;
+    padding-bottom:10px;
+    display: flex;
+    width:500px;
+    margin: 0 auto;
+    justify-content: space-between
+}
+.backToApp i{
+    cursor:pointer;
+    color:white;
+}
+.backToApp button{
+    background: black;
+    border-radius: 6px;
+    width:120px;
+    height:45px;
+    text-align: center;
+    border:4px solid #d32f2f  ;
+    position: absolute;
+    top:-35px;
+    left:calc(50% - (120px / 2));
+    padding: 0px;
+    font-weight: bold;
+}
+.backToApp button:hover, .backToApp button:focus{
+    background: #d50000  ;
+}
+
+
+@media only screen and (max-width: 601px){
+    .backToApp .center{ 
+        width: calc(100% - 72px) !important;
+    }
+}

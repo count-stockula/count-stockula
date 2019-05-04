@@ -1,0 +1,61 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+ .icon-block {
+    padding: 0 15px;
+  }
+  .icon-block .material-icons {
+      font-size: inherit;
+  }
+
+  .aboutSection {
+      margin-top: 60px;
+  }
+
+  .aboutFooter {
+      background: none !important;
+  }
+
+ .page-footer {
+     padding-bottom: 100px;
+ }
+
+ .headerPhotoContainer {
+     padding-bottom: 30px;
+ }
+
+ .headerPhoto {
+     width: 450px;
+ }
+
+ h5 {
+     background: none !important;
+ }
+
+ @media only screen and (max-width: 480px) {
+    /* For mobile phones: */
+    .headerPhoto {
+      width: 320px;
+      padding-top: 60px;
+    }
+
+    .grayFiller {
+        padding-top: 50px;;
+      }
+  }
+
+
+  .grayFiller {
+    background-color: #F7F7F7;
+    width: 100%;
+  }
+
+  .instructionsContainer {
+    height: 100px;
+  }
+  

@@ -5,8 +5,8 @@ export default {
   // gets an array of all items in db or for a certain store
   getAllItems: function(storeId) {
     if (storeId !== "0") {
-      return axios.get("/api/storeItems", { 
-        params: { storeId: storeId } 
+      return axios.get("/api/storeItems", {
+        params: { storeId: storeId }
       });
     } else {
       return axios.get("/api/storeItems");
@@ -35,11 +35,11 @@ export default {
   // gets an array of all non-scannable items in db or for a certain store
   getNoScanItems: function(storeId) {
     if (storeId !== "0") {
-      return axios.get("/api/storeItems", { 
-        params: { storeId: storeId , noScan: true }
+      return axios.get("/api/storeItems", {
+        params: { storeId: storeId, noScan: true }
       });
     } else {
-      return axios.get("/api/storeItems", { 
+      return axios.get("/api/storeItems", {
         params: { noScan: true }
       });
     }
@@ -109,7 +109,7 @@ export default {
   // gets an array of all the users in db or for a certain store
   getAllUsers: function(storeId) {
     if (storeId) {
-      return axios.get("/api/users", { 
+      return axios.get("/api/users", {
         params: { storeId: storeId }
       });
     } else {
@@ -118,7 +118,7 @@ export default {
   },
   // Create an user document in database *userData Must contain storeId to create user
   createUser: function(newUser) {
-    return axios.post("/api/users", newUser);
+    return axios.post("/api/login/create", newUser);
   },
   // gets an object by user Uid
   findUserId: function(userId) {
@@ -128,25 +128,26 @@ export default {
   updateUser: function(userId, userData) {
     return axios.put("/api/users/forOne/" + userId, userData);
   },
-  // Deletes the user with the given user Uid
-  deleteUser: function(userId) {
-    return axios.delete("/api/users/forOne/" + userId);
-  },
   // checks the given user email and password and returns one of three: "badPass", "badEmail", or the user document object
   loginUser: function(email, password) {
-    return axios.post("/api/users/login", {
+    return axios.post("/api/login/login", {
       email: email,
       password: password
     });
   },
-  // token authentication
-  authenticate: function(tokenCookie) {
-    return axios.post("/api/users/authenticate", {
-      tokenCookie: tokenCookie
-    });
+  // passport signup user
+  signupUser: function() {
+    return axios.post("/api/login/signup", {});
+  },
+  getSignUpStores: function() {
+    return axios.get("/api/login/stores");
+  },
+  // passport login user
+  authenticate: function() {
+    return axios.get("/api/users/authenticate");
   },
   // signout
-  signout: function(cb) {
+  signoutUser: function(cb) {
     // return axios.post("/api/users/signout", {
     //   tokenCookie: tokenCookie
     // });
@@ -158,13 +159,18 @@ export default {
       pdfFile: pdfFile
     });
   },
-  saveOrder: function(orderBody){
+  // Deletes the user with the given user Uid
+  deleteUser: function(userId) {
+    return axios.delete("/api/users/forOne/" + userId);
+  },
+  // save sales order to database
+  saveOrder: function(orderBody) {
     return axios.post("api/purchases", orderBody);
   },
-  getStoreSales:function(storeId){
-    return axios.get("api/purchases/StoreSales/", { 
+  // gets list of all saved orders
+  getStoreSales: function(storeId) {
+    return axios.get("api/purchases/StoreSales/", {
       params: { storeId: storeId }
     });
   }
-
 };
