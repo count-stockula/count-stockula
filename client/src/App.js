@@ -75,7 +75,6 @@ class App extends PureComponent {
             <Route exact path="/additem" component={AddItem} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/settings" component={Settings} />
-            <Route exact path="/settings" component={Settings} />
             <Route exact path="/about" component={About} />
             <Route exact path="/storeSales" component={StoreSales} />
             <Route path="*" component={FourOFour} />
