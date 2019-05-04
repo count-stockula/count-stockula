@@ -157,5 +157,9 @@ export default {
       receiveAddress: receiveAddress,
       pdfFile: pdfFile
     });
+  },
+  saveOrder: function(orderBody){
+    return axios.post("api/purchases", orderBody);
   }
+
 };
