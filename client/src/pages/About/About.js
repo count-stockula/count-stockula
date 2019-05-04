@@ -26,13 +26,13 @@ export default class About extends PureComponent {
           </div>
         
           {/* Instructions section */}
-          {/* <div className="container grayFiller instructionsContainer">
+          <div className="container grayFiller instructionsContainer">
             <div className="row">
               <div className="valign-wrapper">
                 <h5>This should be vertically aligned</h5>
               </div>
              </div>
-          </div> */}
+          </div>
 
             {/* Icon Section */}
             <div className="container">
