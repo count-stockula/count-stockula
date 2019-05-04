@@ -17,7 +17,11 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import AddItem from "./pages/AddItem/AddItem";
 import Inventory from "./pages/Inventory/Inventory";
 import Settings from "./pages/Settings/Settings";
+<<<<<<< HEAD
 import About from "./pages/About/About";
+=======
+import StoreSales from "./pages/StoreSales/StoreSales";
+>>>>>>> 98d2bdda25c7459e93b0c4d4d08124cfa1f94138
 import FourOFour from "./pages/FourOFour/FourOFour";
 
 const fakeAuth = {
@@ -74,8 +78,12 @@ class App extends PureComponent {
             <Route exact path="/additem" component={AddItem} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/settings" component={Settings} />
+<<<<<<< HEAD
             <Route exact path="/settings" component={Settings} />
             <Route exact path="/about" component={About} />
+=======
+            <Route exact path="/storeSales" component={StoreSales} />
+>>>>>>> 98d2bdda25c7459e93b0c4d4d08124cfa1f94138
             <Route path="*" component={FourOFour} />
             {/* <Route exact path="/signout" component={SignOut} /> */}
           </Switch>
