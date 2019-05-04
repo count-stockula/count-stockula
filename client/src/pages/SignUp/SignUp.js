@@ -11,12 +11,12 @@ export default class SignUp extends PureComponent {
   constructor() {
     super();
     this.state = {
-      name: "jarret",
+      name: "",
       storeId: "",
-      phone: "123-456-7890",
-      email: "name@test.com",
-      password: "Password1234",
-      confirmation: "Password1234",
+      phone: "",
+      email: "",
+      password: "",
+      confirmation: "",
       theStores: [],
       management: false,
       disabledInputArray: ["management"]
