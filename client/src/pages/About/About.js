@@ -78,7 +78,7 @@ export default class About extends PureComponent {
               </div>
             </div>
 
-            <footer className="page-footer orange">
+            <footer className="page-footer white">
               <div className="container">
                 <div className="row">
                   <div className="col l6 s12">
