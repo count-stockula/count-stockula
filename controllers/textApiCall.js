@@ -5,8 +5,8 @@ const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 
 module.exports = {
-    sendTxt: function (itemObj, qty) {
-        const number = itemObj.storeId.phoneNumber;
+    sendTxt: function (itemObj, qty, phoneNumber) {
+        const number = phoneNumber;
         const body = "There is only " + qty + " of " + itemObj.name + " left in stock. Please check Count-Stockula dashboard."
 
         client.messages

@@ -1,5 +1,7 @@
 const db = require("../models");
-//const textApiCall = require("./textApiCall");
+const textApiCall = require("./textApiCall");
+const jwt = require("jsonwebtoken");
+const secret = process.env.JWT_SECRET;
 
 module.exports = {
   findAll: function (req, res) {
@@ -29,6 +31,8 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res) {
+    const { email, storeId } = jwt.verify(req.cookies.token, secret);
+    req.body.storeId = storeId;
     db.StoreItem
       .create(req.body)
       .then(madeObj => res.json(madeObj))
@@ -54,8 +58,9 @@ module.exports = {
   },
   findByUpc: function (req, res) {
     if (req.query.storeId && req.query.upc) {
+      const { email, storeId } = jwt.verify(req.cookies.token, secret);
       db.StoreItem
-        .findOne(req.query)
+        .findOne({ storeId: storeId, upc: req.query.upc })
         .then(foundObj => {
           if (foundObj) {
             res.json(foundObj);
@@ -70,20 +75,25 @@ module.exports = {
   },
   reduceStock: function (req, res) {
     if (req.body.storeId && req.body.upc) {
+      const { email, storeId } = jwt.verify(req.cookies.token, secret);
       db.StoreItem
-        .findOne({ storeId: req.body.storeId, upc: req.body.upc })
+        .findOne({ storeId: storeId, upc: req.body.upc })
         .populate("storeId")
         .then(foundObj => {
           let updatedQty = (foundObj.currentQty - req.body.reduceQty);
           if ((updatedQty < foundObj.criticalQty) && (foundObj.alertStatus === false)) {
-            //textApiCall.sendTxt(foundObj, updatedQty);
+            //textApiCall.sendTxt(foundObj, updatedQty, foundObj.storeId.phoneNumber);
+            textApiCall.sendTxt(foundObj, updatedQty, "4047233897");
+            textApiCall.sendTxt(foundObj, updatedQty, "4047758896");
+            textApiCall.sendTxt(foundObj, updatedQty, "7703316278");
+            textApiCall.sendTxt(foundObj, updatedQty, "6785573075");
             foundObj.alertStatus = true;
           }
           db.StoreItem
-            .findOneAndUpdate({ storeId: req.body.storeId, upc: req.body.upc }, { currentQty: updatedQty, alertStatus: foundObj.alertStatus })
+            .findOneAndUpdate({ storeId: storeId, upc: req.body.upc }, { currentQty: updatedQty, alertStatus: foundObj.alertStatus })
             .then(() => {
               db.StoreItem
-                .findOne({ storeId: req.body.storeId, upc: req.body.upc })
+                .findOne({ storeId: storeId, upc: req.body.upc })
                 .then(foundObj => res.json(foundObj))
                 .catch(err => res.status(422).json(err));
             })
@@ -96,19 +106,19 @@ module.exports = {
   },
   addStock: function (req, res) {
     if (req.body.storeId && req.body.upc.trim()) {
+      const { email, storeId } = jwt.verify(req.cookies.token, secret);
       db.StoreItem
-        .findOne({ storeId: req.body.storeId, upc: req.body.upc.trim() })
+        .findOne({ storeId: storeId, upc: req.body.upc.trim() })
         .then(foundObj => {
-
           let updatedQty = (foundObj.currentQty + parseInt(req.body.addQty));
           if (updatedQty >= foundObj.criticalQty) {
             foundObj.alertStatus = false;
           }
           db.StoreItem
-            .findOneAndUpdate({ storeId: req.body.storeId, upc: req.body.upc.trim() }, { currentQty: updatedQty, alertStatus: foundObj.alertStatus })
+            .findOneAndUpdate({ storeId: storeId, upc: req.body.upc.trim() }, { currentQty: updatedQty, alertStatus: foundObj.alertStatus })
             .then(() => {
               db.StoreItem
-                .findOne({ storeId: req.body.storeId, upc: req.body.upc.trim() })
+                .findOne({ storeId: storeId, upc: req.body.upc.trim() })
                 .then(foundObj => res.json(foundObj))
                 .catch(err => res.status(422).json(err));
             })
