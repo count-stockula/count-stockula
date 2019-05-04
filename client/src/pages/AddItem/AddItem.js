@@ -53,7 +53,6 @@ export default class AddItem extends PureComponent {
           return;
         }
         this.setState({ alertShown: false, showForm: true, upc: data.trim() },this.componentDidUpdate = () =>{
-          console.log("ASASDSD")
           let ind = document.getElementById("prodName")
           ind.focus();});
       });
