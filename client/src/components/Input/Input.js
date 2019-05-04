@@ -16,8 +16,8 @@ function Input(props) {
   } = props;
   return (
     <>
-    <div class="input-container">
-        <i class={icon}></i>
+    <div className="input-container">
+        <i className={icon}></i>
         <input
           type={type}
           className="inputField"

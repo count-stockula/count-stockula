@@ -4,19 +4,19 @@ import Form from "../../components/Form/Form";
 
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import BlackButton from "../../components/Button/Blackbutton"
+//import BlackButton from "../../components/Button/Blackbutton";
 import "./SignUp.css";
 
 export default class SignUp extends PureComponent {
   constructor() {
     super();
     this.state = {
-      email: "",
-      password: "",
-      confirmation: "",
-      name: "",
-      phone: "",
+      name: "jarret",
       storeId: "",
+      phone: "123-456-7890",
+      email: "name@test.com",
+      password: "Password1234",
+      confirmation: "Password1234",
       theStores: [],
       management: false,
       disabledInputArray: ["management"]
@@ -24,14 +24,13 @@ export default class SignUp extends PureComponent {
   }
 
   componentDidMount = () => {
-    API.getAllStores().then(results => {
-      this.setState({ theStores: results.data });
+    API.getSignUpStores().then(results => {
+      this.setState({ theStores: results.data, storeId: results.data[0]._id });
     });
   };
 
   handleChange = event => {
     const { name, value } = event.target;
-    console.log(event.target.value);
     this.setState({
       [name]: value
     });
@@ -40,31 +39,43 @@ export default class SignUp extends PureComponent {
   handleSubmit = event => {
     event.preventDefault();
     const {
+      name,
+      storeId,
+      phone,
       email,
       password,
       confirmation,
-      name,
-      phone,
-      storeId,
       management
     } = this.state;
-    const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (regex.test(String(email).toLowerCase())) {
+
+    // validation
+    // name
+    if (name === "") {
+      alert("please enter valid name");
+      return;
+    }
+    // phone
+    if (phone === "") {
+      alert("please enter valid phone");
+      return;
+    }
+    if (storeId.length === 0) {
+      console.log(`storeId: ${storeId}`);
+      alert("please select a valid store");
+      return;
+    }
+    // email
+    //const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if (!regex.test(String(email).toLowerCase())) {
       alert("please enter valid email");
       return;
     }
+    // password
     if (password !== confirmation) {
-      alert("password must match confirmation");
+      alert("password must match confirmed password");
       return;
     }
-    // if (name !== "") {
-    //   alert("please enter valid email");
-    //   return;
-    // }
-    // if (phone !== "") {
-    //   alert("please enter valid email");
-    //   return;
-    // }
 
     API.createUser({
       email: email,
@@ -81,12 +92,12 @@ export default class SignUp extends PureComponent {
           return;
         }
         this.setState({
-          email: "",
-          password: "",
-          confirmation: "",
           name: "",
           phone: "",
-          storeId: ""
+          storeId: "",
+          email: "",
+          password: "",
+          confirmation: ""
         });
         alert(
           "Successful SignUp\n\nPlease login with your new username and password"
@@ -120,20 +131,16 @@ export default class SignUp extends PureComponent {
     return (
       <>
         <div className="logoContainer">
-          <img
-            src="/images/logo.png"
-            alt="Count Stockula Logo"
-            width="150px"
-          />
+          <img src="/images/logo.png" alt="Count Stockula Logo" width="150px" />
         </div>
         <div className="row">
-          <div className="col s1 m3 l3"></div>
+          <div className="col s1 m3 l3" />
           <div className="col s10 m6 l6">
             <Form className="col" id="login">
               <div className="col s12 l6">
                 {/* <Label htmlFor="name" className="" /> */}
                 <Input
-                  icon = "fas fa-user icon"
+                  icon="fas fa-user icon"
                   type="text"
                   className="validate"
                   id="name"
@@ -144,19 +151,36 @@ export default class SignUp extends PureComponent {
                 />
               </div>
               <div className="col s12 l6">
-              <div className="input-container">
-                <select onChange={this.handleChange} name="storeId" id="store">
-                  {this.state.theStores.map(item => (
-                    <option key={item._id} value={item._id}>
-                      {item.name}
-                    </option>
-                  ))}
-                </select>
+                <div className="input-container">
+                  <select
+                    onChange={this.handleChange}
+                    name="storeId"
+                    id="store"
+                    value={this.state.storeId}
+                  >
+                    {this.state.theStores.map(item => (
+                      <option key={item._id} value={item._id}>
+                        {item.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
               <div className="col s12 l6">
                 <Input
-                  icon = "fas fa-envelope icon"
+                  type="tel"
+                  icon="fas fa-phone icon"
+                  className="validate"
+                  id="phone"
+                  name="phone"
+                  value={this.state.phone}
+                  placeholder="phone"
+                  onChange={this.handleChange}
+                />
+              </div>
+              <div className="col s12 l6">
+                <Input
+                  icon="fas fa-envelope icon"
                   type="email"
                   className="validate"
                   id="email"
@@ -166,21 +190,9 @@ export default class SignUp extends PureComponent {
                   onChange={this.handleChange}
                 />
               </div>
-              <div className="col s12 l6">
-                <Input
-                  type="tel"
-                  icon = "fas fa-phone icon"
-                  className="validate"
-                  id="phone"
-                  name="phone"
-                  value={this.state.phone}
-                  placeholder="phone"
-                  onChange={this.handleChange}
-                />
-              </div>
               <div className="col s12">
                 <Input
-                  icon = "fas fa-key icon"
+                  icon="fas fa-key icon"
                   type="password"
                   className="validate"
                   id="password"
@@ -192,7 +204,7 @@ export default class SignUp extends PureComponent {
               </div>
               <div className=" col s12">
                 <Input
-                icon = "fas fa-key icon"
+                  icon="fas fa-key icon"
                   type="password"
                   className="validate"
                   id="confirmation"
@@ -225,7 +237,13 @@ export default class SignUp extends PureComponent {
           </div>
         </div>
         <div className="signUpButton">
-          <BlackButton onClick={this.handleSubmit} text="Sign Up"></BlackButton>
+          <Button
+            className="waves-effect waves-light btn black white-text"
+            onClick={this.handleSubmit}
+            text="Sign Up"
+          >
+            Sign Up
+          </Button>
         </div>
         <div className="orSignUp">
           <a href="/">

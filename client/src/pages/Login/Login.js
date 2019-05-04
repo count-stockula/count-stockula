@@ -90,7 +90,13 @@ export default class Login extends PureComponent {
         <div className="row">
           <div className="loginButton">
             {/* <BlackButton onClick={this.handleSubmit} text="Login" /> */}
-            <Button onClick={this.handleSubmit} text="Login">Login</Button>
+            <Button
+              className="waves-effect waves-light btn black white-text"
+              onClick={this.handleSubmit}
+              text="Login"
+            >
+              Login
+            </Button>
           </div>
           <div className="orSignUp">
             <a href="/SignUp">

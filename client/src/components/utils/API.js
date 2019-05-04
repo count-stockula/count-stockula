@@ -139,6 +139,9 @@ export default {
   signupUser: function() {
     return axios.post("/api/login/signup", {});
   },
+  getSignUpStores: function() {
+    return axios.get("/api/login/stores");
+  },
   // passport login user
   authenticate: function() {
     return axios.get("/api/users/authenticate");
