@@ -1,9 +1,10 @@
 import React from "react";
+import "./FourOFour.css";
 
 export default function FourOFour(){
   return (
     <>
-    <h1>Page not found</h1>
+    <img alt="404Photo" className="errorPhoto" src="/images/404image.png"></img>
     </>
   )
 }

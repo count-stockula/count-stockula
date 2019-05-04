@@ -17,6 +17,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import AddItem from "./pages/AddItem/AddItem";
 import Inventory from "./pages/Inventory/Inventory";
 import Settings from "./pages/Settings/Settings";
+import About from "./pages/About/About";
 import StoreSales from "./pages/StoreSales/StoreSales";
 import FourOFour from "./pages/FourOFour/FourOFour";
 
@@ -82,6 +83,7 @@ class App extends PureComponent {
             <Route exact path="/additem" component={AddItem} />
             <Route exact path="/dashboard" component={Dashboard} />
             <Route exact path="/settings" component={Settings} />
+            <Route exact path="/about" component={About} />
             <Route exact path="/storeSales" component={StoreSales} />
             <Route path="*" component={FourOFour} />
             {/* <Route exact path="/signout" component={SignOut} /> */}
