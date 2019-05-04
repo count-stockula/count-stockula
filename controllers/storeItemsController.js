@@ -82,11 +82,7 @@ module.exports = {
         .then(foundObj => {
           let updatedQty = (foundObj.currentQty - req.body.reduceQty);
           if ((updatedQty < foundObj.criticalQty) && (foundObj.alertStatus === false)) {
-            //textApiCall.sendTxt(foundObj, updatedQty, foundObj.storeId.phoneNumber);
-            textApiCall.sendTxt(foundObj, updatedQty, "4047233897");
-            textApiCall.sendTxt(foundObj, updatedQty, "4047758896");
-            textApiCall.sendTxt(foundObj, updatedQty, "7703316278");
-            textApiCall.sendTxt(foundObj, updatedQty, "6785573075");
+            textApiCall.sendTxt(foundObj, updatedQty);
             foundObj.alertStatus = true;
           }
           db.StoreItem
@@ -94,7 +90,7 @@ module.exports = {
             .then(() => {
               db.StoreItem
                 .findOne({ storeId: storeId, upc: req.body.upc })
-                .then(foundObj => res.json(foundObj))
+                .then(updatedObj => res.json(updatedObj))
                 .catch(err => res.status(422).json(err));
             })
             .catch(err => res.status(422).json(err));
@@ -178,5 +174,19 @@ module.exports = {
         })
         .catch(err => res.status(422).json(err));
     }
+  },
+  noScan: function (req, res) {
+    const { email, storeId } = jwt.verify(req.cookies.token, secret);
+    db.StoreItem
+      .find({ storeId: storeId, noScan: true })
+      .sort({ name: 1 })
+      .then(foundArray => {
+        if (foundArray) {
+          res.json(foundArray);
+        } else {
+          res.status(400).json("no items found");
+        };
+      })
+      .catch(err => res.status(422).json(err));
   }
 };

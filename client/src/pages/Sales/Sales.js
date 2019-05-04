@@ -42,7 +42,7 @@ export default class Sales extends PureComponent {
   componentDidMount = () => {
     this.setState({ userEmail: "" });
     document.addEventListener("keydown", this.keyPressListener, false);
-    API.getNoScanItems("5cb3247aef86d68b5e0dc795")
+    API.getNoScanItems()
       .then(results => {
         this.setState({
           nonScanItems: results.data
