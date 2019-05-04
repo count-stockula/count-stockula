@@ -1,10 +1,9 @@
 import React, { PureComponent } from "react";
 import API from "../../components/utils/API";
 import Form from "../../components/Form/Form";
-
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-//import BlackButton from "../../components/Button/Blackbutton";
+import Modal from "../../components/Modal/Modal";
 import "./SignUp.css";
 
 export default class SignUp extends PureComponent {
@@ -12,12 +11,15 @@ export default class SignUp extends PureComponent {
     super();
     this.state = {
       name: "",
+      theStores: [],
       storeId: "",
       phone: "",
       email: "",
       password: "",
       confirmation: "",
-      theStores: [],
+      alertShown: false,
+      errorMessage: "",
+      buttonText: "",
       management: false,
       disabledInputArray: ["management"]
     };
@@ -25,7 +27,10 @@ export default class SignUp extends PureComponent {
 
   componentDidMount = () => {
     API.getSignUpStores().then(results => {
-      this.setState({ theStores: results.data, storeId: results.data[0]._id });
+      this.setState({
+        theStores: results.data,
+        storeId: results.data[0]._id
+      });
     });
   };
 
@@ -33,6 +38,26 @@ export default class SignUp extends PureComponent {
     const { name, value } = event.target;
     this.setState({
       [name]: value
+    });
+  };
+
+  modalViews = () => {
+    return this.state.alertShown ? "modal modalOpen modalDismissable" : "modal";
+  };
+
+  hideModal = () => {
+    this.setState({
+      alertShown: false,
+      errorMessage: "",
+      showCancel: false
+    });
+  };
+
+  showValidationAlert = message => {
+    this.setState({
+      alertShown: true,
+      errorMessage: message,
+      buttonText: "OK"
     });
   };
 
@@ -51,29 +76,36 @@ export default class SignUp extends PureComponent {
     // validation
     // name
     if (name === "") {
-      alert("please enter valid name");
+      this.showValidationAlert("please enter valid name");
       return;
     }
-    // phone
-    if (phone === "") {
-      alert("please enter valid phone");
+    // phone regex
+    if (phone.length !== 10 || /[^0-9]/.test(phone)) {
+      this.showValidationAlert(
+        "phone must be 10 valid numerical digits with no spaces or special characters"
+      );
       return;
     }
+    // storeId
     if (storeId.length === 0) {
       console.log(`storeId: ${storeId}`);
-      alert("please select a valid store");
+      this.showValidationAlert("please select a valid store");
       return;
     }
     // email
     //const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (!regex.test(String(email).toLowerCase())) {
-      alert("please enter valid email");
+      this.showValidationAlert(
+        "please enter valid email in the form of email@domain.com"
+      );
       return;
     }
     // password
-    if (password !== confirmation) {
-      alert("password must match confirmed password");
+    if (password !== confirmation || password.length < 8) {
+      this.showValidationAlert(
+        "password must be at least 8 characters and match the confirmed password"
+      );
       return;
     }
 
@@ -134,6 +166,16 @@ export default class SignUp extends PureComponent {
           <img src="/images/logo.png" alt="Count Stockula Logo" width="150px" />
         </div>
         <div className="row">
+          <Modal
+            //evalCancelVisibillity={this.evalCancelVisibillity}
+            //cancelModal={this.cancelModal}
+            //showEmailDialog={this.state.showUpcField}
+            buttonText={this.state.buttonText}
+            className={this.modalViews()}
+            onClick={this.hideModal.bind(this)} // "this" would default to click event but now "this" refers to SignUp.js
+          >
+            <p className="black-text">{this.state.errorMessage}</p>
+          </Modal>
           <div className="col s1 m3 l3" />
           <div className="col s10 m6 l6">
             <Form className="col" id="login">

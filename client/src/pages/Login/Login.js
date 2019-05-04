@@ -1,10 +1,8 @@
 import React, { PureComponent } from "react";
-//import API from "../../components/utils/API";
 import Form from "../../components/Form/Form";
-//import Label from "../../components/Label/Label";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import BlackButton from "../../components/Button/Blackbutton";
+import Modal from "../../components/Modal/Modal";
 import "./Login.css";
 
 export default class Login extends PureComponent {
@@ -12,7 +10,9 @@ export default class Login extends PureComponent {
     super();
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      alertShown: false,
+      errorMessage: ""
     };
   }
 
@@ -20,6 +20,26 @@ export default class Login extends PureComponent {
     const { name, value } = event.target;
     this.setState({
       [name]: value
+    });
+  };
+
+  modalViews = () => {
+    return this.state.alertShown ? "modal modalOpen modalDismissable" : "modal";
+  };
+
+  hideModal = () => {
+    this.setState({
+      alertShown: false,
+      errorMessage: "",
+      showCancel: false
+    });
+  };
+
+  showValidationAlert = message => {
+    this.setState({
+      alertShown: true,
+      errorMessage: message,
+      buttonText: "OK"
     });
   };
 
@@ -45,7 +65,7 @@ export default class Login extends PureComponent {
       })
       .catch(err => {
         //console.error(err);
-        alert("Error logging in please try again");
+        this.showValidationAlert("login error, please try again");
       });
   };
 
@@ -56,6 +76,16 @@ export default class Login extends PureComponent {
           <img src="images/logo.png" alt="Count Stockula Logo" width="150px" />
         </div>
         <div className="row">
+          <Modal
+            //evalCancelVisibillity={this.evalCancelVisibillity}
+            //cancelModal={this.cancelModal}
+            //showEmailDialog={this.state.showUpcField}
+            buttonText={this.state.buttonText}
+            className={this.modalViews()}
+            onClick={this.hideModal.bind(this)} // "this" would default to click event but now "this" refers to SignUp.js
+          >
+            <p className="black-text">{this.state.errorMessage}</p>
+          </Modal>
           <div className="col s1 m3 l4" />
           <div className="col s10 m6 l4">
             <Form className="col" id="login">
@@ -71,7 +101,7 @@ export default class Login extends PureComponent {
                   onChange={this.handleChange}
                 />
               </div>
-              <div class="col s12">
+              <div className="col s12">
                 <Input
                   icon="fas fa-key icon"
                   type="password"
@@ -109,6 +139,16 @@ export default class Login extends PureComponent {
             </a>
           </div> */}
         </div>
+        <Modal
+          //evalCancelVisibillity={this.evalCancelVisibillity}
+          //cancelModal={this.cancelModal}
+          //showEmailDialog={this.state.showUpcField}
+          buttonText={this.state.buttonText}
+          className={this.modalViews()}
+          onClick={this.hideModal.bind(this)} // "this" would default to click event but now "this" refers to SignUp.js
+        >
+          <p className="black-text">{this.state.errorMessage}</p>
+        </Modal>
       </>
     );
   }

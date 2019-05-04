@@ -1,31 +1,32 @@
-.modal{
-     width:400px;
-     margin-top:30px;
-     border:1px solid #B71C1C;
-     box-shadow: 0 5px 15px 3px rgba(0,0,0,0.05), 0 9px 15px 8px rgba(0,0,0,0.02), 0 11px 15px -7px rgba(0,0,0,0.05);
-     max-width: 75%;
-     background:white;
+.modal {
+  width: 400px;
+  margin-top: 30px;
+  border: 1px solid #b71c1c;
+  box-shadow: 0 5px 15px 3px rgba(0, 0, 0, 0.05),
+    0 9px 15px 8px rgba(0, 0, 0, 0.02), 0 11px 15px -7px rgba(0, 0, 0, 0.05);
+  max-width: 75%;
+  background: white;
 }
-.modal .modal-footer{
-     text-align: center;
-     border-top:1px solid #6a6a6a;
+.modal .modal-footer {
+  text-align: center;
+  border-top: 1px solid #6a6a6a;
 }
-.modal .modal-footer button{
-     background:black;
-     color:white;
+.modal .modal-footer button {
+  background: black;
+  color: white;
 }
-.modal .modal-footer button:hover{
-     background:#B71C1C;
+.modal .modal-footer button:hover {
+  background: #b71c1c;
 }
-.modalOpen{
-     display: block;
+.modalOpen {
+  display: block;
 }
-.modal-content input{
-     text-align: center !important;
+.modal-content input {
+  text-align: center !important;
 }
-.modal-content input:hover{
-     box-shadow:none !important;
+.modal-content input:hover {
+  box-shadow: none !important;
 }
-.modal .modal-footer .btn-flat{
-     margin:6px;
+.modal .modal-footer .btn-flat {
+  margin: 6px;
 }

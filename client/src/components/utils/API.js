@@ -1,7 +1,9 @@
 import axios from "axios";
 
 export default {
+
   // Functions involving StoreItem collection
+
   // gets an array of all items in db or for a certain store
   getAllItems: function(storeId) {
     if (storeId !== "0") {
@@ -54,19 +56,19 @@ export default {
       params: { storeId: storeId, upc: upc.trim() }
     });
   },
-  // Create an item document in database
+  // create an item document in database
   createItem: function(itemData) {
     return axios.post("/api/storeItems", itemData);
   },
-  // Deletes the item with the given item Uid
+  // deletes the item with the given item Uid
   deleteItem: function(itemId) {
     return axios.delete("/api/storeItems/forOne/" + itemId);
   },
-  // Updates the item with the given item Uid
+  // updates the item with the given item Uid
   updateItem: function(itemId, itemData) {
     return axios.put("/api/storeItems/forOne/" + itemId, itemData);
   },
-  // Reduces the current qty of an item by set amount. reduceQty must be positive integer.
+  // reduces the current qty of an item by set amount. reduceQty must be positive integer.
   reduceStock: function(storeId, upc, reduceQty) {
     return axios.put("/api/storeItems/upc/reduceStock", {
       storeId: storeId,
@@ -74,7 +76,7 @@ export default {
       reduceQty: reduceQty
     });
   },
-  // Increases the current qty of an item by set amount. addQty must be positive integer.
+  // increases the current qty of an item by set amount. addQty must be positive integer.
   addStock: function(storeId, upc, addQty) {
     return axios.put("/api/storeItems/upc/addStock", {
       storeId: storeId,
@@ -84,11 +86,12 @@ export default {
   },
 
   // Functions involving Stores collection
+
   // gets an array of all the stores in the database
   getAllStores: function() {
     return axios.get("/api/stores");
   },
-  // Create an item document in database
+  // create an item document in database
   createStore: function(storeData) {
     return axios.post("/api/stores", storeData);
   },
@@ -96,16 +99,17 @@ export default {
   findStoreId: function(storeId) {
     return axios.get("/api/stores/" + storeId);
   },
-  // Updates the store with the given store Uid
+  // updates the store with the given store Uid
   updateStore: function(storeId, storeData) {
     return axios.put("/api/stores/" + storeId, storeData);
   },
-  // Deletes the item with the given store Uid
+  // deletes the item with the given store Uid
   deleteStore: function(storeId) {
     return axios.delete("/api/stores/" + storeId);
   },
 
   // Functions involving Users collection
+
   // gets an array of all the users in db or for a certain store
   getAllUsers: function(storeId) {
     if (storeId) {
@@ -116,7 +120,7 @@ export default {
       return axios.get("/api/users");
     }
   },
-  // Create an user document in database *userData Must contain storeId to create user
+  // create an user document in database *userData Must contain storeId to create user
   createUser: function(newUser) {
     return axios.post("/api/login/create", newUser);
   },
@@ -124,7 +128,7 @@ export default {
   findUserId: function(userId) {
     return axios.get("/api/users/forOne/" + userId);
   },
-  // Updates the user with the given user Uid
+  // updates the user with the given user Uid
   updateUser: function(userId, userData) {
     return axios.put("/api/users/forOne/" + userId, userData);
   },
@@ -135,14 +139,15 @@ export default {
       password: password
     });
   },
-  // passport signup user
+  // signup user
   signupUser: function() {
     return axios.post("/api/login/signup", {});
   },
+  // gets list of stores and storeIds in database
   getSignUpStores: function() {
     return axios.get("/api/login/stores");
   },
-  // passport login user
+  // login user
   authenticate: function() {
     return axios.get("/api/users/authenticate");
   },
@@ -159,7 +164,7 @@ export default {
       pdfFile: pdfFile
     });
   },
-  // Deletes the user with the given user Uid
+  // deletes the user with the given user Uid
   deleteUser: function(userId) {
     return axios.delete("/api/users/forOne/" + userId);
   },
