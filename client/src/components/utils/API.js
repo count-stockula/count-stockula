@@ -160,6 +160,11 @@ export default {
   },
   saveOrder: function(orderBody){
     return axios.post("api/purchases", orderBody);
+  },
+  getStoreSales:function(storeId){
+    return axios.get("api/purchases/StoreSales/", { 
+      params: { storeId: storeId }
+    });
   }
 
 };
