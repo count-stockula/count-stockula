@@ -1,0 +1,12 @@
+.topFixed{
+  position: fixed;
+  width:inherit;
+  margin-top:3px;
+}
+ul h5{margin-bottom:2px; text-align: left}
+ul p{margin:5px; text-align: left}
+ul .purchaseItem{
+  text-align: left;
+  padding:0 18px;
+}
+ul{padding-bottom:100px;}

@@ -162,5 +162,15 @@ export default {
   // Deletes the user with the given user Uid
   deleteUser: function(userId) {
     return axios.delete("/api/users/forOne/" + userId);
+  },
+  // save sales order to database
+  saveOrder: function(orderBody) {
+    return axios.post("api/purchases", orderBody);
+  },
+  // gets list of all saved orders
+  getStoreSales: function(storeId) {
+    return axios.get("api/purchases/StoreSales/", {
+      params: { storeId: storeId }
+    });
   }
 };

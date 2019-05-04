@@ -37,21 +37,27 @@ export default class Inventory extends PureComponent {
       .then(results => this.setState({}))
       .catch(error => this.props.history.push("/"));
   };
-  
+
   handleScan = data => {
     //data will be the upc
     API.findItemUpc("5cb3247aef86d68b5e0dc795", data)
       .then(retData => {
-        this.setState({
-          showForm: true,
-          upc: data,
-          currentQty: parseInt(retData.data.currentQty),
-          prodName: retData.data.name,
-          description: retData.data.description,
-          showUpcField: false,
-          alertShown: false,
-          showCancel: false
-        });
+        this.setState(
+          {
+            showForm: true,
+            upc: data,
+            currentQty: parseInt(retData.data.currentQty),
+            prodName: retData.data.name,
+            description: retData.data.description,
+            showUpcField: false,
+            alertShown: false,
+            showCancel: false
+          },
+          (this.componentDidUpdate = () => {
+            let ind = document.getElementById("qty");
+            ind.focus();
+          })
+        );
       })
       .catch(err => {
         this.setState({
@@ -112,16 +118,22 @@ export default class Inventory extends PureComponent {
     if (this.state.showUpcField) {
       API.findItemUpc("5cb3247aef86d68b5e0dc795", this.state.upc)
         .then(retData => {
-          this.setState({
-            showForm: true,
-            upc: this.state.upc,
-            currentQty: parseInt(retData.data.currentQty),
-            prodName: retData.data.name,
-            description: retData.data.description,
-            showUpcField: false,
-            alertShown: false,
-            showCancel: false
-          });
+          this.setState(
+            {
+              showForm: true,
+              upc: this.state.upc,
+              currentQty: parseInt(retData.data.currentQty),
+              prodName: retData.data.name,
+              description: retData.data.description,
+              showUpcField: false,
+              alertShown: false,
+              showCancel: false
+            },
+            (this.componentDidUpdate = () => {
+              let ind = document.getElementById("qty");
+              ind.focus();
+            })
+          );
         })
         .catch(err => {
           this.setState({
@@ -132,7 +144,7 @@ export default class Inventory extends PureComponent {
             alertShown: true,
             showCancel: true
           });
-        });
+        }); // added to resolve error
     } else {
       this.setState({
         upc: "",
@@ -163,14 +175,20 @@ export default class Inventory extends PureComponent {
       : "hide";
   };
   manualEntry = () => {
-    this.setState({
-      alertShown: true,
-      errorMessage: "",
-      buttonText: "OK",
-      showUpcField: true,
-      upc: "",
-      showCancel: true
-    });
+    this.setState(
+      {
+        alertShown: true,
+        errorMessage: "",
+        buttonText: "OK",
+        showUpcField: true,
+        upc: "",
+        showCancel: true
+      },
+      (this.componentDidUpdate = () => {
+        let ind = document.getElementById("upc2");
+        ind.focus();
+      })
+    );
   };
   render() {
     return (
@@ -213,7 +231,7 @@ export default class Inventory extends PureComponent {
                 <Input
                   textChangeFunc={this.handleChange}
                   value={this.state.upc}
-                  id="upc"
+                  id="upc2"
                   name="upc"
                   textalign="center"
                   required
