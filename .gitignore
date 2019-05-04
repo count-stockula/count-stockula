@@ -1,5 +1,6 @@
 # x_ignore directory for misc local files
 x_ignore/
+passport/
 
 # Logs
 logs
