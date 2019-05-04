@@ -67,9 +67,11 @@ export default class AddItem extends PureComponent {
           });
           return;
         }
-        this.setState({ alertShown: false, showForm: true, upc: data.trim() },this.componentDidUpdate = () =>{
-          let ind = document.getElementById("prodName")
-          ind.focus();});
+        console.log("no item");
+        this.setState({ alertShown: false, showForm: true, upc: data.trim() },() => {
+          let inputField = document.getElementById("prodName")
+          inputField.focus();
+        })
       });
   };
   inputTyping = event => {
@@ -120,6 +122,7 @@ export default class AddItem extends PureComponent {
     return this.state.alertShown ? "modal modalOpen modalDismissable" : "modal";
   };
   hideModal = () => {
+    console.log(this.state.showUpcField)
     if (this.state.showUpcField) {
       API.findItemUpc("5cb3247aef86d68b5e0dc795", this.state.upc)
         .then(retData => {
@@ -145,11 +148,13 @@ export default class AddItem extends PureComponent {
           this.setState({
             alertShown: false,
             showForm: true,
-            upc: this.state.upc.trim(),
+            //upc: this.state.upc.trim(),
             showCancel: true
-          },this.componentDidUpdate = () =>{
-            let ind = document.getElementById("prodName")
-            ind.focus();});
+          },() => {
+            let inputField = document.getElementById("prodName")
+            inputField.focus();
+          })
+          
         });
     } else {
       this.setState({
@@ -168,6 +173,7 @@ export default class AddItem extends PureComponent {
     });
   };
   manualEntry = () => {
+    console.log("manual");
     this.setState({
       alertShown: true,
       errorMessage: "",
@@ -175,10 +181,12 @@ export default class AddItem extends PureComponent {
       showUpcField: true,
       upc: "",
       showCancel: true
-    },this.componentDidUpdate = () => {
-      let ind =  document.getElementById("upc2")
-      ind.focus();
+    },() => {
+      let inputField = document.getElementById("upc2")
+      inputField.focus();
     })
+      
+    
   };
   toggleScanCheck = evt => {
     this.setState({ noScan: evt.target.checked });
