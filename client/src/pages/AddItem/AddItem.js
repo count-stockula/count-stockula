@@ -30,7 +30,7 @@ export default class AddItem extends PureComponent {
       .then(results => this.setState({}))
       .catch(error => this.props.history.push("/"));
   };
-  
+
   cancelEntry = event => {
     event.preventDefault();
     this.setState({
@@ -68,14 +68,27 @@ export default class AddItem extends PureComponent {
           return;
         }
         console.log("no item");
-        this.setState({ alertShown: false, showForm: true, upc: data.trim() },() => {
-          let inputField = document.getElementById("prodName")
-          inputField.focus();
-        })
+        this.setState(
+          {
+            alertShown: false,
+            showForm: true,
+            upc: data.trim(),
+            prodName: "",
+            description: "",
+            criticalQty: 0,
+            caseSize: 0,
+            addedQty: 0
+          },
+          () => {
+            let inputField = document.getElementById("prodName");
+            inputField.focus();
+          }
+        );
       });
   };
   inputTyping = event => {
     const { name, value } = event.target;
+    console.log(name, value)
     this.setState({
       [name]: value
     });
@@ -122,7 +135,7 @@ export default class AddItem extends PureComponent {
     return this.state.alertShown ? "modal modalOpen modalDismissable" : "modal";
   };
   hideModal = () => {
-    console.log(this.state.showUpcField)
+    console.log(this.state.showUpcField);
     if (this.state.showUpcField) {
       API.findItemUpc("5cb3247aef86d68b5e0dc795", this.state.upc)
         .then(retData => {
@@ -145,16 +158,23 @@ export default class AddItem extends PureComponent {
             });
             return;
           }
-          this.setState({
-            alertShown: false,
-            showForm: true,
-            //upc: this.state.upc.trim(),
-            showCancel: true
-          },() => {
-            let inputField = document.getElementById("prodName")
-            inputField.focus();
-          })
-          
+          this.setState(
+            {
+              alertShown: false,
+              showForm: true,
+              //upc: this.state.upc.trim(),
+              showCancel: true,
+              prodName: "",
+              description: "",
+              criticalQty: 0,
+              caseSize: 0,
+              addedQty: 0
+            },
+            () => {
+              let inputField = document.getElementById("prodName");
+              inputField.focus();
+            }
+          );
         });
     } else {
       this.setState({
@@ -174,19 +194,20 @@ export default class AddItem extends PureComponent {
   };
   manualEntry = () => {
     console.log("manual");
-    this.setState({
-      alertShown: true,
-      errorMessage: "",
-      buttonText: "OK",
-      showUpcField: true,
-      upc: "",
-      showCancel: true
-    },() => {
-      let inputField = document.getElementById("upc2")
-      inputField.focus();
-    })
-      
-    
+    this.setState(
+      {
+        alertShown: true,
+        errorMessage: "",
+        buttonText: "OK",
+        showUpcField: true,
+        upc: "",
+        showCancel: true
+      },
+      () => {
+        let inputField = document.getElementById("upc2");
+        inputField.focus();
+      }
+    );
   };
   toggleScanCheck = evt => {
     this.setState({ noScan: evt.target.checked });
@@ -214,6 +235,11 @@ export default class AddItem extends PureComponent {
                 cancelEntry={this.cancelEntry}
                 noScan={this.state.noScan}
                 onChange={this.toggleScanCheck}
+                prodName = {this.state.prodName}
+                description = {this.state.description}
+                criticalQty = {this.state.criticalQty}
+                caseSize= {this.state.caseSize}
+                addedQty= {this.state.addedQty}
               />
             </div>
           </div>
