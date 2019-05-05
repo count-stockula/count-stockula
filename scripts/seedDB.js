@@ -26,13 +26,13 @@ const storeSeed = [
     street: "1234 john hwy",
     city: "Canton",
     state: "GA",
-    phoneNumber: "6786666666",
+    phone: "6786666666",
     userId: []
   }
 ];
 
 const userSeed = {
-  email: "jack123@abc.com",
+  email: "abcd1234@abc.com",
   password: "abcd1234",
   name: "Jack Doe",
   phone: "4445556666",
