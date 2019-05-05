@@ -11,7 +11,7 @@ export default class Settings extends PureComponent {
     storeId: "",
     theStores: [],
     userName: "",
-    userId: "5cc48b5340ab79002a6b9ef8",
+    userId: "",
     email: "",
     phoneNo: "",
     alertShown: false,
@@ -27,7 +27,6 @@ export default class Settings extends PureComponent {
   
   saveClick = event => {
     event.preventDefault();
-    // This will become get cookie function!!!
     let userId = this.state.userId;
     const userData = {
       name: this.state.userName,
@@ -93,16 +92,15 @@ export default class Settings extends PureComponent {
         this.setState({
           theStores: storeRes.data
         });
-      },
-      API.findUserId(this.state.userId).then(userRes => {
+      },API.currentUser().then(userRes => 
         this.setState({
+          userId: userRes.data._id,
           storeId: userRes.data.storeId,
           userName: userRes.data.name,
           email: userRes.data.email,
           phoneNo: userRes.data.phone
-        });
-      })
-    );
+        })
+      ));
   };
 
   render() {

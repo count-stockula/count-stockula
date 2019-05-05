@@ -1,7 +1,8 @@
-.topFixed{
-     position: fixed;
-     width:inherit;
-     margin-top:5px;
+.dashboard .topFixed{
+  position: fixed;
+  width: inherit;
+  margin-top: 0px;
+  background: white;
 }
 .dashboard .invList{
      padding-top:90px;
@@ -18,7 +19,7 @@
 }
 @media only screen and (max-width: 601px){    
      .dashboard.centralContent{width:calc(100% - 72px) !important;}
-     .topFixed{
+     .dashboard .topFixed{
           margin-top:0px;
      }
 }

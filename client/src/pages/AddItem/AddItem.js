@@ -30,7 +30,7 @@ export default class AddItem extends PureComponent {
       .then(results => this.setState({}))
       .catch(error => this.props.history.push("/"));
   };
-  
+
   cancelEntry = event => {
     event.preventDefault();
     this.setState({
@@ -67,9 +67,22 @@ export default class AddItem extends PureComponent {
           });
           return;
         }
-        this.setState({ alertShown: false, showForm: true, upc: data.trim() },this.componentDidUpdate = () =>{
-          let ind = document.getElementById("prodName")
-          ind.focus();});
+        this.setState(
+          {
+            alertShown: false,
+            showForm: true,
+            upc: data.trim(),
+            prodName: "",
+            description: "",
+            criticalQty: 0,
+            caseSize: 0,
+            addedQty: 0
+          },
+          () => {
+            let inputField = document.getElementById("prodName");
+            inputField.focus();
+          }
+        );
       });
   };
   inputTyping = event => {
@@ -142,14 +155,23 @@ export default class AddItem extends PureComponent {
             });
             return;
           }
-          this.setState({
-            alertShown: false,
-            showForm: true,
-            upc: this.state.upc.trim(),
-            showCancel: true
-          },this.componentDidUpdate = () =>{
-            let ind = document.getElementById("prodName")
-            ind.focus();});
+          this.setState(
+            {
+              alertShown: false,
+              showForm: true,
+              //upc: this.state.upc.trim(),
+              showCancel: true,
+              prodName: "",
+              description: "",
+              criticalQty: 0,
+              caseSize: 0,
+              addedQty: 0
+            },
+            () => {
+              let inputField = document.getElementById("prodName");
+              inputField.focus();
+            }
+          );
         });
     } else {
       this.setState({
@@ -168,17 +190,20 @@ export default class AddItem extends PureComponent {
     });
   };
   manualEntry = () => {
-    this.setState({
-      alertShown: true,
-      errorMessage: "",
-      buttonText: "OK",
-      showUpcField: true,
-      upc: "",
-      showCancel: true
-    },this.componentDidUpdate = () => {
-      let ind =  document.getElementById("upc2")
-      ind.focus();
-    })
+    this.setState(
+      {
+        alertShown: true,
+        errorMessage: "",
+        buttonText: "OK",
+        showUpcField: true,
+        upc: "",
+        showCancel: true
+      },
+      () => {
+        let inputField = document.getElementById("upc2");
+        inputField.focus();
+      }
+    );
   };
   toggleScanCheck = evt => {
     this.setState({ noScan: evt.target.checked });
@@ -206,6 +231,11 @@ export default class AddItem extends PureComponent {
                 cancelEntry={this.cancelEntry}
                 noScan={this.state.noScan}
                 onChange={this.toggleScanCheck}
+                prodName = {this.state.prodName}
+                description = {this.state.description}
+                criticalQty = {this.state.criticalQty}
+                caseSize= {this.state.caseSize}
+                addedQty= {this.state.addedQty}
               />
             </div>
           </div>

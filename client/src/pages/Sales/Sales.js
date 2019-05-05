@@ -40,9 +40,8 @@ export default class Sales extends PureComponent {
   };
 
   componentDidMount = () => {
-    this.setState({ userEmail: "" });
     document.addEventListener("keydown", this.keyPressListener, false);
-    API.getNoScanItems("5cb3247aef86d68b5e0dc795")
+    API.getNoScanItems()
       .then(results => {
         this.setState({
           nonScanItems: results.data
@@ -105,7 +104,6 @@ export default class Sales extends PureComponent {
       this.state.store.state +
       " " +
       this.state.store.zip;
-
     let currPurchase = this.state.purchasedItems;
     const documentDefinition = {
       pageSize: { width: 250, height: "auto" },
@@ -166,7 +164,6 @@ export default class Sales extends PureComponent {
     this.setState({
       purchasedItems: [],
       alertShown: false,
-      userEmail: "",
       buttonText: "OK"
     });
     pdfMake.createPdf(documentDefinition).open();
@@ -226,7 +223,6 @@ export default class Sales extends PureComponent {
         this.createPdf();
       }).catch(err => {
         this.setState({
-          userEmail: "",
           showEmailDialog: true,
           alertShown: true,
           errorMessage: err
@@ -237,7 +233,6 @@ export default class Sales extends PureComponent {
       this.handleScan(this.state.upc);
     } else if (this.state.showEmailDialog && this.state.userEmail === "") {
       this.setState({
-        userEmail: "",
         showEmailDialog: true,
         alertShown: true,
         errorMessage: "Email Address not provided"
@@ -245,7 +240,6 @@ export default class Sales extends PureComponent {
       return;
     }
     this.setState({
-      userEmail: "",
       showEmailDialog: false,
       alertShown: false,
       errorMessage: ""
