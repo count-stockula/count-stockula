@@ -5,7 +5,7 @@ const usersController = require("../../controllers/usersController");
 const middleware = require("../middleware");
 router.use(middleware.authenticate);
 
-// Matches with "/api/users/forOne/:id"
+// Matches with "/api/users/authenticate"
 router
   .route("/authenticate")
   .get(usersController.authenticate);
@@ -21,5 +21,10 @@ router
 router
   .route("/signout")
   .post(usersController.signout);
+
+// Matches with "/api/users/currentUser"
+router
+  .route("/currentUser")
+  .get(usersController.currentUser);
 
 module.exports = router;

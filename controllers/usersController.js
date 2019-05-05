@@ -44,6 +44,19 @@ module.exports = {
       })
       .catch(err => res.status(500).json(err));
   },
+  currentUser: function (req, res) {
+    const { email, storeId } = jwt.verify(req.cookies.token, secret);
+    db.User.findOne({ email: email })
+      .populate("storeId")
+      .then(foundUser => {
+        if (foundUser) {
+          res.json(foundUser);
+        } else {
+          res.status(500).json("no users found");
+        }
+      })
+      .catch(err => res.status(500).json(err));
+  },
   create: function (req, res) {
     if (req.body.storeId) {
       //check for existing user
