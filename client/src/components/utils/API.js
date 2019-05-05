@@ -116,6 +116,10 @@ export default {
   findUserId: function (userId) {
     return axios.get("/api/users/forOne/" + userId);
   },
+  // gets an object of the current signed in user
+  currentUser: function () {
+    return axios.get("/api/users/currentUser");
+  },
   // Updates the user with the given user Uid
   updateUser: function (userId, userData) {
     return axios.put("/api/users/forOne/" + userId, userData);
