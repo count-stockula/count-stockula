@@ -104,7 +104,6 @@ export default class Sales extends PureComponent {
       this.state.store.state +
       " " +
       this.state.store.zip;
-    console.log(storeName);
     let currPurchase = this.state.purchasedItems;
     const documentDefinition = {
       pageSize: { width: 250, height: "auto" },
@@ -149,7 +148,6 @@ export default class Sales extends PureComponent {
       }
     };
     let userEmail = this.state.userEmail;
-    console.log(userEmail);
     pdfMake.createPdf(documentDefinition).getBase64(function(encodedString) {
       let data = encodedString;
       try {

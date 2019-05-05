@@ -93,16 +93,14 @@ export default class Settings extends PureComponent {
         this.setState({
           theStores: storeRes.data
         });
-      },
-      API.findUserId(this.state.userId).then(userRes => {
+      },API.findUserId(this.state.userId).then(userRes => 
         this.setState({
           storeId: userRes.data.storeId,
           userName: userRes.data.name,
           email: userRes.data.email,
           phoneNo: userRes.data.phone
-        });
-      })
-    );
+        })
+      ));
   };
 
   render() {

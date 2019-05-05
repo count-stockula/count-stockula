@@ -67,7 +67,6 @@ export default class AddItem extends PureComponent {
           });
           return;
         }
-        console.log("no item");
         this.setState(
           {
             alertShown: false,
@@ -88,7 +87,6 @@ export default class AddItem extends PureComponent {
   };
   inputTyping = event => {
     const { name, value } = event.target;
-    console.log(name, value)
     this.setState({
       [name]: value
     });
@@ -135,7 +133,6 @@ export default class AddItem extends PureComponent {
     return this.state.alertShown ? "modal modalOpen modalDismissable" : "modal";
   };
   hideModal = () => {
-    console.log(this.state.showUpcField);
     if (this.state.showUpcField) {
       API.findItemUpc("5cb3247aef86d68b5e0dc795", this.state.upc)
         .then(retData => {
@@ -193,7 +190,6 @@ export default class AddItem extends PureComponent {
     });
   };
   manualEntry = () => {
-    console.log("manual");
     this.setState(
       {
         alertShown: true,
