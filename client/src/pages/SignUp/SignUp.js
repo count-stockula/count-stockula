@@ -74,6 +74,7 @@ export default class SignUp extends PureComponent {
     } = this.state;
 
     // validation
+
     // name
     if (name === "") {
       this.showValidationAlert("please enter valid name");
@@ -93,7 +94,6 @@ export default class SignUp extends PureComponent {
       return;
     }
     // email
-    //const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (!regex.test(String(email).toLowerCase())) {
       this.showValidationAlert(
@@ -101,6 +101,7 @@ export default class SignUp extends PureComponent {
       );
       return;
     }
+
     // password
     if (password !== confirmation || password.length < 8) {
       this.showValidationAlert(
@@ -131,13 +132,15 @@ export default class SignUp extends PureComponent {
           password: "",
           confirmation: ""
         });
-        alert(
-          "Successful SignUp\n\nPlease login with your new username and password"
+        this.showValidationAlert(
+          "Successful SignUp\n\nPlease go to the login page to login with your new username and password"
         );
-        window.location.href = "/";
+        //this.props.history.push("/");
       })
       .catch(error => {
-        //window.location.href = "/Scan";
+        this.showValidationAlert(
+          "Signup error\n\nPlease try again"
+        );
       });
     // end API.checkPass
   };
@@ -167,9 +170,6 @@ export default class SignUp extends PureComponent {
         </div>
         <div className="row">
           <Modal
-            //evalCancelVisibillity={this.evalCancelVisibillity}
-            //cancelModal={this.cancelModal}
-            //showEmailDialog={this.state.showUpcField}
             buttonText={this.state.buttonText}
             className={this.modalViews()}
             onClick={this.hideModal.bind(this)} // "this" would default to click event but now "this" refers to SignUp.js
@@ -180,7 +180,6 @@ export default class SignUp extends PureComponent {
           <div className="col s10 m6 l6">
             <Form className="col" id="login">
               <div className="col s12 l6">
-                {/* <Label htmlFor="name" className="" /> */}
                 <Input
                   icon="fas fa-user icon"
                   type="text"
@@ -256,15 +255,6 @@ export default class SignUp extends PureComponent {
                   onChange={this.handleChange}
                 />
               </div>
-              {/* <Input
-              type="text"
-              className="validate"
-              id="storeId"
-              name="storeId"
-              value={this.state.storeId}
-              //placeholder="storeId"
-              onChange={this.handleChange}
-            /> */}
               {/* <Input
               type="text"
               className="validate"

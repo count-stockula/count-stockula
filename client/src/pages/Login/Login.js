@@ -54,8 +54,7 @@ export default class Login extends PureComponent {
     })
       .then(res => {
         if (res.status === 200) {
-          // successful login
-          // redirect to secure site
+          // successful login, redirect to secure site
           this.props.history.push("/scan");
           //this.props.history.push("/testauth");
         } else {
@@ -64,7 +63,6 @@ export default class Login extends PureComponent {
         }
       })
       .catch(err => {
-        //console.error(err);
         this.showValidationAlert("login error, please try again");
       });
   };
@@ -77,9 +75,6 @@ export default class Login extends PureComponent {
         </div>
         <div className="row">
           <Modal
-            //evalCancelVisibillity={this.evalCancelVisibillity}
-            //cancelModal={this.cancelModal}
-            //showEmailDialog={this.state.showUpcField}
             buttonText={this.state.buttonText}
             className={this.modalViews()}
             onClick={this.hideModal.bind(this)} // "this" would default to click event but now "this" refers to SignUp.js
@@ -119,7 +114,6 @@ export default class Login extends PureComponent {
         <div className="col s1 m3 l4" />
         <div className="row">
           <div className="loginButton">
-            {/* <BlackButton onClick={this.handleSubmit} text="Login" /> */}
             <Button
               className="waves-effect waves-light btn black white-text"
               onClick={this.handleSubmit}
@@ -140,9 +134,6 @@ export default class Login extends PureComponent {
           </div> */}
         </div>
         <Modal
-          //evalCancelVisibillity={this.evalCancelVisibillity}
-          //cancelModal={this.cancelModal}
-          //showEmailDialog={this.state.showUpcField}
           buttonText={this.state.buttonText}
           className={this.modalViews()}
           onClick={this.hideModal.bind(this)} // "this" would default to click event but now "this" refers to SignUp.js
