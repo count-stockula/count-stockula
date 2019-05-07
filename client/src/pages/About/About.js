@@ -51,7 +51,7 @@ export default class About extends PureComponent {
                   <div className="icon-block">
                     <h2 className="center"><img src="/images/boxicon.png" className="material-icons"></img></h2>
                     <h5 className="center">Stock</h5>
-                    <p className="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+                    <p className="light">With our human-friendly UI, keeping track of your inventory is easier than ever. Your stock will finally be organized! We even tell you what items are low on stock or completely out.</p>
                   </div>
                 </div>
 
@@ -59,7 +59,7 @@ export default class About extends PureComponent {
                   <div className="icon-block">
                     <h2 className="center light-blue-text"><img src="/images/scanicon.png" className="material-icons"></img></h2>
                     <h5 className="center">Scan</h5>
-                    <p className="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+                    <p className="light">Using a hand-held scanner, you can scan incoming stock AND outgoing sales! Just beep, beep, go! If you don’t have a scanner, don’t worry. We have a manual mode.</p>
                   </div>
                 </div>
 
@@ -67,7 +67,7 @@ export default class About extends PureComponent {
                   <div className="icon-block">
                     <h2 className="center light-blue-text"><img src="/images/papericon.png" className="material-icons"></img></h2>
                     <h5 className="center">Print</h5>
-                    <p className="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+                    <p className="light">After you finish a sale, enter in an email to send a receipt to your client. Each sale is recorded for your own individual sales reporting records. We really do it all!</p>
                   </div>
                 </div>
               </div>
@@ -87,10 +87,10 @@ export default class About extends PureComponent {
                 <div className="col l6 s12">
                   <h5 className="white-text aboutFooter">The Team</h5>
                   <ul>
-                    <li><a className="white-text" href="#!">Kurt Cooney</a></li>
-                    <li><a className="white-text" href="#!">Aaron Lee</a></li>
-                    <li><a className="white-text" href="#!">Jarret Yingling</a></li>
-                    <li><a className="white-text" href="#!">Anna Sylvester</a></li>
+                    <li><a className="white-text" href="https://github.com/krtcotm">Kurt Cooney</a></li>
+                    <li><a className="white-text" href="https://github.com/shinji911">Aaron Lee</a></li>
+                    <li><a className="white-text" href="https://github.com/JarretYingling">Jarret Yingling</a></li>
+                    <li><a className="white-text" href="https://github.com/annasylvester">Anna Sylvester</a></li>
                   </ul>
                 </div>
               </div>
