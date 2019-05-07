@@ -35,4 +35,8 @@ router.route("/lowStock")
 router.route("/zeroStock")
   .get(storeItemsController.zeroStock);
 
+// Matches with "/api/storeItems/noScan"
+router.route("/noScan")
+  .get(storeItemsController.noScan);
+
 module.exports = router;

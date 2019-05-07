@@ -6,6 +6,7 @@ const storesController = require("../../controllers/storesController");
 router
   .route("/stores")
   .get(storesController.findAll)
+  .post(storesController.create);
 
 // createUser matches with "/api/login/create"
 router

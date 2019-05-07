@@ -89,7 +89,7 @@ export default class Login extends PureComponent {
           <div className="col s1 m3 l4" />
           <div className="col s10 m6 l4">
             <Form className="col" id="login">
-              <div class="col s12">
+              <div className="col s12">
                 <Input
                   icon="fas fa-envelope icon"
                   type="email"

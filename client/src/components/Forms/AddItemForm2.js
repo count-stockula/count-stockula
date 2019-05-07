@@ -8,21 +8,21 @@ export default function AddItemForm2 (props) {
      return (
           <Form id="aForm">
                <div className="col s12">
-                    <Label labValue="Product Name" htmlFor="prodName" className="active"/>
-                    <Input type="text"
-                    id="prodName"
-                    name="prodName"
-                    textChangeFunc={props.typingEvent}/>
+                  <Label labValue="Product Name" htmlFor="prodName" className="active"/>
+                  <Input type="text"
+                  id="prodName"
+                  name="prodName"
+                  value={props.prodName}
+                  textChangeFunc={props.typingEvent}
+                  />
                </div>
-               
-
                <div className="col s12 m6">
-               <Label labValue="UPC" htmlFor="upc" className="active"/>
-                    <Input type="text"
-                    id="upc"
-                    name="upc"
-                    value={props.upc}
-                    textChangeFunc={props.typingEvent}/>
+                <Label labValue="UPC" htmlFor="upc" className="active"/>
+                <Input type="text"
+                id="upc"
+                name="upc"
+                value={props.upc}
+                textChangeFunc={props.typingEvent}/>
                </div>
                <div className="col s12 m6 center">
                   <Label labValue="Non Scannable Item" htmlFor="upc" className="active"/>
@@ -41,6 +41,7 @@ export default function AddItemForm2 (props) {
                     <Input type="text"
                     id="description"
                     name="description"
+                    value={props.description}
                     textChangeFunc={props.typingEvent}/>
                </div>
                <div className="col s12 m6">
@@ -48,6 +49,7 @@ export default function AddItemForm2 (props) {
                     <Input type="number"
                     id="criticalQty"
                     name="criticalQty"
+                    value={props.criticalQty}
                     textChangeFunc={props.typingEvent}/>
                </div>
                <div className="col s12 m6">
@@ -55,6 +57,7 @@ export default function AddItemForm2 (props) {
                     <Input type="number"
                     id="caseSize"
                     name="caseSize"
+                    value={props.caseSize}
                     textChangeFunc={props.typingEvent}/>
                </div>
                <div className="col s12 m6 offset-m3">
@@ -63,6 +66,7 @@ export default function AddItemForm2 (props) {
                     <Input type="number"
                     id="addedQty"
                     name="addedQty"
+                    value={props.addedQty}
                     textChangeFunc={props.typingEvent}/>
                </div>
                <div className="col s12 m12 center-align">

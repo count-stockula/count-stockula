@@ -6,7 +6,6 @@ import "./Forms.css";
 
 export default function SettingsForm(props) {
 let initialStore=props.storeId;
-
   return (
     <Form id="aForm">
       <div className="col s12 m6">

@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export default {
-
   // Functions involving StoreItem collection
 
   // gets an array of all items in db or for a certain store
@@ -35,16 +34,8 @@ export default {
     }
   },
   // gets an array of all non-scannable items in db or for a certain store
-  getNoScanItems: function(storeId) {
-    if (storeId !== "0") {
-      return axios.get("/api/storeItems", {
-        params: { storeId: storeId, noScan: true }
-      });
-    } else {
-      return axios.get("/api/storeItems", {
-        params: { noScan: true }
-      });
-    }
+  getNoScanItems: function() {
+    return axios.get("/api/storeItems/noScan");
   },
   // gets an object by item Id
   findItemId: function(itemId) {
@@ -127,6 +118,10 @@ export default {
   // gets an object by user Uid
   findUserId: function(userId) {
     return axios.get("/api/users/forOne/" + userId);
+  },
+  // gets an object of the current signed in user
+  currentUser: function() {
+    return axios.get("/api/users/currentUser");
   },
   // updates the user with the given user Uid
   updateUser: function(userId, userData) {

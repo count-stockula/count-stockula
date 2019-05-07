@@ -6,13 +6,13 @@
      padding: 12px 0 0 0;
      background: #eee;
 }
-h5{
-     background: white;
+.pageHeader h5{
+     background: white !important;
      line-height: 1.8em;
      margin-bottom:0px;
 }
-.redBar{
-     background: #d32f2f  ;
+.pageHeader .redBar{
+     background: #d32f2f !important ;
      color:white;
      text-transform: uppercase;
 }
