@@ -6,11 +6,11 @@
  * Made By MaterializeCSS.com
  */
 
-.icon-block {
+.aboutSection .icon-block {
   padding: 0 15px;
 }
 
-.icon-block .material-icons {
+.aboutSection .icon-block .material-icons {
   font-size: inherit;
 }
 
@@ -19,57 +19,57 @@
 }
 
 
-.page-footer {
+.aboutSection .page-footer {
   background-color: #383838;
 }
 
 
-.headerPhoto {
+.aboutSection .headerPhoto {
   width: 450px;
   padding-bottom: 0px;
 }
 
-h5 {
+.aboutSection h5 {
   background: none !important;
 }
 
 @media only screen and (max-width: 480px) {
 
   /* For mobile phones: */
-  .headerPhoto {
+  .aboutSection .headerPhoto {
     width: 320px;
     padding-bottom: 0px;
   }
 }
 
-.material-icons {
+.aboutSection .material-icons {
   width: 70%;
 }
 
 
-.headliner-image {
+.aboutSection .headliner-image {
   width: 50%;
 }
 
 @media only screen and (max-width: 480px) {
 
   /* For mobile phones: */
-  .headliner-image {
+  .aboutSection .headliner-image {
     width: 80%;
   }
 }
 
-.gray-filler {
+.aboutSection .gray-filler {
   background-color: #383838;
   color: white;
   padding-bottom: 10px !important;
 }
 
-.heart-icon {
+.aboutSection .heart-icon {
   width: 50px;
 }
 
-.header-text {
+.aboutSection .header-text {
   padding-bottom: 30px;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16pt;
