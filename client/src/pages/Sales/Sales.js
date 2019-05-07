@@ -15,12 +15,12 @@ import "./Sales.css";
 export default class Sales extends PureComponent {
   state = {
     store: {
-      name: "Shops at East Peidmont",
-      address: " 230 E. Peiedmont Ave",
-      city: "Norcross",
-      state: "GA",
-      zip: "30010",
-      phone: "(770) 876-2201"
+      name: "",
+      address: "",
+      city: "",
+      state: "",
+      zip: "",
+      phone: ""
     },
     purchasedItems: [],
     alertShown: false,
@@ -36,7 +36,7 @@ export default class Sales extends PureComponent {
   componentWillMount = () => {
     API.authenticate()
       .then(results => this.setState({}))
-      .catch(error => this.props.history.push("/"));
+      .catch(error => this.props.history.push("/"));    
   };
 
   componentDidMount = () => {
@@ -56,6 +56,10 @@ export default class Sales extends PureComponent {
           showUPCDialog: false
         });
       });
+      API.currentUser()
+    .then(result => {
+      this.setState({store: result.data.storeId});
+    })
   };
   openSide = () => {
     var elems = document.getElementById("sidenav");
@@ -98,12 +102,11 @@ export default class Sales extends PureComponent {
     pdfMake.vfs = vfs;
     const storeName = this.state.store.name;
     const address = this.state.store.address;
+    const formatedPhone = `(${this.state.store.phone.substring(0,3)}) ${this.state.store.phone.substring(3,6)}-${this.state.store.phone.substring(6,10)}`;
     const city =
       this.state.store.city +
       ", " +
-      this.state.store.state +
-      " " +
-      this.state.store.zip;
+      this.state.store.state ;
     let currPurchase = this.state.purchasedItems;
     const documentDefinition = {
       pageSize: { width: 250, height: "auto" },
@@ -118,7 +121,7 @@ export default class Sales extends PureComponent {
         { text: address, alignment: "center" },
         { text: city, alignment: "center" },
         {
-          text: this.state.store.phone,
+          text: formatedPhone,
           alignment: "center",
           margin: [0, 0, 0, 30]
         },
