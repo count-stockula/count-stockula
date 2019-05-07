@@ -1,10 +1,8 @@
 import React, { PureComponent } from "react";
-//import API from "../../components/utils/API";
 import Form from "../../components/Form/Form";
-//import Label from "../../components/Label/Label";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import BlackButton from "../../components/Button/Blackbutton";
+import Modal from "../../components/Modal/Modal";
 import "./Login.css";
 
 export default class Login extends PureComponent {
@@ -12,7 +10,9 @@ export default class Login extends PureComponent {
     super();
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      alertShown: false,
+      errorMessage: ""
     };
   }
 
@@ -20,6 +20,26 @@ export default class Login extends PureComponent {
     const { name, value } = event.target;
     this.setState({
       [name]: value
+    });
+  };
+
+  modalViews = () => {
+    return this.state.alertShown ? "modal modalOpen modalDismissable" : "modal";
+  };
+
+  hideModal = () => {
+    this.setState({
+      alertShown: false,
+      errorMessage: "",
+      showCancel: false
+    });
+  };
+
+  showValidationAlert = message => {
+    this.setState({
+      alertShown: true,
+      errorMessage: message,
+      buttonText: "OK"
     });
   };
 
@@ -34,8 +54,7 @@ export default class Login extends PureComponent {
     })
       .then(res => {
         if (res.status === 200) {
-          // successful login
-          // redirect to secure site
+          // successful login, redirect to secure site
           this.props.history.push("/scan");
           //this.props.history.push("/testauth");
         } else {
@@ -44,8 +63,7 @@ export default class Login extends PureComponent {
         }
       })
       .catch(err => {
-        //console.error(err);
-        alert("Error logging in please try again");
+        this.showValidationAlert("login error, please try again");
       });
   };
 
@@ -56,6 +74,13 @@ export default class Login extends PureComponent {
           <img src="images/logo.png" alt="Count Stockula Logo" width="150px" />
         </div>
         <div className="row">
+          <Modal
+            buttonText={this.state.buttonText}
+            className={this.modalViews()}
+            onClick={this.hideModal.bind(this)} // "this" would default to click event but now "this" refers to SignUp.js
+          >
+            <p className="black-text">{this.state.errorMessage}</p>
+          </Modal>
           <div className="col s1 m3 l4" />
           <div className="col s10 m6 l4">
             <Form className="col" id="login">
@@ -89,7 +114,6 @@ export default class Login extends PureComponent {
         <div className="col s1 m3 l4" />
         <div className="row">
           <div className="loginButton">
-            {/* <BlackButton onClick={this.handleSubmit} text="Login" /> */}
             <Button
               className="waves-effect waves-light btn black white-text"
               onClick={this.handleSubmit}
@@ -109,6 +133,13 @@ export default class Login extends PureComponent {
             </a>
           </div> */}
         </div>
+        <Modal
+          buttonText={this.state.buttonText}
+          className={this.modalViews()}
+          onClick={this.hideModal.bind(this)} // "this" would default to click event but now "this" refers to SignUp.js
+        >
+          <p className="black-text">{this.state.errorMessage}</p>
+        </Modal>
       </>
     );
   }
