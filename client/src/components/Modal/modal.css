@@ -6,6 +6,7 @@
     0 9px 15px 8px rgba(0, 0, 0, 0.02), 0 11px 15px -7px rgba(0, 0, 0, 0.05);
   max-width: 75%;
   background: white;
+  z-index:1000;
 }
 .modal .modal-footer {
   text-align: center;

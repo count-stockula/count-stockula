@@ -6,3 +6,6 @@
 .settingsContainer select {
     margin-bottom: 8px;
   }
+  .settingsContainer i{
+    height: 2rem;
+  }

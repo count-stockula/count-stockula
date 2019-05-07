@@ -133,13 +133,7 @@ export default class Login extends PureComponent {
             </a>
           </div> */}
         </div>
-        <Modal
-          buttonText={this.state.buttonText}
-          className={this.modalViews()}
-          onClick={this.hideModal.bind(this)} // "this" would default to click event but now "this" refers to SignUp.js
-        >
-          <p className="black-text">{this.state.errorMessage}</p>
-        </Modal>
+       
       </>
     );
   }
