@@ -16,7 +16,7 @@ export default class Sales extends PureComponent {
   state = {
     store: {
       name: "Shops at East Peidmont",
-      address: " 230 E. Peiedmont Ave",
+      address: " 230 E. Piedmont Ave",
       city: "Norcross",
       state: "GA",
       zip: "30010",
