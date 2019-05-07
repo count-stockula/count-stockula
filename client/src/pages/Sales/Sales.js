@@ -15,12 +15,12 @@ import "./Sales.css";
 export default class Sales extends PureComponent {
   state = {
     store: {
-      name: "Shops at East Peidmont",
-      address: " 230 E. Piedmont Ave",
-      city: "Norcross",
-      state: "GA",
-      zip: "30010",
-      phone: "(770) 876-2201"
+      name: "",
+      address: "",
+      city: "",
+      state: "",
+      zip: "",
+      phone: ""
     },
     purchasedItems: [],
     alertShown: false,
@@ -58,7 +58,6 @@ export default class Sales extends PureComponent {
       });
       API.currentUser()
     .then(result => {
-     let s="";
       this.setState({store: result.data.storeId});
     })
   };
