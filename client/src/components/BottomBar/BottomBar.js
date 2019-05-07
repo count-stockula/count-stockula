@@ -4,7 +4,7 @@ import "./BottomBar.css";
 
 export default function(){
      return (
-          <div className="grey lighten-3 bottomBar"> 
+          <div className="grey lighten-1 bottomBar"> 
                <div className="center">
                     <Link to="/Dashboard"><i className="material-icons small text-white">dashboard</i></Link>
                     <Link to="/Scan"><button className="waves-circle waves-red btn" >Scan</button></Link>
