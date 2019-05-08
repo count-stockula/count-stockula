@@ -140,6 +140,13 @@ export default class Sales extends PureComponent {
             }),
           alignment: "left",
           margin: [0, 30, 0, 30]
+        },
+        {
+          text:
+            "Powered by Count Stockula"
+            ,
+          alignment: "left",
+          margin: [12, 30, 0, 30]
         }
       ],
       styles: {

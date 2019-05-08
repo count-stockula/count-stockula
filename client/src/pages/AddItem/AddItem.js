@@ -42,7 +42,7 @@ export default class AddItem extends PureComponent {
   };
   handleScan = data => {
     this.setState({
-      showForm: true,
+      //showForm: true,
       upc: data.trim()
     });
     API.findItemUpc("5cb3247aef86d68b5e0dc795", data.trim())
@@ -54,7 +54,8 @@ export default class AddItem extends PureComponent {
           } exists in the db as ${
             retData.data.name
           }. UPCs can not be duplicated. `,
-          showUpcField: false
+          showUpcField: false,
+          showForm: false
         });
       })
       .catch(err => {
@@ -63,7 +64,7 @@ export default class AddItem extends PureComponent {
             alertShown: true,
             errorMessage: `Error connecting to db`,
             buttonText: "OK",
-            showUpcField: false
+            showUpcField: false,
           });
           return;
         }
